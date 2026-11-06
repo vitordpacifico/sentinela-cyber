@@ -34,6 +34,12 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 - Scripts da auditoria, da demonstração no painel e do ZIP de entrega.
 - 45 testes novos (108 no total).
 
+### 4. Fechar a entrega (06/11/2026)
+
+**Pedido:** Deixar o código de Cyber e de Mobile completos para a validação, antes dos prints e do vídeo.
+
+**Resultado:** O problema que a auditoria apontou no app (telefone e CEP sem criptografia) foi corrigido no repositório de Mobile. A auditoria e os prints do painel foram refeitos, o roteiro do vídeo foi reduzido para 3 minutos e o script da demonstração passou a poder rodar de novo sem duplicar scans.
+
 ## Decisões sugeridas pela IA, para o grupo revisar
 
 - Usar o Sentinela do grupo como base, porque o PDF fala em "novas regras no motor de parsing", "o LLM" e "Dashboard Atualizado".

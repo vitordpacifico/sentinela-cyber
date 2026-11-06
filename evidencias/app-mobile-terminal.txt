@@ -1,11 +1,11 @@
 
-Sentinela 1.0.0 — 83 arquivo(s) analisado(s), 95 achado(s)
+Sentinela 1.0.0 — 84 arquivo(s) analisado(s), 100 achado(s)
 
 
 Security Gate: APROVADO
   - Nenhum achado aberto com severidade >= high.
 
-Dados pessoais mapeados: 95 campo(s). A lista completa está nos relatórios JSON e SARIF.
+Dados pessoais mapeados: 100 campo(s). A lista completa está nos relatórios JSON e SARIF.
 
 Risco Cidadão: 3/100 (Baixo)
   Nenhum vazamento de dado pessoal encontrado. O índice reflete só os dados que o sistema guarda.

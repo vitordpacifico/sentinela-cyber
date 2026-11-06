@@ -64,7 +64,9 @@ Detalhado em [risco-cidadao.md](risco-cidadao.md). Em resumo:
 |---|---|---|---|
 | `exemplos/prototipo-com-falhas` (falhas inseridas de propósito) | **Bloqueado** | **100, Crítico** | 5 vazamentos e 1 CPF real no código |
 | `exemplos/prototipo-corrigido` (mesma função, corrigida) | Aprovado | 7, Baixo | 0 vazamentos |
-| App SENTINELA de Mobile (`GS-Mobile/src`, código real) | Aprovado | 3, Baixo | 0 vazamentos; 95 campos com dado pessoal mapeados |
+| App SENTINELA de Mobile (`GS-Mobile/src`, código real) | Aprovado | 3, Baixo | 0 vazamentos; 100 campos com dado pessoal mapeados |
+
+**O que a auditoria mudou no app.** Os campos mapeados mostraram onde o app guardava o telefone e o CEP do cidadão. Seguindo esses campos, a revisão manual achou um problema que o scanner não pega sozinho, porque o dado passa por dois arquivos (veja as limitações): esses dados iam para o AsyncStorage, que grava **sem criptografia**. O app foi corrigido, e agora o telefone e o CEP ficam no cofre do sistema (`expo-secure-store`: Keychain no iOS, Keystore no Android). A correção está no commit [45dc17f do app](https://github.com/vitordpacifico/sentinela-mobile/commit/45dc17f).
 
 As evidências ficam em [`evidencias/`](../evidencias). Cada alvo tem o relatório Markdown, o JSON completo, o SARIF e a saída do terminal. Há também os prints do painel.
 
@@ -99,19 +101,23 @@ Sem `--ai`, os alertas são escritos por regras e o painel avisa isso.
 
 ## Roteiro do vídeo
 
-| Tempo | Mostrar |
-|---|---|
-| 0:00 | O problema: o app SENTINELA guarda dados de moradores e não pode vazá-los. O módulo novo audita isso antes de cada merge. |
-| 0:30 | O código do módulo: `sentinela/pii/` e `sentinela/rules/pii.yml` |
-| 1:00 | `sentinela scan exemplos/prototipo-com-falhas`: os vazamentos, o caminho do dado e o gate **bloqueado** |
-| 2:00 | O mesmo scan no protótipo corrigido: gate **aprovado** |
-| 2:30 | O scan no app real de Mobile: nenhum vazamento, só o mapeamento |
-| 3:00 | O painel: o Risco Cidadão crítico do protótipo, os alertas ao cidadão escritos pela IA e o detalhe de um vazamento |
-| 4:00 | O projeto `sentinela-app`: a queda na tendência e o Risco Cidadão baixo |
+O PDF não fixa um tempo para o vídeo de Cyber. O roteiro cabe em 3 minutos.
+
+Antes de gravar, rode `python scripts/demo_gs.py --ai` e deixe `sentinela serve` aberto em outra janela.
+
+| Tempo | Mostrar | O que falar |
+|---|---|---|
+| 0:00 | Este documento, na tabela da missão | "O app SENTINELA guarda dados de moradores. Criamos no Sentinela um módulo que acha dados pessoais no código e bloqueia o merge quando eles vazam." |
+| 0:20 | `exemplos/prototipo-com-falhas/cadastroMorador.ts` | "Este protótipo tem 5 vazamentos colocados de propósito: o diagnóstico vai para o celular sem criptografia e para a notificação, e o CPF vai para o log, para a URL e para o celular sem criptografia. Além disso, há um CPF real escrito no código." |
+| 0:40 | Terminal: `sentinela scan exemplos/prototipo-com-falhas --policy exemplos/politica-auditoria.yml --no-bandit` | Mostrar o caminho do dado (de onde veio até onde vazou), o **gate bloqueado** e o Risco Cidadão 100. |
+| 1:20 | O mesmo comando em `exemplos/prototipo-corrigido` | "Com as correções, o gate aprova e o risco cai para Baixo." |
+| 1:40 | Painel, projeto `prototipo-com-falhas` | O medidor do **Risco Cidadão** (crítico), a tabela por categoria e os alertas ao cidadão escritos pela IA. Abrir um vazamento e mostrar o alerta. |
+| 2:20 | Painel, projeto `sentinela-app` | "Ao longo da semana, as falhas caíram e o app real ficou com risco Baixo." Mostrar a tendência. |
+| 2:40 | O parágrafo "O que a auditoria mudou no app" | "A auditoria achou o telefone e o CEP sem criptografia no app de Mobile, e nós corrigimos." |
 
 ## Limitações conhecidas
 
-- **O fluxo é seguido dentro do mesmo arquivo.** Se um dado passa por funções de arquivos diferentes, ele não é rastreado. Um exemplo é o app de Mobile: o celular e o CEP passam do serviço de usuários para o serviço genérico de armazenamento, e esse caminho não aparece. Uma revisão manual confirmou que o app guarda esses dados no AsyncStorage **sem criptografia**. A correção recomendada é usar o `expo-secure-store`.
+- **O fluxo é seguido dentro do mesmo arquivo.** Se um dado passa por funções de arquivos diferentes, ele não é rastreado. Um exemplo é o app de Mobile, antes da correção: o telefone e o CEP passavam do serviço de usuários para o serviço genérico de armazenamento, e esse caminho não aparecia. Quem achou o problema foi a revisão manual dos campos mapeados.
 - **O reconhecimento é pelo nome.** Um campo com nome genérico, como `valor`, não é reconhecido como dado pessoal. Por outro lado, `tipoCidadao` é mapeado como cadastro de pessoa, mesmo sem ser um dado pessoal.
 - **Uma saída que recebe dois dados gera um achado só.** O achado mostra a primeira categoria encontrada. Por exemplo, CPF e senha no mesmo `console.log` aparecem como um vazamento de CPF.
 - **A IA local recomenda, mas não decide.** O alerta escrito pela IA não muda a severidade nem o gate, como já era no Sentinela.

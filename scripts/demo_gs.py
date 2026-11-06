@@ -23,7 +23,7 @@ from pathlib import Path
 from sentinela import services
 from sentinela.ai.assistant import OllamaAssistant
 from sentinela.storage.db import create_all, session_scope
-from sentinela.storage.models import Scan
+from sentinela.storage.models import FindingRow, FindingState, Project, Scan, StateHistory
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROJETO = "sentinela-app"
@@ -36,6 +36,15 @@ def arquivos(pasta: Path, prefixo: str = "") -> list[tuple[str, str]]:
         for caminho in sorted(pasta.rglob("*"))
         if caminho.suffix in EXTENSOES and "node_modules" not in caminho.parts and "__tests__" not in caminho.parts
     ]
+
+
+def apagar_projetos(nomes: set[str]) -> None:
+    """Apaga os projetos da demonstração, para o script poder rodar de novo sem duplicar scans."""
+    with session_scope() as session:
+        for projeto in session.query(Project).filter(Project.name.in_(nomes)).all():
+            for modelo in (StateHistory, FindingState, FindingRow):
+                session.query(modelo).filter(modelo.project_id == projeto.id).delete(synchronize_session=False)
+            session.delete(projeto)
 
 
 def main() -> None:
@@ -65,6 +74,7 @@ def main() -> None:
         linha_do_tempo.append((PROJETO, 0, "app-mobile", arquivos(app, "src/")))
 
     create_all()
+    apagar_projetos({projeto for projeto, *_ in linha_do_tempo})
     agora = datetime.now(UTC)
     for indice, (projeto, dias, rotulo, lista) in enumerate(linha_do_tempo):
         with session_scope() as session:

@@ -896,8 +896,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 18,
-                  "endLine": 18,
+                  "startLine": 19,
+                  "endLine": 19,
                   "startColumn": 3
                 }
               }
@@ -929,8 +929,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 20,
+                  "endLine": 20,
                   "startColumn": 3
                 }
               }
@@ -962,8 +962,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 20,
-                  "endLine": 20,
+                  "startLine": 21,
+                  "endLine": 21,
                   "startColumn": 3
                 }
               }
@@ -995,8 +995,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 21,
-                  "endLine": 21,
+                  "startLine": 22,
+                  "endLine": 22,
                   "startColumn": 3
                 }
               }
@@ -1028,8 +1028,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 22,
-                  "endLine": 22,
+                  "startLine": 23,
+                  "endLine": 23,
                   "startColumn": 3
                 }
               }
@@ -1061,8 +1061,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 28,
-                  "endLine": 28,
+                  "startLine": 29,
+                  "endLine": 29,
                   "startColumn": 9
                 }
               }
@@ -1080,6 +1080,72 @@
             "status": "open"
           },
           "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`_email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 118,
+                  "endLine": 118,
+                  "startColumn": 11
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "176c4ff8fbef4d39da9c56120e04521e"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`_senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 118,
+                  "endLine": 118,
+                  "startColumn": 11
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "393d7fff04a2d363ef4aec1e4ce0277b"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
         },
         {
           "ruleId": "pii.mapa.registro",
@@ -1127,8 +1193,8 @@
                   "uri": "src/servicos/armazenamento/armazenamento.ts"
                 },
                 "region": {
-                  "startLine": 16,
-                  "endLine": 16,
+                  "startLine": 17,
+                  "endLine": 17,
                   "startColumn": 19
                 }
               }
@@ -1136,6 +1202,105 @@
           ],
           "partialFingerprints": {
             "sentinela/v1": "c5bf7ab47cbf0c56639b5f933bff80fe"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/cofre.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "15a718c89f0ef729cb65bcec8ee4c95a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/cofre.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "aed864f5aa3860a9f5cb0d3362e76f01"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/cofre.ts"
+                },
+                "region": {
+                  "startLine": 29,
+                  "endLine": 29,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "44401f7c5a078bd792aab0595773655f"
           },
           "properties": {
             "severity": "info",
@@ -1226,8 +1391,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 16,
-                  "endLine": 16,
+                  "startLine": 23,
+                  "endLine": 23,
                   "startColumn": 3
                 }
               }
@@ -1259,8 +1424,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 17,
-                  "endLine": 17,
+                  "startLine": 24,
+                  "endLine": 24,
                   "startColumn": 3
                 }
               }
@@ -1292,8 +1457,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 18,
-                  "endLine": 18,
+                  "startLine": 25,
+                  "endLine": 25,
                   "startColumn": 3
                 }
               }
@@ -1325,8 +1490,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 26,
+                  "endLine": 26,
                   "startColumn": 3
                 }
               }
@@ -1358,8 +1523,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 20,
-                  "endLine": 20,
+                  "startLine": 27,
+                  "endLine": 27,
                   "startColumn": 3
                 }
               }
