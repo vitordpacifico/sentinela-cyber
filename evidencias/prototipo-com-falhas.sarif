@@ -1,0 +1,998 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Sentinela",
+          "semanticVersion": "1.0.0",
+          "informationUri": "https://github.com/GusRVPaulino/sast-devsecops-fiap",
+          "rules": [
+            {
+              "id": "pii.vazamento.armazenamento.saude",
+              "name": "pii_vazamento_armazenamento_saude",
+              "shortDescription": {
+                "text": "Dado pessoal salvo sem criptografia: Saúde"
+              },
+              "fullDescription": {
+                "text": "Saúde vindo de `cadastro.condicaoDeSaude` (Saúde) chega a `@react-native-async-storage/async-storage.setItem`: o armazenamento do aparelho ou do servidor, sem criptografia. É um dado pessoal sensível pela LGPD (art. 5º, II)."
+              },
+              "help": {
+                "text": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+                "markdown": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.\n\n```typescript\nawait SecureStore.setItemAsync(\"cpf\", cpf);\n```"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/312.html",
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-312",
+                  "owasp/a02:2021"
+                ],
+                "security-severity": "9.5",
+                "precision": "high"
+              }
+            },
+            {
+              "id": "pii.vazamento.notificacao.saude",
+              "name": "pii_vazamento_notificacao_saude",
+              "shortDescription": {
+                "text": "Dado pessoal em notificação: Saúde"
+              },
+              "fullDescription": {
+                "text": "Saúde vindo de `remedios` (Saúde) chega a `expo-notifications.scheduleNotificationAsync`: uma notificação, que aparece na tela bloqueada do celular. É um dado pessoal sensível pela LGPD (art. 5º, II)."
+              },
+              "help": {
+                "text": "A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.",
+                "markdown": "A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.\n\n```typescript\nawait Notifications.scheduleNotificationAsync({ content: { title: \"Você tem um novo aviso\" }, trigger: null });\n```"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/359.html",
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359",
+                  "owasp/a04:2021"
+                ],
+                "security-severity": "9.5",
+                "precision": "high"
+              }
+            },
+            {
+              "id": "pii.valor.cpf",
+              "name": "pii_valor_cpf",
+              "shortDescription": {
+                "text": "CPF válido escrito no código"
+              },
+              "fullDescription": {
+                "text": "O texto contém um CPF com dígitos verificadores corretos (***.***.***-09). Pode ser o documento de uma pessoa real e fica para sempre no histórico do repositório."
+              },
+              "help": {
+                "text": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).",
+                "markdown": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).\n\n```typescript\nconst CPF_TESTE = gerarCpfFicticio(); // gerado na hora, não pertence a ninguém\n```"
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359",
+                  "owasp/a04:2021"
+                ],
+                "security-severity": "8.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.vazamento.log.documento",
+              "name": "pii_vazamento_log_documento",
+              "shortDescription": {
+                "text": "Dado pessoal escrito no log: CPF e documentos"
+              },
+              "fullDescription": {
+                "text": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `console.log`: o log do sistema, que costuma ser lido por várias pessoas e enviado a outros serviços."
+              },
+              "help": {
+                "text": "Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.",
+                "markdown": "Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.\n\n```typescript\nconsole.info(\"cadastro concluído\", { usuarioId: usuario.id });\n```"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/532.html",
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-532",
+                  "owasp/a09:2021"
+                ],
+                "security-severity": "8.0",
+                "precision": "high"
+              }
+            },
+            {
+              "id": "pii.vazamento.armazenamento.documento",
+              "name": "pii_vazamento_armazenamento_documento",
+              "shortDescription": {
+                "text": "Dado pessoal salvo sem criptografia: CPF e documentos"
+              },
+              "fullDescription": {
+                "text": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `@react-native-async-storage/async-storage.setItem`: o armazenamento do aparelho ou do servidor, sem criptografia."
+              },
+              "help": {
+                "text": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+                "markdown": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.\n\n```typescript\nawait SecureStore.setItemAsync(\"cpf\", cpf);\n```"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/312.html",
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-312",
+                  "owasp/a02:2021"
+                ],
+                "security-severity": "8.0",
+                "precision": "high"
+              }
+            },
+            {
+              "id": "pii.vazamento.url.documento",
+              "name": "pii_vazamento_url_documento",
+              "shortDescription": {
+                "text": "Dado pessoal exposto na URL: CPF e documentos"
+              },
+              "fullDescription": {
+                "text": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `fetch`: a URL, que fica no histórico, nos logs dos servidores e nos proxies."
+              },
+              "help": {
+                "text": "Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.",
+                "markdown": "Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.\n\n```typescript\nawait fetch(\"https://api.exemplo.gov.br/cadastro\", { method: \"POST\", body: JSON.stringify({ cpf }) });\n```"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/598.html",
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-598",
+                  "owasp/a04:2021"
+                ],
+                "security-severity": "8.0",
+                "precision": "high"
+              }
+            },
+            {
+              "id": "pii.mapa.documento",
+              "name": "pii_mapa_documento",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: CPF e documentos"
+              },
+              "fullDescription": {
+                "text": "`cpf` guarda CPF ou outros documentos. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.contato",
+              "name": "pii_mapa_contato",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Contato e endereço"
+              },
+              "fullDescription": {
+                "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.saude",
+              "name": "pii_mapa_saude",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Saúde"
+              },
+              "fullDescription": {
+                "text": "`condicaoDeSaude` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.credencial",
+              "name": "pii_mapa_credencial",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Senhas e credenciais"
+              },
+              "fullDescription": {
+                "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.registro",
+              "name": "pii_mapa_registro",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Cadastro de pessoa"
+              },
+              "fullDescription": {
+                "text": "`cadastro` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "pii.vazamento.armazenamento.saude",
+          "level": "error",
+          "message": {
+            "text": "Saúde vindo de `cadastro.condicaoDeSaude` (Saúde) chega a `@react-native-async-storage/async-storage.setItem`: o armazenamento do aparelho ou do servidor, sem criptografia. É um dado pessoal sensível pela LGPD (art. 5º, II)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 36,
+                  "endLine": 36,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "cd2a0ec01af59cedcefb2dc152e57982"
+          },
+          "properties": {
+            "severity": "critical",
+            "confidence": "high",
+            "engines": [
+              "taint"
+            ],
+            "status": "open"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 36,
+                            "endLine": 36,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "source: await AsyncStorage.setItem(\"cadastro:saude\", cadastro.condicaoDeSaude);"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 36,
+                            "endLine": 36,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "sink: await AsyncStorage.setItem(\"cadastro:saude\", cadastro.condicaoDeSaude);"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.vazamento.notificacao.saude",
+          "level": "error",
+          "message": {
+            "text": "Saúde vindo de `remedios` (Saúde) chega a `expo-notifications.scheduleNotificationAsync`: uma notificação, que aparece na tela bloqueada do celular. É um dado pessoal sensível pela LGPD (art. 5º, II)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 46,
+                  "endLine": 49,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "4d2f48b403a12fa2d4e9092b9885b2af"
+          },
+          "properties": {
+            "severity": "critical",
+            "confidence": "high",
+            "engines": [
+              "taint"
+            ],
+            "status": "open"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 47,
+                            "endLine": 47,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "source: content: { title: \"Evacuação\", body: `Leve seus remédios: ${remedios}` },"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 46,
+                            "endLine": 46,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "sink: await Notifications.scheduleNotificationAsync({"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.valor.cpf",
+          "level": "error",
+          "message": {
+            "text": "O texto contém um CPF com dígitos verificadores corretos (***.***.***-09). Pode ser o documento de uma pessoa real e fica para sempre no histórico do repositório."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 28,
+                  "endLine": 28,
+                  "startColumn": 22
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c14d2e9d0ed4d98e17624b3c41aafbee"
+          },
+          "properties": {
+            "severity": "high",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.vazamento.log.documento",
+          "level": "error",
+          "message": {
+            "text": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `console.log`: o log do sistema, que costuma ser lido por várias pessoas e enviado a outros serviços."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 32,
+                  "endLine": 32,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "168606409973b1cd85515f4db52608aa"
+          },
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engines": [
+              "taint"
+            ],
+            "status": "open"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 32,
+                            "endLine": 32,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "source: console.log(\"Novo cadastro\", cadastro.cpf, cadastro.senha);"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 32,
+                            "endLine": 32,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "sink: console.log(\"Novo cadastro\", cadastro.cpf, cadastro.senha);"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.vazamento.armazenamento.documento",
+          "level": "error",
+          "message": {
+            "text": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `@react-native-async-storage/async-storage.setItem`: o armazenamento do aparelho ou do servidor, sem criptografia."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 35,
+                  "endLine": 35,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "bd4c4d57bb427dd8ab83cd0869374662"
+          },
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engines": [
+              "taint"
+            ],
+            "status": "open"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 35,
+                            "endLine": 35,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "source: await AsyncStorage.setItem(\"cadastro:cpf\", cadastro.cpf);"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 35,
+                            "endLine": 35,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "sink: await AsyncStorage.setItem(\"cadastro:cpf\", cadastro.cpf);"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.vazamento.url.documento",
+          "level": "error",
+          "message": {
+            "text": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `fetch`: a URL, que fica no histórico, nos logs dos servidores e nos proxies."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 39,
+                  "endLine": 39,
+                  "startColumn": 26
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "dba19fb9d22b7b0eb8a17bbbd1dde144"
+          },
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engines": [
+              "taint"
+            ],
+            "status": "open"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 39,
+                            "endLine": 39,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "source: const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                          },
+                          "region": {
+                            "startLine": 39,
+                            "endLine": 39,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "sink: const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ruleIndex": 5
+        },
+        {
+          "ruleId": "pii.mapa.documento",
+          "level": "note",
+          "message": {
+            "text": "`cpf` guarda CPF ou outros documentos. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e1fdea22d042e925002b1d2de29256f6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 6
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e903c44c67a8e60ee230dba968d261a6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 7
+        },
+        {
+          "ruleId": "pii.mapa.saude",
+          "level": "note",
+          "message": {
+            "text": "`condicaoDeSaude` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 20,
+                  "endLine": 20,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "16a5febff2fa1379410ba0789c2a097b"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 8
+        },
+        {
+          "ruleId": "pii.mapa.saude",
+          "level": "note",
+          "message": {
+            "text": "`medicamentos` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 21,
+                  "endLine": 21,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "97ff07fe0a0fec068ad57614952a50b9"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 8
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 22,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "01d0f142b91a2bf0fe239a59a8b2acd6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 9
+        },
+        {
+          "ruleId": "pii.mapa.documento",
+          "level": "note",
+          "message": {
+            "text": "`CPF_DE_TESTE` guarda CPF ou outros documentos. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 28,
+                  "endLine": 28,
+                  "startColumn": 7
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "a3d2a64ae15b2797bc39c83fab463099"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 6
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`cadastro` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 30,
+                  "endLine": 30,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "89ebd71515a56f2116798aee21871b80"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 10
+        },
+        {
+          "ruleId": "pii.mapa.saude",
+          "level": "note",
+          "message": {
+            "text": "`remedios` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-com-falhas/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 45,
+                  "endLine": 45,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "7beaae942d824f41dfd3833e0b92ef31"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 8
+        }
+      ],
+      "versionControlProvenance": [
+        {
+          "repositoryUri": "prototipo-com-falhas"
+        }
+      ]
+    }
+  ]
+}

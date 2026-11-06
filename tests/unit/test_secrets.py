@@ -3,7 +3,7 @@ import pytest
 from sentinela.engine.scanner import ScanOptions, scan_source
 from sentinela.engine.secrets import looks_like_secret, provider_token
 
-OPTS = ScanOptions(use_bandit=False)
+OPTS = ScanOptions(use_bandit=False, dados_pessoais=False)
 
 
 @pytest.mark.parametrize(

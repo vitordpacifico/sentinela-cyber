@@ -21,6 +21,8 @@ from sentinela.config import get_settings
 from sentinela.engine.models import Finding, Severity, SourceFile
 from sentinela.engine.scanner import ScanOptions, scan_files
 from sentinela.gate import GatePolicy, evaluate
+from sentinela.pii.alerta import alerta_padrao
+from sentinela.pii.risco import calcular_risco_cidadao
 from sentinela.storage.db import session_scope
 from sentinela.storage.models import FindingRow, FindingState, Project, Scan, ScanFile, StateHistory
 
@@ -236,9 +238,18 @@ def finding_dict(
             "fix_code": row.ai_fix_code,
             "model": row.ai_model,
         }
+    data["alerta_cidadao"] = _alerta_cidadao(row)
     if include_history is not None:
         data["history"] = include_history
     return data
+
+
+def _alerta_cidadao(row: FindingRow) -> dict[str, Any] | None:
+    """Alerta escrito pela IA, ou montado por regras quando a IA não estava disponível."""
+
+    if row.ai_alerta_cidadao:
+        return {**row.ai_alerta_cidadao, "origem": "ia", "modelo": row.ai_model}
+    return alerta_padrao(row.rule_id, row.remediation)
 
 
 def scan_dict(scan: Scan, *, counts: dict[str, int] | None = None) -> dict[str, Any]:
@@ -282,7 +293,8 @@ def project_metrics(session: Session, project_name: str) -> dict[str, Any]:
     ).all()
     latest = scans[-1] if scans else None
     current = [finding_dict(row, states) for row in latest.findings] if latest else []
-    open_now = [f for f in current if f["status"] in {"open", "confirmed"}]
+    # O mapeamento de dados pessoais é inventário: entra no Risco Cidadão, mas não conta como falha.
+    open_now = [f for f in current if f["status"] in {"open", "confirmed"} and not _inventario(f["rule_id"])]
 
     severity = Counter(f["severity"] for f in open_now)
     by_file = Counter(f["file_path"] for f in open_now)
@@ -294,7 +306,11 @@ def project_metrics(session: Session, project_name: str) -> dict[str, Any]:
 
     trend = []
     for scan in scans[-30:]:
-        counts = Counter(row.severity for row in scan.findings if _status(states, row) in {"open", "confirmed"})
+        counts = Counter(
+            row.severity
+            for row in scan.findings
+            if _status(states, row) in {"open", "confirmed"} and not _inventario(row.rule_id)
+        )
         trend.append(
             {
                 "scan_id": scan.id,
@@ -336,7 +352,12 @@ def project_metrics(session: Session, project_name: str) -> dict[str, Any]:
         "owasp": [{"category": k, "count": v} for k, v in by_owasp.most_common(10)],
         "languages": dict(by_language),
         "ai": dict(ai),
+        "risco_cidadao": calcular_risco_cidadao(current),
     }
+
+
+def _inventario(rule_id: str) -> bool:
+    return rule_id.startswith("pii.mapa.")
 
 
 def list_projects(session: Session) -> list[dict[str, Any]]:
@@ -449,3 +470,4 @@ def _apply_assessment(row: FindingRow, assessment: AIAssessment) -> None:
     row.ai_fix_explanation = assessment.fix_explanation
     row.ai_fix_code = assessment.fix_code
     row.ai_model = assessment.model
+    row.ai_alerta_cidadao = assessment.alerta_cidadao

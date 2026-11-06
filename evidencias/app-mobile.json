@@ -1,0 +1,2809 @@
+{
+  "gate": {
+    "status": "passed",
+    "passed": true,
+    "blocking": [],
+    "warnings": [],
+    "reasons": [
+      "Nenhum achado aberto com severidade >= high."
+    ]
+  },
+  "risco_cidadao": {
+    "indice": 3,
+    "nivel": "baixo",
+    "rotulo": "Baixo",
+    "resumo": "Nenhum vazamento de dado pessoal encontrado. O índice reflete só os dados que o sistema guarda.",
+    "vazamentos": 0,
+    "valores_reais": 0,
+    "dados_mapeados": 95,
+    "categorias": [
+      {
+        "id": "contato",
+        "rotulo": "Contato e endereço",
+        "sensivel": false,
+        "mapeados": 44,
+        "vazamentos": 0,
+        "contribuicao": 0
+      },
+      {
+        "id": "registro",
+        "rotulo": "Cadastro de pessoa",
+        "sensivel": false,
+        "mapeados": 34,
+        "vazamentos": 0,
+        "contribuicao": 0
+      },
+      {
+        "id": "credencial",
+        "rotulo": "Senhas e credenciais",
+        "sensivel": false,
+        "mapeados": 17,
+        "vazamentos": 0,
+        "contribuicao": 0
+      }
+    ],
+    "alertas": [],
+    "componentes": {
+      "vazamentos": 0.0,
+      "mapeamento": 3.4
+    },
+    "formula": "Índice = A + B × (1 − A/100), em que A = 100 × (1 − Π(1 − peso da categoria × peso da saída)) e B = mín(15, 2 × soma dos pesos das categorias mapeadas)."
+  },
+  "findings": [
+    {
+      "fingerprint": "ad5fc12ce816e704d6de51fba49a3060",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/app/(abas)/_layout.tsx",
+      "line": 15,
+      "end_line": 15,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const { usuario } = useAutenticacao();",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "544df53e3b6a5659a4a1e61477cd90c6",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/app/_layout.tsx",
+      "line": 36,
+      "end_line": 36,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const { usuario, carregando } = useAutenticacao();",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "29953a2f2862a2cb61b9d165e32412b1",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/componentes/CampoTexto/index.tsx",
+      "line": 18,
+      "end_line": 18,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "senha?: boolean;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "dd38d5c2632a7c6dd936d9c924854f60",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/componentes/CartaoPonto/estilos.ts",
+      "line": 18,
+      "end_line": 18,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: { fontSize: 14, color: cores.textoSecundario },",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "9f91f6f6d0c684f49f1ec035c92afbc6",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/componentes/__tests__/CampoTexto.test.tsx",
+      "line": 8,
+      "end_line": 8,
+      "column": 60,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "function Exemplo({ erro, senha = false }: { erro?: string; senha?: boolean }) {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "ca44078b3276041a82c501cf5bbcebed",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/contexto/AlertasContext.tsx",
+      "line": 34,
+      "end_line": 34,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const { usuario } = useAutenticacao();",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "649da1bad3c1af6f7295ed94b5bac3c2",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/contexto/AlertasContext.tsx",
+      "line": 39,
+      "end_line": 39,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const usuarioId = usuario && ehCidadao(usuario) ? usuario.id : null;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "f577e240b118096a7a6faf2429398960",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/contexto/AutenticacaoContext.tsx",
+      "line": 32,
+      "end_line": 32,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "usuario: Usuario | null;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "14a6255b614fa990dda481c4ad06bdc2",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/contexto/AutenticacaoContext.tsx",
+      "line": 46,
+      "end_line": 46,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setUsuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [usuario, setUsuario] = useState<Usuario | null>(null);",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "c5b427fd2489ed82a95cee66d5d2c22d",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/contexto/AutenticacaoContext.tsx",
+      "line": 60,
+      "end_line": 60,
+      "column": 30,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const entrar = useCallback(async (email: string, senha: string) => {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "2aae7f5f4c8f90f49f5512b05709b4b8",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/contexto/AutenticacaoContext.tsx",
+      "line": 60,
+      "end_line": 60,
+      "column": 30,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const entrar = useCallback(async (email: string, senha: string) => {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "730fdd229a56a68b798b6432e3fa21b5",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/dominio/tipos.ts",
+      "line": 14,
+      "end_line": 14,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "71dd5caf6c4dda6bc40d809c5827f7d4",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 13,
+      "end_line": 13,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "email: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "1bf1691872bdc3163a6770e26483932f",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 17,
+      "end_line": 17,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "telefone?: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "feec9a8bf289afc83183f92a43a2322a",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 18,
+      "end_line": 18,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "cep?: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b5673f70918c9a2092af75120bbc4eb0",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 19,
+      "end_line": 19,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "tipoCidadao?: TipoCidadao;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "52e3082c4df5d1d9aa31efde35527434",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 24,
+      "end_line": 24,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export function ehAgente(usuario: Usuario | null): boolean {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "ef65d7736bc88447d5926df6b1a48b9c",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 33,
+      "end_line": 33,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "cidadao: 'Cidadão',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "c13c3c2685852cfe4f011316bd5be076",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 38,
+      "end_line": 38,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`morador` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "morador: 'Morador',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "faa9d11ea87a1becea781d6aea0f6a32",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/dominio/usuario.ts",
+      "line": 42,
+      "end_line": 42,
+      "column": 14,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`OPCOES_TIPO_CIDADAO` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export const OPCOES_TIPO_CIDADAO: { valor: TipoCidadao; rotulo: string; descricao: string }[] = [",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "0462bb654f5b6211ea193affb53f79fe",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/alertas/__tests__/monitor.test.ts",
+      "line": 22,
+      "end_line": 22,
+      "column": 7,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`USUARIO` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const USUARIO = 'u1';",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b3671a6ce57e05133581acb6fc96cff4",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/alertas/__tests__/monitor.test.ts",
+      "line": 32,
+      "end_line": 32,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: 'Rua A',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "7459e9d8f5b5aec04f7ce941369bd45e",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/alertas/monitor.ts",
+      "line": 19,
+      "end_line": 19,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export async function verificarPontosSeguidos(",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "80f4a87828764e2d589c7e6dd18fd702",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/__tests__/armazenamento.test.ts",
+      "line": 24,
+      "end_line": 24,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: 'Rua A',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "69f290254700f35418f83ee53c4f60d0",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts",
+      "line": 18,
+      "end_line": 18,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "email: 'A***@Email.com ',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "532aa87753e056d3c26b54ef9440e4d1",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts",
+      "line": 19,
+      "end_line": 19,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "telefone: '(**) *****-5678',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "ff0edbfa500c9d1d0de9e74ec4bdc3f3",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts",
+      "line": 20,
+      "end_line": 20,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "cep: '01001-000',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "f9969ee3ee3fe10bf939b64c1d33fd85",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts",
+      "line": 21,
+      "end_line": 21,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "tipoCidadao: 'morador' as const,",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "fcc2ba46dad40d966e0cd1ec1c1b8ae6",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts",
+      "line": 22,
+      "end_line": 22,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "senha: 'Senha123',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "a9f5b9d32cef094852a9eae29d3ab08a",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts",
+      "line": 28,
+      "end_line": 28,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const usuario = await cadastrarCidadao(DADOS);",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "600dbe2286a892cb1a3b288da7e71141",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/alertasServico.ts",
+      "line": 10,
+      "end_line": 10,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export async function listarAlertas(usuarioId: string): Promise<AlertaRegistrado[]> {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "c5bf7ab47cbf0c56639b5f933bff80fe",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/armazenamento.ts",
+      "line": 16,
+      "end_line": 16,
+      "column": 19,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "pontosSeguidos: (usuarioId: string) => `${PREFIXO}:usuario:${usuarioId}:pontos-seguidos`,",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b9c444b335375c982b8d09965125f9c7",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/pontosSeguidosServico.ts",
+      "line": 8,
+      "end_line": 8,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export async function listarPontosSeguidos(usuarioId: string): Promise<PontoSeguido[]> {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "d57be752e5049cf3b41fe063bb7e15db",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/sessaoServico.ts",
+      "line": 5,
+      "end_line": 5,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "usuarioId: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "92b765ba3c8ec4751c89f368d1c0f4d8",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/usuariosServico.ts",
+      "line": 16,
+      "end_line": 16,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "email: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "31341f6002c764b2ed7c81bfcb1bc41d",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/usuariosServico.ts",
+      "line": 17,
+      "end_line": 17,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "telefone: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "07eeb1bf49c48790bfb8e93f05cd70cf",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/usuariosServico.ts",
+      "line": 18,
+      "end_line": 18,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "cep: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "22023548373c5dfc17bec28bf872437a",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/usuariosServico.ts",
+      "line": 19,
+      "end_line": 19,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "tipoCidadao: TipoCidadao;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b4f5f8ba2e5921e9d2fc8ca624ec9c3a",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/servicos/armazenamento/usuariosServico.ts",
+      "line": 20,
+      "end_line": 20,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "senha: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "c0d1a0b0036c846210209e72ce649a3d",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/dados/__tests__/api.test.ts",
+      "line": 6,
+      "end_line": 6,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: 'Rua A, 10',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "3abb0ed7f454e38e92550516df5f0007",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/dados/api.ts",
+      "line": 63,
+      "end_line": 63,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: texto(bruto, 'endereco'),",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "9e32c301002460a84be1ca16eab2bf34",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/servicos/dados/simulacao.ts",
+      "line": 44,
+      "end_line": 44,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "c1ec44c7870b087064d3b8424c499ec5",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/servicos/seguranca/senha.ts",
+      "line": 18,
+      "end_line": 18,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export async function calcularHashSenha(senha: string, sal: string): Promise<string> {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "16e7992f9f4a26de1db186952db9d092",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Alertas/index.tsx",
+      "line": 20,
+      "end_line": 20,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const { usuario } = useAutenticacao();",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "8a067633bf9bf1831d5fa2c0f3f63368",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Alertas/index.tsx",
+      "line": 25,
+      "end_line": 25,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const usuarioId = usuario?.id;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "74a4c2a2e828bb9d10967af2a022bd9b",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 31,
+      "end_line": 31,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "email: null,",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "a1b9c41be519a932a0b7abd3b5e5a48e",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 32,
+      "end_line": 32,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "telefone: null,",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "e3814d2321947e535254a5a74ebeb344",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 33,
+      "end_line": 33,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "cep: null,",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "d74558bc447ac1e73b33ae68974945a7",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 34,
+      "end_line": 34,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "senha: null,",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "0f7fe5b61929ae6aaa667c3adf5136d5",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 42,
+      "end_line": 42,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setEmail` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [email, setEmail] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "388335557a3bc24e5998404a49eae346",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 43,
+      "end_line": 43,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setTelefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [telefone, setTelefone] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "6daf527449adbc505741edece2308df8",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 44,
+      "end_line": 44,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setCep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [cep, setCep] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "3df0ac146cfa40594e5d01d717351faa",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 45,
+      "end_line": 45,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [tipoCidadao, setTipoCidadao] = useState<TipoCidadao>('morador');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "3df0ac146cfa40594e5d01d717351faa",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 45,
+      "end_line": 45,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setTipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [tipoCidadao, setTipoCidadao] = useState<TipoCidadao>('morador');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "060f6f01229d2b628d9c8dd0170d6013",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/Cadastro/index.tsx",
+      "line": 46,
+      "end_line": 46,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setSenha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [senha, setSenha] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "1682f43356331659a5f6f5a7a453dad6",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Entrar/index.tsx",
+      "line": 21,
+      "end_line": 21,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [email, setEmail] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "1682f43356331659a5f6f5a7a453dad6",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Entrar/index.tsx",
+      "line": 21,
+      "end_line": 21,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setEmail` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [email, setEmail] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "4c7622f0fec0b1ed9109ad0941b6bb28",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/Entrar/index.tsx",
+      "line": 22,
+      "end_line": 22,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [senha, setSenha] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "4c7622f0fec0b1ed9109ad0941b6bb28",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/Entrar/index.tsx",
+      "line": 22,
+      "end_line": 22,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setSenha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [senha, setSenha] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "0d4e4dbc3a3735e9582dfdf651c20cdf",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 45,
+      "end_line": 45,
+      "column": 1,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "function EditarCidadao({ usuario }: { usuario: Usuario }) {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "40742b173ce5a9ea7d66af0805fc0777",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 48,
+      "end_line": 48,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [telefone, setTelefone] = useState(usuario.telefone ?? '');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "40742b173ce5a9ea7d66af0805fc0777",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 48,
+      "end_line": 48,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setTelefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [telefone, setTelefone] = useState(usuario.telefone ?? '');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "a437df20f749dabc073aaf740b8b7317",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 49,
+      "end_line": 49,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [cep, setCep] = useState(usuario.cep ?? '');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "a437df20f749dabc073aaf740b8b7317",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 49,
+      "end_line": 49,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setCep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [cep, setCep] = useState(usuario.cep ?? '');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "085226af3e0716c734d814b6b7b42aa9",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 50,
+      "end_line": 50,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [tipoCidadao, setTipoCidadao] = useState<TipoCidadao>(usuario.tipoCidadao ?? 'morador');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "085226af3e0716c734d814b6b7b42aa9",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 50,
+      "end_line": 50,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setTipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [tipoCidadao, setTipoCidadao] = useState<TipoCidadao>(usuario.tipoCidadao ?? 'morador');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "085bcf365e0ca1e3dd43ef0042fbb149",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 119,
+      "end_line": 119,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [senha, setSenha] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "085bcf365e0ca1e3dd43ef0042fbb149",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 119,
+      "end_line": 119,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`setSenha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const [senha, setSenha] = useState('');",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "db76913cff16749a0ddf4ac70f073243",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Perfil/index.tsx",
+      "line": 190,
+      "end_line": 190,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const cidadao = ehCidadao(usuario);",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "f86a38ef155436d37980861b4868379a",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/Ponto/estilos.ts",
+      "line": 6,
+      "end_line": 6,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: { fontSize: 15, color: cores.textoSecundario },",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "511862280ecf5c88670e17ccf1fd9b3e",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Ponto/index.tsx",
+      "line": 30,
+      "end_line": 30,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const { usuario } = useAutenticacao();",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "732209a05872600be90b28486a21b2ab",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Pontos/index.tsx",
+      "line": 19,
+      "end_line": 19,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const { usuario } = useAutenticacao();",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "1cac154e56e9be142df62ff8c5e4a51c",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/Pontos/index.tsx",
+      "line": 23,
+      "end_line": 23,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const cidadao = ehCidadao(usuario);",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "bbaf545e834e3aba58d082ba3f4f0ce3",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Cadastro.test.tsx",
+      "line": 30,
+      "end_line": 30,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`E-mail` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "'E-mail': 'a***@email.com',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "9f9fab206414261984254b4e623b89c9",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Cadastro.test.tsx",
+      "line": 31,
+      "end_line": 31,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`Celular` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "Celular: '(**) *****-4321',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b4fed4f04b7eb5d8de0ba37bcdf2e774",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Cadastro.test.tsx",
+      "line": 32,
+      "end_line": 32,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`CEP` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "CEP: '01310100',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "ee9248bf6c5dee9bc987b8a5f59b37da",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Cadastro.test.tsx",
+      "line": 33,
+      "end_line": 33,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`Senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "Senha: 'Senha1234',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "338b650446fd8b4ddd0b81f7a0601eb4",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Cadastro.test.tsx",
+      "line": 34,
+      "end_line": 34,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`Repita a senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "'Repita a senha': 'Senha1234',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "40d5fc2f51419e1239fed3892cc3375c",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Cadastro.test.tsx",
+      "line": 69,
+      "end_line": 69,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "telefone: '(**) *****-4321',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "d2d8409a4bddc0a7dca8cd4b39c28642",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Entrar.test.tsx",
+      "line": 19,
+      "end_line": 19,
+      "column": 1,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "async function entrarCom(email: string, senha: string) {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "90172edec531330598591058f2816714",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Entrar.test.tsx",
+      "line": 19,
+      "end_line": 19,
+      "column": 1,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "async function entrarCom(email: string, senha: string) {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "93e48eb96502f56a5faa58a632933f8b",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Limites.test.tsx",
+      "line": 15,
+      "end_line": 15,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: 'Endereço a definir',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "c83853274f30ac4ae1eace50ca5c0331",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Painel.test.tsx",
+      "line": 14,
+      "end_line": 14,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "endereco: 'Rua',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "5ae0fd0887d05dd9174c1f62a3222cd6",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Perfil.test.tsx",
+      "line": 17,
+      "end_line": 17,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "let usuarioId = '';",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "dd58d7e178a90da24eed5f93ed84450b",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Perfil.test.tsx",
+      "line": 21,
+      "end_line": 21,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const usuario = await cadastrarCidadao({",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "0b8afeeb31e1a38d9fec6bd59ca4995d",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Perfil.test.tsx",
+      "line": 23,
+      "end_line": 23,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "email: 'a***@email.com',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "813df2ba2d26ed24f34504313b8049ce",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Perfil.test.tsx",
+      "line": 24,
+      "end_line": 24,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "telefone: '(**) *****-4321',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b54d3363cc8f44e7b8bb48bc41be3a95",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Perfil.test.tsx",
+      "line": 25,
+      "end_line": 25,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "cep: '01310-100',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "47eb91bc70ce4df1ce4bc783db764370",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Perfil.test.tsx",
+      "line": 26,
+      "end_line": 26,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "tipoCidadao: 'morador',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "22fe39f7e497b16ce7de7e04e6b612fa",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/telas/__tests__/Perfil.test.tsx",
+      "line": 27,
+      "end_line": 27,
+      "column": 5,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "senha: 'Senha1234',",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b6c2996bcd15e8725216be31b72726bf",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/utilitarios/__tests__/validacoes.test.ts",
+      "line": 27,
+      "end_line": 27,
+      "column": 79,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "it.each(['n***@email.com', ' n***@empresa.com.br '])('aceita %p', (email) => {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "84291d569e558d2c152ba830e402c233",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/utilitarios/validacoes.ts",
+      "line": 19,
+      "end_line": 19,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export function validarEmail(email: string): Validacao {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "684465a35c424b8665568ba2c399a65b",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/utilitarios/validacoes.ts",
+      "line": 27,
+      "end_line": 27,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export function validarTelefone(telefone: string): Validacao {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "09f624e31399d51229c434a7cc9678ac",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "src/utilitarios/validacoes.ts",
+      "line": 36,
+      "end_line": 36,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export function validarCep(cep: string): Validacao {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "b368958f34b86080a94a43e4814b4741",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "src/utilitarios/validacoes.ts",
+      "line": 44,
+      "end_line": 44,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export function validarSenha(senha: string): Validacao {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    }
+  ]
+}

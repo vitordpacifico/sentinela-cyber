@@ -27,7 +27,9 @@ from sentinela import __version__
 from sentinela.engine.languages import detect_language
 from sentinela.engine.models import SourceFile
 from sentinela.engine.scanner import ScanOptions, scan_files
-from sentinela.gate import GatePolicy, evaluate
+from sentinela.gate import GatePolicy, evaluate, ignorado
+from sentinela.pii.alerta import alerta_padrao
+from sentinela.pii.risco import calcular_risco_cidadao
 from sentinela.reporting.markdown import pr_comment
 from sentinela.reporting.sarif import to_sarif
 
@@ -72,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
 def _scan(args: argparse.Namespace) -> int:
     files = _collect(args.paths, args.diff)
     if not files:
-        print("Nenhum arquivo Python, JavaScript ou Java para analisar.")
+        print("Nenhum arquivo Python, JavaScript, TypeScript ou Java para analisar.")
         return 0
 
     policy = GatePolicy.load(args.policy)
@@ -87,12 +89,18 @@ def _scan(args: argparse.Namespace) -> int:
             args.sarif,
             json.dumps(to_sarif(findings, commit_sha=commit, repository=args.project), indent=2, ensure_ascii=False),
         )
+    # O Risco Cidadão segue a mesma política do gate: código ignorado não entra na conta.
+    risco = calcular_risco_cidadao([f for f in findings if not ignorado(f, policy)])
     if args.markdown:
-        _write(args.markdown, pr_comment(findings, gate))
+        _write(args.markdown, pr_comment(findings, gate, risco=risco))
     if args.json:
-        _write(args.json, json.dumps({"gate": gate, "findings": findings}, indent=2, ensure_ascii=False))
+        _write(
+            args.json,
+            json.dumps({"gate": gate, "risco_cidadao": risco, "findings": findings}, indent=2, ensure_ascii=False),
+        )
     if not args.quiet:
         _print_report(findings, gate, len(files))
+        _print_risco(risco)
 
     if gate["status"] == "failed" and not args.no_fail:
         return 1
@@ -116,6 +124,8 @@ def _scan_local(args: argparse.Namespace, files: list[SourceFile], policy: GateP
         if assistant is not None and assistant.available:
             assessment = assistant.assess(finding)
             data["ai"] = assessment.to_dict() if assessment else None
+            if assessment and assessment.alerta_cidadao:
+                data["alerta_cidadao"] = {**assessment.alerta_cidadao, "origem": "ia", "modelo": assessment.model}
         findings.append(data)
     gate = evaluate(findings, policy).to_dict()
     return findings, gate
@@ -176,6 +186,7 @@ def _finding_dict(finding) -> dict:
         "references": finding.references,
         "status": "open",
         "ai": None,
+        "alerta_cidadao": alerta_padrao(finding.rule_id, finding.remediation),
     }
 
 
@@ -216,7 +227,10 @@ def _collect(paths: list[str], diff_ref: str | None) -> list[SourceFile]:
 def _print_report(findings: list[dict], gate: dict, file_count: int) -> None:
     color = sys.stdout.isatty()
     print(f"\nSentinela {__version__} — {file_count} arquivo(s) analisado(s), {len(findings)} achado(s)\n")
+    mapeados = [f for f in findings if f["rule_id"].startswith("pii.mapa.")]
     for f in findings:
+        if f in mapeados:
+            continue
         sev = f["severity"].upper()
         tag = f"{_COLORS[f['severity']]}{sev:8}{_RESET}" if color else f"{sev:8}"
         ai = f.get("ai") or {}
@@ -231,6 +245,20 @@ def _print_report(findings: list[dict], gate: dict, file_count: int) -> None:
         print(f"  - {reason}")
     if gate.get("dashboard"):
         print(f"\nDashboard: {gate['dashboard']}")
+    if mapeados:
+        print(
+            f"\nDados pessoais mapeados: {len(mapeados)} campo(s). A lista completa está nos relatórios JSON e SARIF."
+        )
+
+
+def _print_risco(risco: dict) -> None:
+    print(f"\nRisco Cidadão: {risco['indice']}/100 ({risco['rotulo']})")
+    print(f"  {risco['resumo']}")
+    for item in risco["alertas"][:3]:
+        alerta = item.get("alerta_cidadao") or {}
+        print(f"  ! {alerta.get('titulo', item['titulo'])} ({item['arquivo']}:{item['linha']})")
+        if alerta.get("o_que_pode_acontecer"):
+            print(f"    {alerta['o_que_pode_acontecer']}")
 
 
 def _write(path: str, content: str) -> None:

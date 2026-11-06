@@ -11,8 +11,12 @@ def eager_queue(database, monkeypatch):
     monkeypatch.setattr(get_settings(), "execution_mode", "queue")
     monkeypatch.setattr(get_settings(), "ai_enabled", True)
     monkeypatch.setattr(get_settings(), "ollama_url", "http://127.0.0.1:9")  # IA fora do ar
-    monkeypatch.setattr(celery_app.conf, "task_always_eager", True)
-    monkeypatch.setattr(celery_app.conf, "task_eager_propagates", True)
+    # Celery 5.7 não aceita monkeypatch nessas chaves; altera e restaura pela própria configuração.
+    chaves = ("task_always_eager", "task_eager_propagates")
+    anteriores = {chave: celery_app.conf.get(chave) for chave in chaves}
+    celery_app.conf.update(task_always_eager=True, task_eager_propagates=True)
+    yield
+    celery_app.conf.update(**anteriores)
 
 
 def test_queue_pipeline_with_ai_offline_still_completes(eager_queue):

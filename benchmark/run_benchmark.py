@@ -133,13 +133,13 @@ def _engine_filter(engines: set[Engine]) -> Callable[[list[Finding]], list[Findi
 
 def run(ai_assistant=None) -> tuple[list[Expected], dict[str, Score]]:
     files, expected = load_corpus()
-    full = scan_files(files, ScanOptions(use_bandit=True)).findings
+    full = scan_files(files, ScanOptions(use_bandit=True, dados_pessoais=False)).findings
 
     configurations: dict[str, list[Finding]] = {
         "Regras de padrão (AST)": _engine_filter({Engine.RULE, Engine.SECRET})(
-            scan_files(files, ScanOptions(use_bandit=False)).findings,
+            scan_files(files, ScanOptions(use_bandit=False, dados_pessoais=False)).findings,
         ),
-        "Regras + taint analysis": scan_files(files, ScanOptions(use_bandit=False)).findings,
+        "Regras + taint analysis": scan_files(files, ScanOptions(use_bandit=False, dados_pessoais=False)).findings,
         "Sentinela (regras + taint + Bandit)": full,
     }
     results = {name: score(_as_reported(findings), expected) for name, findings in configurations.items()}

@@ -95,6 +95,16 @@ def has_strong_evidence(engines: set[Engine] | set[str], severity: Severity, rul
     return Engine.SECRET.value in names and severity == Severity.CRITICAL
 
 
+def ignorado(finding: Any, policy: GatePolicy) -> bool:
+    """O achado está fora do gate por ``ignore_rules`` ou ``ignore_paths`` da política."""
+
+    rule_id = _get(finding, "rule_id")
+    path = _get(finding, "file_path")
+    return any(fnmatch(rule_id, pattern) for pattern in policy.ignore_rules) or any(
+        fnmatch(path, pattern) for pattern in policy.ignore_paths
+    )
+
+
 def evaluate(findings: list[Any], policy: GatePolicy) -> GateDecision:
     """``findings`` pode ser ``Finding`` do motor ou linha do banco/dicionário."""
 
@@ -103,12 +113,10 @@ def evaluate(findings: list[Any], policy: GatePolicy) -> GateDecision:
         status = _get(finding, "status") or "open"
         if status in CLOSED_STATUSES:
             continue
+        if ignorado(finding, policy):
+            continue
         rule_id = _get(finding, "rule_id")
         path = _get(finding, "file_path")
-        if any(fnmatch(rule_id, pattern) for pattern in policy.ignore_rules):
-            continue
-        if any(fnmatch(path, pattern) for pattern in policy.ignore_paths):
-            continue
         severity = Severity.parse(_get(finding, "severity"))
         if severity.rank < policy.fail_on.rank:
             continue

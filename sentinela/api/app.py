@@ -19,6 +19,7 @@ from sentinela.config import get_settings
 from sentinela.engine.languages import detect_language
 from sentinela.engine.rules import load_rules
 from sentinela.engine.taint import load_taint_spec
+from sentinela.pii.risco import calcular_risco_cidadao
 from sentinela.reporting.markdown import pr_comment
 from sentinela.reporting.sarif import to_sarif
 from sentinela.storage.db import session_scope
@@ -148,6 +149,16 @@ def get_findings(
     return findings
 
 
+@app.get("/api/scans/{scan_id}/risco-cidadao", tags=["relatórios"])
+def get_risco_cidadao(scan_id: str) -> dict[str, Any]:
+    """Índice Risco Cidadão (0 a 100) do scan, com as categorias de dados e os alertas."""
+
+    with session_scope() as session:
+        _ensure_completed(session, scan_id)
+        findings = services.scan_findings(session, scan_id)
+    return {"scan_id": scan_id, **calcular_risco_cidadao(findings)}
+
+
 @app.get("/api/scans/{scan_id}/gate", tags=["relatórios"])
 def get_gate(scan_id: str) -> dict[str, Any]:
     with session_scope() as session:
@@ -171,7 +182,7 @@ def get_markdown(scan_id: str) -> str:
         scan = _ensure_completed(session, scan_id)
         findings = services.scan_findings(session, scan_id)
         gate = {"status": scan.gate_status, "blocking": _blocking(findings, scan.policy)}
-        return pr_comment(findings, gate)
+        return pr_comment(findings, gate, risco=calcular_risco_cidadao(findings))
 
 
 # ------------------------------------------------------------------ achados
@@ -204,7 +215,7 @@ def metrics(name: str) -> dict[str, Any]:
 @app.get("/api/rules", tags=["regras"])
 def rules() -> list[dict[str, Any]]:
     catalog = []
-    for language in ("python", "javascript", "java"):
+    for language in ("python", "javascript", "java"):  # TypeScript usa as regras do JavaScript
         for rule in load_rules(language):
             catalog.append(
                 {

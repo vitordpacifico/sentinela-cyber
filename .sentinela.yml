@@ -10,4 +10,8 @@ gate:
   ignore_paths:
     - "benchmark/corpus/*"
     - "tests/fixtures/*"
+    # Protótipo com vazamentos inseridos de propósito para a Global Solution.
+    - "exemplos/prototipo-com-falhas/*"
+    # CPF e Cartão SUS válidos usados de propósito nos testes do módulo.
+    - "tests/unit/test_pii.py"
   ignore_rules: []

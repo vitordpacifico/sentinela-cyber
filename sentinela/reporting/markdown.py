@@ -14,10 +14,21 @@ _GATE = {
 MARKER = "<!-- sentinela-report -->"
 
 
-def pr_comment(findings: list[dict[str, Any]], gate: dict[str, Any], *, max_items: int = 25) -> str:
+def pr_comment(
+    findings: list[dict[str, Any]],
+    gate: dict[str, Any],
+    *,
+    max_items: int = 25,
+    risco: dict[str, Any] | None = None,
+) -> str:
     """Achados com IA dizendo 'falso positivo' vão para uma seção recolhida."""
 
-    active = [f for f in findings if f.get("status", "open") in {"open", "confirmed"}]
+    # O mapeamento de dados pessoais é inventário, não vulnerabilidade: fica fora da lista de achados.
+    active = [
+        f
+        for f in findings
+        if f.get("status", "open") in {"open", "confirmed"} and not f["rule_id"].startswith("pii.mapa.")
+    ]
     dismissed_by_ai = [f for f in active if _ai_dismisses(f)]
     main = [f for f in active if not _ai_dismisses(f)]
     counts = Counter(f["severity"] for f in active)
@@ -33,6 +44,8 @@ def pr_comment(findings: list[dict[str, Any]], gate: dict[str, Any], *, max_item
             f"🤖 A IA local marcou **{len(dismissed_by_ai)}** achado(s) como provável falso positivo "
             "(recolhidos no fim). Eles continuam abertos até um revisor confirmar — a IA não altera o gate.",
         ]
+    if risco is not None:
+        lines += _risco_block(risco)
     blocking = set(gate.get("blocking", []))
     if blocking:
         lines += ["", "**O que bloqueia o merge:**"]
@@ -63,6 +76,26 @@ def pr_comment(findings: list[dict[str, Any]], gate: dict[str, Any], *, max_item
             lines += _finding_block(finding)
         lines += ["</details>"]
     return "\n".join(lines)
+
+
+def _risco_block(risco: dict[str, Any]) -> list[str]:
+    lines = ["", f"### Risco Cidadão: **{risco['indice']}/100** ({risco['rotulo']})", "", risco["resumo"]]
+    if risco["categorias"]:
+        lines += ["", "| Dado pessoal | Campos mapeados | Vazamentos |", "|---|---:|---:|"]
+        lines += [f"| {c['rotulo']} | {c['mapeados']} | {c['vazamentos']} |" for c in risco["categorias"]]
+    for item in risco["alertas"][:3]:
+        alerta = item.get("alerta_cidadao") or {}
+        if not alerta:
+            continue
+        origem = "IA" if alerta.get("origem") == "ia" else "regras"
+        lines += [
+            "",
+            f"> **{alerta['titulo']}** (`{item['arquivo']}:{item['linha']}`, escrito por {origem})  ",
+            f"> {alerta['o_que_pode_acontecer']}  ",
+            f"> **Quem é afetado:** {alerta['quem_e_afetado']}  ",
+            f"> **O que fazer:** {alerta['o_que_fazer']}",
+        ]
+    return lines
 
 
 def _finding_block(f: dict[str, Any]) -> list[str]:

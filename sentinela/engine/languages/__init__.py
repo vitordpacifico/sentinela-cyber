@@ -9,9 +9,17 @@ from sentinela.engine.languages.base import LanguageAdapter
 from sentinela.engine.languages.java import JavaAdapter
 from sentinela.engine.languages.javascript import JavaScriptAdapter
 from sentinela.engine.languages.python import PythonAdapter
+from sentinela.engine.languages.typescript import TypeScriptAdapter
 
-_ADAPTERS: tuple[type[LanguageAdapter], ...] = (PythonAdapter, JavaScriptAdapter, JavaAdapter)
-_ALIASES = {"py": "python", "js": "javascript", "node": "javascript", "jsx": "javascript"}
+_ADAPTERS: tuple[type[LanguageAdapter], ...] = (PythonAdapter, JavaScriptAdapter, TypeScriptAdapter, JavaAdapter)
+_ALIASES = {
+    "py": "python",
+    "js": "javascript",
+    "node": "javascript",
+    "jsx": "javascript",
+    "ts": "typescript",
+    "tsx": "typescript",
+}
 
 SUPPORTED_LANGUAGES = tuple(adapter.name for adapter in _ADAPTERS)
 

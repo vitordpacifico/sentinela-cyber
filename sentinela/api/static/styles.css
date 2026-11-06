@@ -125,3 +125,21 @@ dialog menu { display: flex; justify-content: flex-end; gap: 8px; padding: 0; ma
 
 .empty { text-align: center; padding: 48px 16px; color: var(--muted); }
 .empty code { background: var(--panel-2); padding: 2px 6px; border-radius: 4px; }
+
+/* ---------------------------------------------------------- Risco Cidadão */
+.risco { margin-bottom: 16px; }
+.risco-indice { text-align: center; }
+.medidor { position: relative; max-width: 240px; margin: 4px auto 0; }
+.medidor svg { width: 100%; display: block; }
+.medidor path { fill: none; stroke-width: 12; stroke-linecap: round; }
+.medidor .fundo { stroke: var(--panel-2); }
+.medidor .valor { stroke: var(--cor); transition: stroke-dasharray .6s ease; }
+.medidor .numero { position: absolute; left: 0; right: 0; bottom: 0; font-size: 40px; font-weight: 800; color: var(--cor); line-height: 1; }
+.medidor .numero small { font-size: 15px; color: var(--muted); font-weight: 600; }
+.selo-risco { display: inline-block; padding: 3px 12px; border-radius: 999px; background: var(--cor); color: #0e1116; font-weight: 700; }
+.tag.sensivel { color: var(--critical); border-color: var(--critical); }
+.alertas { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.alerta { border: 1px solid var(--border); border-left: 4px solid var(--high); border-radius: var(--radius); padding: 12px 14px; background: var(--panel-2); }
+.alerta header { margin-bottom: 6px; }
+.alerta p { margin: 6px 0; }
+

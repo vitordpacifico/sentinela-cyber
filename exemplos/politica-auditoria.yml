@@ -1,0 +1,7 @@
+# Política usada na Auditoria do Protótipo (scripts/auditoria_gs.py).
+# Igual à do repositório, mas sem ignorar o protótipo com falhas.
+gate:
+  fail_on: high
+  require_strong_evidence: true
+  ignore_paths: []
+  ignore_rules: []

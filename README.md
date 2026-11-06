@@ -1,5 +1,23 @@
 # Sentinela
 
+> **Global Solution 2026.2 (CitizenTech): entrega de Cybersecurity.**
+> Este fork ganhou um **módulo de dados pessoais**: mapeamento de PII com
+> CPF e Cartão SUS, taint analysis até saídas inseguras, alerta ao cidadão
+> escrito pela IA e o indicador **Risco Cidadão** no dashboard. Também passou a
+> analisar **TypeScript**. Ele audita o app SENTINELA de alerta de alagamentos.
+>
+> Tudo sobre a entrega está em **[docs/GLOBAL_SOLUTION.md](docs/GLOBAL_SOLUTION.md)**:
+> a missão, as evidências em [`evidencias/`](evidencias), o indicador
+> ([docs/risco-cidadao.md](docs/risco-cidadao.md)) e os prompts ([prompts.md](prompts.md)).
+>
+> ```bash
+> python scripts/auditoria_gs.py   # auditoria do protótipo
+> python scripts/demo_gs.py        # prepara o painel
+> sentinela serve                  # http://localhost:8000
+> ```
+>
+> O restante deste README é o Sentinela original do Projeto Integrador.
+
 **Plataforma SAST & DevSecOps.** O Sentinela analisa o código-fonte de cada
 Pull Request **sem executá-lo**, em **Python, JavaScript e Java**.
 

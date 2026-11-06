@@ -105,6 +105,7 @@ class FindingRow(Base):
     ai_fix_explanation: Mapped[str | None] = mapped_column(Text)
     ai_fix_code: Mapped[str | None] = mapped_column(Text)
     ai_model: Mapped[str | None] = mapped_column(String(100))
+    ai_alerta_cidadao: Mapped[dict | None] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
 
     scan: Mapped[Scan] = relationship(back_populates="findings")

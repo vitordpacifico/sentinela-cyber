@@ -8,7 +8,11 @@ devolve, em uma única resposta JSON:
   com confiança e justificativa citando a linha decisiva;
 * **severidade sugerida** — reavaliação no contexto (ex.: SQL Injection em
   script de migração interno vs. em endpoint público);
-* **correção** — explicação curta e o bloco de código corrigido.
+* **correção** — explicação curta e o bloco de código corrigido;
+* **alerta ao cidadão** (só para achados de dados pessoais) — a falha
+  explicada em linguagem simples: o que pode acontecer com a pessoa, quem é
+  afetado e o que a equipe deve fazer. O código chega à IA com CPF, e-mail e
+  telefone mascarados (``sentinela/pii/valores.py``).
 
 Princípios:
 
@@ -46,6 +50,7 @@ class AIAssessment:
     fix_explanation: str
     fix_code: str
     model: str
+    alerta_cidadao: dict[str, str] | None = None
 
     @property
     def dismisses(self) -> bool:
@@ -114,6 +119,17 @@ SYSTEM_PROMPT = (
 )
 
 
+CAMPOS_ALERTA = ("titulo", "o_que_pode_acontecer", "quem_e_afetado", "o_que_fazer")
+
+_INSTRUCAO_ALERTA = (
+    "\n\nEste achado envolve DADOS PESSOAIS de cidadãos. Inclua também no JSON o campo "
+    '"alerta_cidadao": {"titulo": "frase curta", "o_que_pode_acontecer": "consequência real para a pessoa, '
+    'como golpe, constrangimento ou discriminação", "quem_e_afetado": "quem sofre o risco", '
+    '"o_que_fazer": "o que a equipe deve corrigir"}. Escreva em português simples, para quem não é da área '
+    "de tecnologia: sem siglas, sem termos técnicos, até 2 frases por campo. Não invente dados pessoais."
+)
+
+
 def build_prompt(finding: Finding) -> str:
     path = (
         "\n".join(f"  linha {s.line} [{s.kind}]: {s.code}" for s in finding.taint_path)
@@ -148,6 +164,7 @@ def build_prompt(finding: Finding) -> str:
         f"Achado: {json.dumps(meta, ensure_ascii=False)}\n\n"
         f"Caminho do dado:\n{path}\n\n"
         f"Código (linhas com >> são o achado):\n{finding.context}\n"
+        + (_INSTRUCAO_ALERTA if finding.rule_id.startswith("pii.") else "")
     )
 
 
@@ -176,6 +193,7 @@ def parse_assessment(payload: Mapping[str, Any], *, model: str, current: Severit
     fix_code = _strip_fences(fix_code) if isinstance(fix_code, str) else ""
     explanation = body.get("fix_explanation")
     return AIAssessment(
+        alerta_cidadao=_parse_alerta(body.get("alerta_cidadao")),
         verdict=verdict,
         confidence=confidence,
         rationale=rationale.strip()[:600],
@@ -184,6 +202,15 @@ def parse_assessment(payload: Mapping[str, Any], *, model: str, current: Severit
         fix_code=fix_code[:3000],
         model=model,
     )
+
+
+def _parse_alerta(bruto: Any) -> dict[str, str] | None:
+    """Aceita o alerta só se todos os campos vierem preenchidos com texto."""
+
+    if not isinstance(bruto, Mapping):
+        return None
+    alerta = {campo: str(bruto.get(campo) or "").strip()[:500] for campo in CAMPOS_ALERTA}
+    return alerta if all(alerta.values()) else None
 
 
 def _strip_fences(code: str) -> str:

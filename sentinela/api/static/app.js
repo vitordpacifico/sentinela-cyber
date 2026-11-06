@@ -89,6 +89,7 @@ async function renderOverview(view) {
       ${kpi("Gates bloqueados", m.totals.gate_failed)}
       ${kpi("Revisados", m.totals.reviewed)}
     </section>
+    ${riscoCidadao(m.risco_cidadao, latest)}
     <section class="grid charts">
       <div class="card span-4"><h2>Severidade (abertos)</h2><div class="chart-box"><canvas id="c-sev"></canvas></div></div>
       <div class="card span-8"><h2>Tendência de falhas por scan</h2><div class="chart-box"><canvas id="c-trend"></canvas></div></div>
@@ -98,6 +99,57 @@ async function renderOverview(view) {
       <div class="card span-8"><h2>Fraquezas mais frequentes (CWE)</h2>${cweTable(m.cwe)}</div>
     </section>`;
   drawOverviewCharts(m);
+}
+
+// ------------------------------------------------------------ Risco Cidadão
+const RISCO_COR = { baixo: "var(--ok)", moderado: "var(--medium)", alto: "var(--high)", critico: "var(--critical)" };
+
+function riscoCidadao(r, latest) {
+  if (!r) return "";
+  const cor = RISCO_COR[r.nivel] || "var(--muted)";
+  const maior = Math.max(1, ...r.categorias.map((c) => c.contribuicao));
+  const categorias = r.categorias.length
+    ? `<table><thead><tr><th>Dado pessoal</th><th>Campos mapeados</th><th>Vazamentos</th><th>Peso no índice</th></tr></thead><tbody>${r.categorias.map((c) => `
+        <tr><td>${esc(c.rotulo)}${c.sensivel ? ' <span class="tag sensivel">sensível (LGPD)</span>' : ""}</td>
+        <td>${esc(c.mapeados)}</td><td>${c.vazamentos ? `<b style="color:var(--critical)">${esc(c.vazamentos)}</b>` : "0"}</td>
+        <td><div class="bar-list"><div class="bar"><span style="width:${(100 * c.contribuicao) / maior}%"></span></div></div></td></tr>`).join("")}</tbody></table>`
+    : `<p class="muted">Nenhum dado pessoal encontrado no código.</p>`;
+  const alertas = r.alertas.length
+    ? r.alertas.map((item) => alertaCidadao(item.alerta_cidadao, item, latest)).join("")
+    : `<p class="muted">Nenhum alerta: os dados pessoais não chegam a saídas inseguras. 🎉</p>`;
+  return `<section class="grid charts risco">
+    <div class="card span-4 risco-indice" style="--cor:${cor}">
+      <h2>Risco Cidadão</h2>
+      <div class="medidor" role="img" aria-label="Risco Cidadão ${esc(r.indice)} de 100, nível ${esc(r.rotulo)}">
+        <svg viewBox="0 0 120 66" aria-hidden="true">
+          <path d="M10 60 A50 50 0 0 1 110 60" pathLength="100" class="fundo"></path>
+          <path d="M10 60 A50 50 0 0 1 110 60" pathLength="100" class="valor" style="stroke-dasharray:${esc(r.indice)} 100"></path>
+        </svg>
+        <div class="numero">${esc(r.indice)}<small>/100</small></div>
+      </div>
+      <p class="nivel"><span class="selo-risco">${esc(r.rotulo)}</span></p>
+      <p>${esc(r.resumo)}</p>
+      <details><summary class="muted">Como o índice é calculado</summary>
+        <p class="muted">${esc(r.formula)}</p>
+        <p class="muted">Vazamentos e documentos reais: ${esc(r.componentes.vazamentos)} · Dados mapeados: ${esc(r.componentes.mapeamento)} (até 15)</p>
+      </details>
+    </div>
+    <div class="card span-8"><h2>Dados pessoais no código</h2>${categorias}</div>
+    <div class="card span-12"><h2>Alertas ao cidadão</h2><div class="alertas">${alertas}</div></div>
+  </section>`;
+}
+
+function alertaCidadao(a, item, latest) {
+  if (!a) return "";
+  const origem = a.origem === "ia" ? `escrito pela IA${a.modelo ? ` (${esc(a.modelo)})` : ""}` : "escrito por regras (IA indisponível)";
+  const local = item ? `<p class="muted"><code>${esc(item.arquivo)}:${esc(item.linha)}</code> · risco ${esc(item.risco)}/100${latest ? ` · <a href="#/scan/${esc(latest.id)}">ver no scan</a>` : ""}</p>` : "";
+  return `<article class="alerta">
+    <header><b>${esc(a.titulo)}</b> <span class="tag">${origem}</span></header>
+    <p>${esc(a.o_que_pode_acontecer)}</p>
+    <p><b>Quem é afetado:</b> ${esc(a.quem_e_afetado)}</p>
+    <p><b>O que fazer:</b> ${esc(a.o_que_fazer)}</p>
+    ${local}
+  </article>`;
 }
 
 function kpi(label, value, cls = "") {
@@ -246,6 +298,7 @@ function findingDetail(f) {
     <h3>Código</h3><pre>${esc(f.snippet)}</pre>
     ${path}
     ${ai}
+    ${f.alerta_cidadao ? `<h3>Alerta ao cidadão</h3>${alertaCidadao(f.alerta_cidadao)}` : ""}
     <h3>Como corrigir</h3><p>${esc(f.remediation)}</p>${f.safe_example ? `<pre>${esc(f.safe_example)}</pre>` : ""}
     <p class="muted">Regra <code>${esc(f.rule_id)}</code> · ${esc(f.owasp)} · ${f.references.map((r) => `<a href="${esc(r)}" target="_blank" rel="noopener">referência</a>`).join(" ")}</p>
     <h3>Revisão</h3>

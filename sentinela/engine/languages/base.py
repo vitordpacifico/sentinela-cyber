@@ -44,6 +44,8 @@ class NamedLiteral:
 
 class LanguageAdapter(ABC):
     name: str = ""
+    # Linguagem cujas regras (.yml) este adaptador usa. TypeScript reaproveita as do JavaScript.
+    rules_language: str = ""
     extensions: tuple[str, ...] = ()
     call_types: frozenset[str] = frozenset()
     function_types: frozenset[str] = frozenset()
@@ -52,6 +54,8 @@ class LanguageAdapter(ABC):
     string_types: frozenset[str] = frozenset()
 
     def __init__(self) -> None:
+        if not self.rules_language:
+            self.rules_language = self.name
         self._language = Language(self._grammar())
         self._parser = Parser(self._language)
 

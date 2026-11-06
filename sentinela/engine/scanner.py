@@ -1,7 +1,8 @@
 """Orquestra a análise de um conjunto de arquivos.
 
 Para cada arquivo: detecta a linguagem → parseia (Tree-sitter) → regras
-declarativas → detector de segredos → taint analysis → Bandit (Python) →
+declarativas → detector de segredos → taint analysis → dados pessoais
+(mapeamento, valores reais e vazamentos) → Bandit (Python) →
 une achados que descrevem a mesma vulnerabilidade → monta o contexto de
 código que a IA vai ler (com segredos mascarados) → fingerprint.
 """
@@ -18,6 +19,8 @@ from sentinela.engine.models import Engine, Finding, ScanResult, SourceFile
 from sentinela.engine.rules import RuleMatcher, load_rules
 from sentinela.engine.secrets import detect_secrets
 from sentinela.engine.taint import TaintAnalyzer, load_taint_spec
+from sentinela.pii.detector import analisar_dados_pessoais
+from sentinela.pii.valores import mascarar_dados_pessoais
 
 CONTEXT_RADIUS = 8
 MAX_FILE_BYTES = 1_000_000
@@ -28,6 +31,7 @@ class ScanOptions:
     use_bandit: bool = True
     scope: str = ""  # entra no fingerprint (ex. nome do projeto)
     rules_dir: str | None = None
+    dados_pessoais: bool = True  # módulo de PII da Global Solution
 
 
 def scan_files(files: Iterable[SourceFile], options: ScanOptions | None = None) -> ScanResult:
@@ -73,17 +77,24 @@ def scan_source(path: str, content: str, language: str, options: ScanOptions | N
     ctx = adapter.build_context(root)
     lines = content.splitlines()
 
-    rule_findings = RuleMatcher(adapter, load_rules(language, options.rules_dir)).run(
+    rules_language = adapter.rules_language
+    rule_findings = RuleMatcher(adapter, load_rules(rules_language, options.rules_dir)).run(
         root,
         ctx,
         path=path,
         source_lines=lines,
     )
     secret_findings = detect_secrets(adapter, root, path=path, source_lines=lines)
-    spec = load_taint_spec(language, options.rules_dir)
+    spec = load_taint_spec(rules_language, options.rules_dir)
     taint_findings = TaintAnalyzer(adapter, spec, ctx, path=path, source_lines=lines).run(root) if spec else []
 
-    findings = merge_findings([*secret_findings, *rule_findings], taint_findings)
+    pii_patterns, pii_flows = (
+        analisar_dados_pessoais(adapter, root, ctx, path=path, source_lines=lines, rules_dir=options.rules_dir)
+        if options.dados_pessoais
+        else ([], [])
+    )
+
+    findings = merge_findings([*secret_findings, *rule_findings, *pii_patterns], [*taint_findings, *pii_flows])
 
     if options.use_bandit and language == "python":
         corroborate_with_bandit(findings, content)
@@ -92,7 +103,10 @@ def scan_source(path: str, content: str, language: str, options: ScanOptions | N
         line for finding in findings if finding.cwe == "CWE-798" for line in range(finding.line, finding.end_line + 1)
     }
     for finding in findings:
-        finding.context = code_window(lines, finding.line, finding.end_line, masked_lines)
+        # Dados pessoais (CPF, Cartão SUS, e-mail, telefone) são mascarados antes de ir para a IA,
+        # para o banco e para os relatórios.
+        finding.context = mascarar_dados_pessoais(code_window(lines, finding.line, finding.end_line, masked_lines))
+        finding.snippet = mascarar_dados_pessoais(finding.snippet)
         finding.compute_fingerprint(options.scope)
     return findings
 

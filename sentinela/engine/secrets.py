@@ -133,7 +133,7 @@ def detect_secrets(
                 "Leia o valor de variável de ambiente ou de um cofre de segredos "
                 "e revogue/rotacione a credencial exposta."
             ),
-            safe_example=_example(adapter.name, hit.name),
+            safe_example=_example(adapter.rules_language, hit.name),
             references=["https://cwe.mitre.org/data/definitions/798.html"],
         )
         findings.append(finding)

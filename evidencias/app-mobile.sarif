@@ -1,0 +1,3237 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Sentinela",
+          "semanticVersion": "1.0.0",
+          "informationUri": "https://github.com/GusRVPaulino/sast-devsecops-fiap",
+          "rules": [
+            {
+              "id": "pii.mapa.registro",
+              "name": "pii_mapa_registro",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Cadastro de pessoa"
+              },
+              "fullDescription": {
+                "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.credencial",
+              "name": "pii_mapa_credencial",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Senhas e credenciais"
+              },
+              "fullDescription": {
+                "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.contato",
+              "name": "pii_mapa_contato",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Contato e endereço"
+              },
+              "fullDescription": {
+                "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/app/(abas)/_layout.tsx"
+                },
+                "region": {
+                  "startLine": 15,
+                  "endLine": 15,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ad5fc12ce816e704d6de51fba49a3060"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/app/_layout.tsx"
+                },
+                "region": {
+                  "startLine": 36,
+                  "endLine": 36,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "544df53e3b6a5659a4a1e61477cd90c6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/componentes/CampoTexto/index.tsx"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "29953a2f2862a2cb61b9d165e32412b1"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/componentes/CartaoPonto/estilos.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "dd38d5c2632a7c6dd936d9c924854f60"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/componentes/__tests__/CampoTexto.test.tsx"
+                },
+                "region": {
+                  "startLine": 8,
+                  "endLine": 8,
+                  "startColumn": 60
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "9f91f6f6d0c684f49f1ec035c92afbc6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/AlertasContext.tsx"
+                },
+                "region": {
+                  "startLine": 34,
+                  "endLine": 34,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ca44078b3276041a82c501cf5bbcebed"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/AlertasContext.tsx"
+                },
+                "region": {
+                  "startLine": 39,
+                  "endLine": 39,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "649da1bad3c1af6f7295ed94b5bac3c2"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/AutenticacaoContext.tsx"
+                },
+                "region": {
+                  "startLine": 32,
+                  "endLine": 32,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "f577e240b118096a7a6faf2429398960"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`setUsuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/AutenticacaoContext.tsx"
+                },
+                "region": {
+                  "startLine": 46,
+                  "endLine": 46,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "14a6255b614fa990dda481c4ad06bdc2"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/AutenticacaoContext.tsx"
+                },
+                "region": {
+                  "startLine": 60,
+                  "endLine": 60,
+                  "startColumn": 30
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c5b427fd2489ed82a95cee66d5d2c22d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/AutenticacaoContext.tsx"
+                },
+                "region": {
+                  "startLine": 60,
+                  "endLine": 60,
+                  "startColumn": 30
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "2aae7f5f4c8f90f49f5512b05709b4b8"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/tipos.ts"
+                },
+                "region": {
+                  "startLine": 14,
+                  "endLine": 14,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "730fdd229a56a68b798b6432e3fa21b5"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 13,
+                  "endLine": 13,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "71dd5caf6c4dda6bc40d809c5827f7d4"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 17,
+                  "endLine": 17,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "1bf1691872bdc3163a6770e26483932f"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "feec9a8bf289afc83183f92a43a2322a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b5673f70918c9a2092af75120bbc4eb0"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 24,
+                  "endLine": 24,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "52e3082c4df5d1d9aa31efde35527434"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`cidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 33,
+                  "endLine": 33,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ef65d7736bc88447d5926df6b1a48b9c"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`morador` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 38,
+                  "endLine": 38,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c13c3c2685852cfe4f011316bd5be076"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`OPCOES_TIPO_CIDADAO` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/usuario.ts"
+                },
+                "region": {
+                  "startLine": 42,
+                  "endLine": 42,
+                  "startColumn": 14
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "faa9d11ea87a1becea781d6aea0f6a32"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`USUARIO` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/alertas/__tests__/monitor.test.ts"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 22,
+                  "startColumn": 7
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "0462bb654f5b6211ea193affb53f79fe"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/alertas/__tests__/monitor.test.ts"
+                },
+                "region": {
+                  "startLine": 32,
+                  "endLine": 32,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b3671a6ce57e05133581acb6fc96cff4"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/alertas/monitor.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "7459e9d8f5b5aec04f7ce941369bd45e"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/armazenamento.test.ts"
+                },
+                "region": {
+                  "startLine": 24,
+                  "endLine": 24,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "80f4a87828764e2d589c7e6dd18fd702"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "69f290254700f35418f83ee53c4f60d0"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "532aa87753e056d3c26b54ef9440e4d1"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 20,
+                  "endLine": 20,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ff0edbfa500c9d1d0de9e74ec4bdc3f3"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 21,
+                  "endLine": 21,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "f9969ee3ee3fe10bf939b64c1d33fd85"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 22,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "fcc2ba46dad40d966e0cd1ec1c1b8ae6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
+                },
+                "region": {
+                  "startLine": 28,
+                  "endLine": 28,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "a9f5b9d32cef094852a9eae29d3ab08a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/alertasServico.ts"
+                },
+                "region": {
+                  "startLine": 10,
+                  "endLine": 10,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "600dbe2286a892cb1a3b288da7e71141"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/armazenamento.ts"
+                },
+                "region": {
+                  "startLine": 16,
+                  "endLine": 16,
+                  "startColumn": 19
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c5bf7ab47cbf0c56639b5f933bff80fe"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/pontosSeguidosServico.ts"
+                },
+                "region": {
+                  "startLine": 8,
+                  "endLine": 8,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b9c444b335375c982b8d09965125f9c7"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/sessaoServico.ts"
+                },
+                "region": {
+                  "startLine": 5,
+                  "endLine": 5,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d57be752e5049cf3b41fe063bb7e15db"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/usuariosServico.ts"
+                },
+                "region": {
+                  "startLine": 16,
+                  "endLine": 16,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "92b765ba3c8ec4751c89f368d1c0f4d8"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/usuariosServico.ts"
+                },
+                "region": {
+                  "startLine": 17,
+                  "endLine": 17,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "31341f6002c764b2ed7c81bfcb1bc41d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/usuariosServico.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "07eeb1bf49c48790bfb8e93f05cd70cf"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/usuariosServico.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "22023548373c5dfc17bec28bf872437a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/usuariosServico.ts"
+                },
+                "region": {
+                  "startLine": 20,
+                  "endLine": 20,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b4f5f8ba2e5921e9d2fc8ca624ec9c3a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/__tests__/api.test.ts"
+                },
+                "region": {
+                  "startLine": 6,
+                  "endLine": 6,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c0d1a0b0036c846210209e72ce649a3d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/api.ts"
+                },
+                "region": {
+                  "startLine": 63,
+                  "endLine": 63,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "3abb0ed7f454e38e92550516df5f0007"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/simulacao.ts"
+                },
+                "region": {
+                  "startLine": 44,
+                  "endLine": 44,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "9e32c301002460a84be1ca16eab2bf34"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/seguranca/senha.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c1ec44c7870b087064d3b8424c499ec5"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Alertas/index.tsx"
+                },
+                "region": {
+                  "startLine": 20,
+                  "endLine": 20,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "16e7992f9f4a26de1db186952db9d092"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Alertas/index.tsx"
+                },
+                "region": {
+                  "startLine": 25,
+                  "endLine": 25,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "8a067633bf9bf1831d5fa2c0f3f63368"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 31,
+                  "endLine": 31,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "74a4c2a2e828bb9d10967af2a022bd9b"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 32,
+                  "endLine": 32,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "a1b9c41be519a932a0b7abd3b5e5a48e"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 33,
+                  "endLine": 33,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e3814d2321947e535254a5a74ebeb344"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 34,
+                  "endLine": 34,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d74558bc447ac1e73b33ae68974945a7"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`setEmail` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 42,
+                  "endLine": 42,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "0f7fe5b61929ae6aaa667c3adf5136d5"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`setTelefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 43,
+                  "endLine": 43,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "388335557a3bc24e5998404a49eae346"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`setCep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 44,
+                  "endLine": 44,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "6daf527449adbc505741edece2308df8"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 45,
+                  "endLine": 45,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "3df0ac146cfa40594e5d01d717351faa"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`setTipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 45,
+                  "endLine": 45,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "3df0ac146cfa40594e5d01d717351faa"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`setSenha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Cadastro/index.tsx"
+                },
+                "region": {
+                  "startLine": 46,
+                  "endLine": 46,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "060f6f01229d2b628d9c8dd0170d6013"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Entrar/index.tsx"
+                },
+                "region": {
+                  "startLine": 21,
+                  "endLine": 21,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "1682f43356331659a5f6f5a7a453dad6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`setEmail` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Entrar/index.tsx"
+                },
+                "region": {
+                  "startLine": 21,
+                  "endLine": 21,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "1682f43356331659a5f6f5a7a453dad6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Entrar/index.tsx"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 22,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "4c7622f0fec0b1ed9109ad0941b6bb28"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`setSenha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Entrar/index.tsx"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 22,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "4c7622f0fec0b1ed9109ad0941b6bb28"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 45,
+                  "endLine": 45,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "0d4e4dbc3a3735e9582dfdf651c20cdf"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 48,
+                  "endLine": 48,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "40742b173ce5a9ea7d66af0805fc0777"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`setTelefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 48,
+                  "endLine": 48,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "40742b173ce5a9ea7d66af0805fc0777"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 49,
+                  "endLine": 49,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "a437df20f749dabc073aaf740b8b7317"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`setCep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 49,
+                  "endLine": 49,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "a437df20f749dabc073aaf740b8b7317"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 50,
+                  "endLine": 50,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "085226af3e0716c734d814b6b7b42aa9"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`setTipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 50,
+                  "endLine": 50,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "085226af3e0716c734d814b6b7b42aa9"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 119,
+                  "endLine": 119,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "085bcf365e0ca1e3dd43ef0042fbb149"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`setSenha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 119,
+                  "endLine": 119,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "085bcf365e0ca1e3dd43ef0042fbb149"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`cidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Perfil/index.tsx"
+                },
+                "region": {
+                  "startLine": 190,
+                  "endLine": 190,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "db76913cff16749a0ddf4ac70f073243"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Ponto/estilos.ts"
+                },
+                "region": {
+                  "startLine": 6,
+                  "endLine": 6,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "f86a38ef155436d37980861b4868379a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Ponto/index.tsx"
+                },
+                "region": {
+                  "startLine": 30,
+                  "endLine": 30,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "511862280ecf5c88670e17ccf1fd9b3e"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Pontos/index.tsx"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "732209a05872600be90b28486a21b2ab"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`cidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Pontos/index.tsx"
+                },
+                "region": {
+                  "startLine": 23,
+                  "endLine": 23,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "1cac154e56e9be142df62ff8c5e4a51c"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`E-mail` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Cadastro.test.tsx"
+                },
+                "region": {
+                  "startLine": 30,
+                  "endLine": 30,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "bbaf545e834e3aba58d082ba3f4f0ce3"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`Celular` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Cadastro.test.tsx"
+                },
+                "region": {
+                  "startLine": 31,
+                  "endLine": 31,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "9f9fab206414261984254b4e623b89c9"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`CEP` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Cadastro.test.tsx"
+                },
+                "region": {
+                  "startLine": 32,
+                  "endLine": 32,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b4fed4f04b7eb5d8de0ba37bcdf2e774"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`Senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Cadastro.test.tsx"
+                },
+                "region": {
+                  "startLine": 33,
+                  "endLine": 33,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ee9248bf6c5dee9bc987b8a5f59b37da"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`Repita a senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Cadastro.test.tsx"
+                },
+                "region": {
+                  "startLine": 34,
+                  "endLine": 34,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "338b650446fd8b4ddd0b81f7a0601eb4"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Cadastro.test.tsx"
+                },
+                "region": {
+                  "startLine": 69,
+                  "endLine": 69,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "40d5fc2f51419e1239fed3892cc3375c"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Entrar.test.tsx"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d2d8409a4bddc0a7dca8cd4b39c28642"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Entrar.test.tsx"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "90172edec531330598591058f2816714"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Limites.test.tsx"
+                },
+                "region": {
+                  "startLine": 15,
+                  "endLine": 15,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "93e48eb96502f56a5faa58a632933f8b"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Painel.test.tsx"
+                },
+                "region": {
+                  "startLine": 14,
+                  "endLine": 14,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c83853274f30ac4ae1eace50ca5c0331"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 17,
+                  "endLine": 17,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "5ae0fd0887d05dd9174c1f62a3222cd6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 21,
+                  "endLine": 21,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "dd58d7e178a90da24eed5f93ed84450b"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 23,
+                  "endLine": 23,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "0b8afeeb31e1a38d9fec6bd59ca4995d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 24,
+                  "endLine": 24,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "813df2ba2d26ed24f34504313b8049ce"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 25,
+                  "endLine": 25,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b54d3363cc8f44e7b8bb48bc41be3a95"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`tipoCidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 26,
+                  "endLine": 26,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "47eb91bc70ce4df1ce4bc783db764370"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 27,
+                  "endLine": 27,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "22fe39f7e497b16ce7de7e04e6b612fa"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utilitarios/__tests__/validacoes.test.ts"
+                },
+                "region": {
+                  "startLine": 27,
+                  "endLine": 27,
+                  "startColumn": 79
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b6c2996bcd15e8725216be31b72726bf"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utilitarios/validacoes.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "84291d569e558d2c152ba830e402c233"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utilitarios/validacoes.ts"
+                },
+                "region": {
+                  "startLine": 27,
+                  "endLine": 27,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "684465a35c424b8665568ba2c399a65b"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`cep` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utilitarios/validacoes.ts"
+                },
+                "region": {
+                  "startLine": 36,
+                  "endLine": 36,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "09f624e31399d51229c434a7cc9678ac"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utilitarios/validacoes.ts"
+                },
+                "region": {
+                  "startLine": 44,
+                  "endLine": 44,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "b368958f34b86080a94a43e4814b4741"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        }
+      ],
+      "versionControlProvenance": [
+        {
+          "repositoryUri": "app-mobile"
+        }
+      ]
+    }
+  ]
+}

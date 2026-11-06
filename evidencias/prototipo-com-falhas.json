@@ -1,0 +1,662 @@
+{
+  "gate": {
+    "status": "failed",
+    "passed": false,
+    "blocking": [
+      "cd2a0ec01af59cedcefb2dc152e57982",
+      "4d2f48b403a12fa2d4e9092b9885b2af",
+      "168606409973b1cd85515f4db52608aa",
+      "bd4c4d57bb427dd8ab83cd0869374662",
+      "dba19fb9d22b7b0eb8a17bbbd1dde144"
+    ],
+    "warnings": [
+      "c14d2e9d0ed4d98e17624b3c41aafbee"
+    ],
+    "reasons": [
+      "BLOQUEIA critical: prototipo-com-falhas/cadastroMorador.ts:36 pii.vazamento.armazenamento.saude",
+      "BLOQUEIA critical: prototipo-com-falhas/cadastroMorador.ts:46 pii.vazamento.notificacao.saude",
+      "aviso high (evidência única): prototipo-com-falhas/cadastroMorador.ts:28 pii.valor.cpf",
+      "BLOQUEIA high: prototipo-com-falhas/cadastroMorador.ts:32 pii.vazamento.log.documento",
+      "BLOQUEIA high: prototipo-com-falhas/cadastroMorador.ts:35 pii.vazamento.armazenamento.documento",
+      "BLOQUEIA high: prototipo-com-falhas/cadastroMorador.ts:39 pii.vazamento.url.documento"
+    ]
+  },
+  "risco_cidadao": {
+    "indice": 100,
+    "nivel": "critico",
+    "rotulo": "Crítico",
+    "resumo": "5 vazamentos de dados pessoais e 1 documento real no código, envolvendo CPF ou outros documentos e informações de saúde.",
+    "vazamentos": 5,
+    "valores_reais": 1,
+    "dados_mapeados": 8,
+    "categorias": [
+      {
+        "id": "documento",
+        "rotulo": "CPF e documentos",
+        "sensivel": false,
+        "mapeados": 2,
+        "vazamentos": 4,
+        "contribuicao": 99
+      },
+      {
+        "id": "saude",
+        "rotulo": "Saúde",
+        "sensivel": true,
+        "mapeados": 3,
+        "vazamentos": 2,
+        "contribuicao": 92
+      },
+      {
+        "id": "credencial",
+        "rotulo": "Senhas e credenciais",
+        "sensivel": false,
+        "mapeados": 1,
+        "vazamentos": 0,
+        "contribuicao": 0
+      },
+      {
+        "id": "contato",
+        "rotulo": "Contato e endereço",
+        "sensivel": false,
+        "mapeados": 1,
+        "vazamentos": 0,
+        "contribuicao": 0
+      },
+      {
+        "id": "registro",
+        "rotulo": "Cadastro de pessoa",
+        "sensivel": false,
+        "mapeados": 1,
+        "vazamentos": 0,
+        "contribuicao": 0
+      }
+    ],
+    "alertas": [
+      {
+        "id": null,
+        "titulo": "Dado pessoal salvo sem criptografia: Saúde",
+        "arquivo": "prototipo-com-falhas/cadastroMorador.ts",
+        "linha": 36,
+        "risco": 80,
+        "alerta_cidadao": {
+          "titulo": "Risco de exposição: Saúde",
+          "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler informações de saúde sem precisar de senha. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
+          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+          "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+          "gravidade": "crítica",
+          "origem": "regras"
+        }
+      },
+      {
+        "id": null,
+        "titulo": "Dado pessoal exposto na URL: CPF e documentos",
+        "arquivo": "prototipo-com-falhas/cadastroMorador.ts",
+        "linha": 39,
+        "risco": 80,
+        "alerta_cidadao": {
+          "titulo": "Risco de exposição: CPF e documentos",
+          "o_que_pode_acontecer": "CPF ou outros documentos ficam gravados no histórico do navegador e nos registros dos servidores por onde a requisição passa. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
+          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+          "o_que_fazer": "Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.",
+          "gravidade": "alta",
+          "origem": "regras"
+        }
+      },
+      {
+        "id": null,
+        "titulo": "CPF válido escrito no código",
+        "arquivo": "prototipo-com-falhas/cadastroMorador.ts",
+        "linha": 28,
+        "risco": 72,
+        "alerta_cidadao": {
+          "titulo": "Risco de exposição: CPF e documentos",
+          "o_que_pode_acontecer": "Um documento verdadeiro ficou gravado no código do sistema, e qualquer pessoa com acesso ao código consegue copiá-lo. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
+          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+          "o_que_fazer": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).",
+          "gravidade": "alta",
+          "origem": "regras"
+        }
+      },
+      {
+        "id": null,
+        "titulo": "Dado pessoal salvo sem criptografia: CPF e documentos",
+        "arquivo": "prototipo-com-falhas/cadastroMorador.ts",
+        "linha": 35,
+        "risco": 64,
+        "alerta_cidadao": {
+          "titulo": "Risco de exposição: CPF e documentos",
+          "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler CPF ou outros documentos sem precisar de senha. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
+          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+          "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+          "gravidade": "alta",
+          "origem": "regras"
+        }
+      },
+      {
+        "id": null,
+        "titulo": "Dado pessoal em notificação: Saúde",
+        "arquivo": "prototipo-com-falhas/cadastroMorador.ts",
+        "linha": 46,
+        "risco": 60,
+        "alerta_cidadao": {
+          "titulo": "Risco de exposição: Saúde",
+          "o_que_pode_acontecer": "Informações de saúde aparecem na tela bloqueada do celular, onde qualquer pessoa por perto consegue ler. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
+          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+          "o_que_fazer": "A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.",
+          "gravidade": "crítica",
+          "origem": "regras"
+        }
+      }
+    ],
+    "componentes": {
+      "vazamentos": 99.9,
+      "mapeamento": 7.0
+    },
+    "formula": "Índice = A + B × (1 − A/100), em que A = 100 × (1 − Π(1 − peso da categoria × peso da saída)) e B = mín(15, 2 × soma dos pesos das categorias mapeadas)."
+  },
+  "findings": [
+    {
+      "fingerprint": "cd2a0ec01af59cedcefb2dc152e57982",
+      "rule_id": "pii.vazamento.armazenamento.saude",
+      "title": "Dado pessoal salvo sem criptografia: Saúde",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 36,
+      "end_line": 36,
+      "column": 9,
+      "severity": "critical",
+      "confidence": "high",
+      "cwe": "CWE-312",
+      "owasp": "A02:2021 - Cryptographic Failures",
+      "message": "Saúde vindo de `cadastro.condicaoDeSaude` (Saúde) chega a `@react-native-async-storage/async-storage.setItem`: o armazenamento do aparelho ou do servidor, sem criptografia. É um dado pessoal sensível pela LGPD (art. 5º, II).",
+      "snippet": "await AsyncStorage.setItem(\"cadastro:saude\", cadastro.condicaoDeSaude);",
+      "engines": [
+        "taint"
+      ],
+      "taint_path": [
+        {
+          "line": 36,
+          "kind": "source",
+          "code": "await AsyncStorage.setItem(\"cadastro:saude\", cadastro.condicaoDeSaude);"
+        },
+        {
+          "line": 36,
+          "kind": "sink",
+          "code": "await AsyncStorage.setItem(\"cadastro:saude\", cadastro.condicaoDeSaude);"
+        }
+      ],
+      "remediation": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+      "safe_example": "await SecureStore.setItemAsync(\"cpf\", cpf);",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/312.html",
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": {
+        "titulo": "Risco de exposição: Saúde",
+        "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler informações de saúde sem precisar de senha. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
+        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+        "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+        "gravidade": "crítica",
+        "origem": "regras"
+      }
+    },
+    {
+      "fingerprint": "4d2f48b403a12fa2d4e9092b9885b2af",
+      "rule_id": "pii.vazamento.notificacao.saude",
+      "title": "Dado pessoal em notificação: Saúde",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 46,
+      "end_line": 49,
+      "column": 9,
+      "severity": "critical",
+      "confidence": "high",
+      "cwe": "CWE-359",
+      "owasp": "A04:2021 - Insecure Design",
+      "message": "Saúde vindo de `remedios` (Saúde) chega a `expo-notifications.scheduleNotificationAsync`: uma notificação, que aparece na tela bloqueada do celular. É um dado pessoal sensível pela LGPD (art. 5º, II).",
+      "snippet": "await Notifications.scheduleNotificationAsync({",
+      "engines": [
+        "taint"
+      ],
+      "taint_path": [
+        {
+          "line": 47,
+          "kind": "source",
+          "code": "content: { title: \"Evacuação\", body: `Leve seus remédios: ${remedios}` },"
+        },
+        {
+          "line": 46,
+          "kind": "sink",
+          "code": "await Notifications.scheduleNotificationAsync({"
+        }
+      ],
+      "remediation": "A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.",
+      "safe_example": "await Notifications.scheduleNotificationAsync({ content: { title: \"Você tem um novo aviso\" }, trigger: null });",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/359.html",
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": {
+        "titulo": "Risco de exposição: Saúde",
+        "o_que_pode_acontecer": "Informações de saúde aparecem na tela bloqueada do celular, onde qualquer pessoa por perto consegue ler. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
+        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+        "o_que_fazer": "A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.",
+        "gravidade": "crítica",
+        "origem": "regras"
+      }
+    },
+    {
+      "fingerprint": "c14d2e9d0ed4d98e17624b3c41aafbee",
+      "rule_id": "pii.valor.cpf",
+      "title": "CPF válido escrito no código",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 28,
+      "end_line": 28,
+      "column": 22,
+      "severity": "high",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "A04:2021 - Insecure Design",
+      "message": "O texto contém um CPF com dígitos verificadores corretos (***.***.***-09). Pode ser o documento de uma pessoa real e fica para sempre no histórico do repositório.",
+      "snippet": "const CPF_DE_TESTE = \"***.***.***-09\";",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).",
+      "safe_example": "const CPF_TESTE = gerarCpfFicticio(); // gerado na hora, não pertence a ninguém",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": {
+        "titulo": "Risco de exposição: CPF e documentos",
+        "o_que_pode_acontecer": "Um documento verdadeiro ficou gravado no código do sistema, e qualquer pessoa com acesso ao código consegue copiá-lo. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
+        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+        "o_que_fazer": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).",
+        "gravidade": "alta",
+        "origem": "regras"
+      }
+    },
+    {
+      "fingerprint": "168606409973b1cd85515f4db52608aa",
+      "rule_id": "pii.vazamento.log.documento",
+      "title": "Dado pessoal escrito no log: CPF e documentos",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 32,
+      "end_line": 32,
+      "column": 3,
+      "severity": "high",
+      "confidence": "high",
+      "cwe": "CWE-532",
+      "owasp": "A09:2021 - Security Logging and Monitoring Failures",
+      "message": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `console.log`: o log do sistema, que costuma ser lido por várias pessoas e enviado a outros serviços.",
+      "snippet": "console.log(\"Novo cadastro\", cadastro.cpf, cadastro.senha);",
+      "engines": [
+        "taint"
+      ],
+      "taint_path": [
+        {
+          "line": 32,
+          "kind": "source",
+          "code": "console.log(\"Novo cadastro\", cadastro.cpf, cadastro.senha);"
+        },
+        {
+          "line": 32,
+          "kind": "sink",
+          "code": "console.log(\"Novo cadastro\", cadastro.cpf, cadastro.senha);"
+        }
+      ],
+      "remediation": "Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.",
+      "safe_example": "console.info(\"cadastro concluído\", { usuarioId: usuario.id });",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/532.html",
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": {
+        "titulo": "Risco de exposição: CPF e documentos",
+        "o_que_pode_acontecer": "Pessoas da equipe técnica e serviços que recebem os registros do sistema podem ver CPF ou outros documentos de quem usa o app. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
+        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+        "o_que_fazer": "Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.",
+        "gravidade": "alta",
+        "origem": "regras"
+      }
+    },
+    {
+      "fingerprint": "bd4c4d57bb427dd8ab83cd0869374662",
+      "rule_id": "pii.vazamento.armazenamento.documento",
+      "title": "Dado pessoal salvo sem criptografia: CPF e documentos",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 35,
+      "end_line": 35,
+      "column": 9,
+      "severity": "high",
+      "confidence": "high",
+      "cwe": "CWE-312",
+      "owasp": "A02:2021 - Cryptographic Failures",
+      "message": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `@react-native-async-storage/async-storage.setItem`: o armazenamento do aparelho ou do servidor, sem criptografia.",
+      "snippet": "await AsyncStorage.setItem(\"cadastro:cpf\", cadastro.cpf);",
+      "engines": [
+        "taint"
+      ],
+      "taint_path": [
+        {
+          "line": 35,
+          "kind": "source",
+          "code": "await AsyncStorage.setItem(\"cadastro:cpf\", cadastro.cpf);"
+        },
+        {
+          "line": 35,
+          "kind": "sink",
+          "code": "await AsyncStorage.setItem(\"cadastro:cpf\", cadastro.cpf);"
+        }
+      ],
+      "remediation": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+      "safe_example": "await SecureStore.setItemAsync(\"cpf\", cpf);",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/312.html",
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": {
+        "titulo": "Risco de exposição: CPF e documentos",
+        "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler CPF ou outros documentos sem precisar de senha. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
+        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+        "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
+        "gravidade": "alta",
+        "origem": "regras"
+      }
+    },
+    {
+      "fingerprint": "dba19fb9d22b7b0eb8a17bbbd1dde144",
+      "rule_id": "pii.vazamento.url.documento",
+      "title": "Dado pessoal exposto na URL: CPF e documentos",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 39,
+      "end_line": 39,
+      "column": 26,
+      "severity": "high",
+      "confidence": "high",
+      "cwe": "CWE-598",
+      "owasp": "A04:2021 - Insecure Design",
+      "message": "CPF e documentos vindo de `cadastro.cpf` (CPF e documentos) chega a `fetch`: a URL, que fica no histórico, nos logs dos servidores e nos proxies.",
+      "snippet": "const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);",
+      "engines": [
+        "taint"
+      ],
+      "taint_path": [
+        {
+          "line": 39,
+          "kind": "source",
+          "code": "const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);"
+        },
+        {
+          "line": 39,
+          "kind": "sink",
+          "code": "const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);"
+        }
+      ],
+      "remediation": "Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.",
+      "safe_example": "await fetch(\"https://api.exemplo.gov.br/cadastro\", { method: \"POST\", body: JSON.stringify({ cpf }) });",
+      "references": [
+        "https://cwe.mitre.org/data/definitions/598.html",
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": {
+        "titulo": "Risco de exposição: CPF e documentos",
+        "o_que_pode_acontecer": "CPF ou outros documentos ficam gravados no histórico do navegador e nos registros dos servidores por onde a requisição passa. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
+        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
+        "o_que_fazer": "Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.",
+        "gravidade": "alta",
+        "origem": "regras"
+      }
+    },
+    {
+      "fingerprint": "e1fdea22d042e925002b1d2de29256f6",
+      "rule_id": "pii.mapa.documento",
+      "title": "Dado pessoal mapeado: CPF e documentos",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 18,
+      "end_line": 18,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cpf` guarda CPF ou outros documentos. Confira se o dado é necessário e se está protegido.",
+      "snippet": "cpf: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "e903c44c67a8e60ee230dba968d261a6",
+      "rule_id": "pii.mapa.contato",
+      "title": "Dado pessoal mapeado: Contato e endereço",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 19,
+      "end_line": 19,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido.",
+      "snippet": "telefone: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "16a5febff2fa1379410ba0789c2a097b",
+      "rule_id": "pii.mapa.saude",
+      "title": "Dado pessoal mapeado: Saúde",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 20,
+      "end_line": 20,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`condicaoDeSaude` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido.",
+      "snippet": "condicaoDeSaude: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "97ff07fe0a0fec068ad57614952a50b9",
+      "rule_id": "pii.mapa.saude",
+      "title": "Dado pessoal mapeado: Saúde",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 21,
+      "end_line": 21,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`medicamentos` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido.",
+      "snippet": "medicamentos: string[];",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "01d0f142b91a2bf0fe239a59a8b2acd6",
+      "rule_id": "pii.mapa.credencial",
+      "title": "Dado pessoal mapeado: Senhas e credenciais",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 22,
+      "end_line": 22,
+      "column": 3,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido.",
+      "snippet": "senha: string;",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "a3d2a64ae15b2797bc39c83fab463099",
+      "rule_id": "pii.mapa.documento",
+      "title": "Dado pessoal mapeado: CPF e documentos",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 28,
+      "end_line": 28,
+      "column": 7,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`CPF_DE_TESTE` guarda CPF ou outros documentos. Confira se o dado é necessário e se está protegido.",
+      "snippet": "const CPF_DE_TESTE = \"***.***.***-09\";",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "89ebd71515a56f2116798aee21871b80",
+      "rule_id": "pii.mapa.registro",
+      "title": "Dado pessoal mapeado: Cadastro de pessoa",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 30,
+      "end_line": 30,
+      "column": 8,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`cadastro` guarda dados do cadastro. Confira se o dado é necessário e se está protegido.",
+      "snippet": "export async function salvarCadastro(cadastro: CadastroMorador) {",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    },
+    {
+      "fingerprint": "7beaae942d824f41dfd3833e0b92ef31",
+      "rule_id": "pii.mapa.saude",
+      "title": "Dado pessoal mapeado: Saúde",
+      "language": "typescript",
+      "file_path": "prototipo-com-falhas/cadastroMorador.ts",
+      "line": 45,
+      "end_line": 45,
+      "column": 9,
+      "severity": "info",
+      "confidence": "medium",
+      "cwe": "CWE-359",
+      "owasp": "",
+      "message": "`remedios` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido.",
+      "snippet": "const remedios = cadastro.medicamentos.join(\", \");",
+      "engines": [
+        "rule"
+      ],
+      "taint_path": [],
+      "remediation": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+      "safe_example": "",
+      "references": [
+        "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+        "https://cwe.mitre.org/data/definitions/359.html"
+      ],
+      "status": "open",
+      "ai": null,
+      "alerta_cidadao": null
+    }
+  ]
+}

@@ -259,11 +259,9 @@ class TaintAnalyzer:
 
         reference = adapter.reference_name(node)
         if reference is not None:
-            if matches_any(reference, self.spec.source_members):
-                return Trace(
-                    source=f"`{reference}`",
-                    steps=(self._step(node, "source"),),
-                )
+            source = self._source_trace(reference, node)
+            if source is not None:
+                return source
             if reference in env:
                 return env[reference]
             base = reference.split(".", 1)[0]
@@ -276,7 +274,7 @@ class TaintAnalyzer:
             name = adapter.call_name(node, self.ctx) or ""
             if matches_any(name, self.spec.source_calls):
                 return Trace(source=f"`{name}()`", steps=(self._step(node, "source"),))
-            if matches_any(name, self.spec.sanitizers):
+            if self._is_sanitizer(name):
                 return None
             summary = self.summaries.get(name.rsplit(".", 1)[-1])
             if summary is not None and summary.returns_source is not None:
@@ -297,6 +295,23 @@ class TaintAnalyzer:
             if trace is not None:
                 return trace
         return None
+
+    def _source_trace(self, reference: str, node: Node) -> Trace | None:
+        """Ponto de extensão: decide se uma referência já é uma fonte.
+
+        Aqui a fonte é entrada externa (``req.query``...). O módulo de dados
+        pessoais sobrescreve este método para tratar ``cpf``, ``senha`` etc.
+        como fonte.
+        """
+
+        if matches_any(reference, self.spec.source_members):
+            return Trace(source=f"`{reference}`", steps=(self._step(node, "source"),))
+        return None
+
+    def _is_sanitizer(self, call_name: str) -> bool:
+        """Ponto de extensão: chamada que devolve um valor limpo."""
+
+        return matches_any(call_name, self.spec.sanitizers)
 
     # --------------------------------------------------------------- sinks
     def _check_call_sink(

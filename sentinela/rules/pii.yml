@@ -1,0 +1,168 @@
+# Saídas inseguras para dados pessoais (taint analysis de PII).
+#
+# A fonte é qualquer campo ou variável com nome de dado pessoal (cpf, senha,
+# diagnostico, telefone...), reconhecido por sentinela/pii/categorias.py.
+# O sink é uma saída onde o dado fica exposto a quem não deveria vê-lo.
+# O tipo de saída é a terceira parte do id (log, armazenamento, url...) e
+# define o peso no índice Risco Cidadão (sentinela/pii/risco.py).
+#
+# Sanitizadores: chamadas cujo nome indica proteção (mascarar, hash,
+# criptografar, anonimizar...) também são reconhecidas pelo nome, em
+# sentinela/pii/fluxo.py. A lista abaixo também inclui clientes HTTP: a
+# resposta de uma requisição não carrega o dado enviado nela (um token no
+# cabeçalho não "contamina" o JSON que volta do servidor).
+
+javascript:
+  sanitizers:
+    - "Crypto.digestStringAsync"
+    - "expo-crypto.*"
+    - "bcrypt.hash"
+    - "bcrypt.hashSync"
+    - "SecureStore.setItemAsync"
+    - "expo-secure-store.*"
+    - "*.length"
+    - "fetch"
+    - "axios"
+    - "axios.*"
+    - "*.json"
+  sinks:
+    - id: pii.vazamento.log
+      title: Dado pessoal escrito no log
+      severity: high
+      cwe: CWE-532
+      owasp: "A09:2021 - Security Logging and Monitoring Failures"
+      calls: ["console.*", "logger.*", "log.info", "log.debug", "log.warn", "log.error", "winston.*", "Sentry.captureMessage", "Sentry.addBreadcrumb"]
+      args: any
+      remediation: Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.
+      example: |
+        console.info("cadastro concluído", { usuarioId: usuario.id });
+    - id: pii.vazamento.armazenamento
+      title: Dado pessoal salvo sem criptografia
+      severity: high
+      cwe: CWE-312
+      owasp: "A02:2021 - Cryptographic Failures"
+      calls: ["AsyncStorage.setItem", "AsyncStorage.mergeItem", "AsyncStorage.multiSet", "*async-storage.setItem", "*async-storage.mergeItem", "*async-storage.multiSet", "localStorage.setItem", "sessionStorage.setItem", "fs.writeFile", "fs.writeFileSync", "fs.appendFile", "fs.appendFileSync", "MMKV.set", "*.storage.set"]
+      args: any
+      member_assign: ["cookie"]
+      remediation: Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.
+      example: |
+        await SecureStore.setItemAsync("cpf", cpf);
+    - id: pii.vazamento.url
+      title: Dado pessoal exposto na URL
+      severity: high
+      cwe: CWE-598
+      owasp: "A04:2021 - Insecure Design"
+      calls: ["fetch", "axios.get", "axios.delete", "axios.head", "*Linking.openURL", "expo-linking.openURL", "window.open", "*WebBrowser.openBrowserAsync", "expo-web-browser.openBrowserAsync"]
+      args: [0]
+      remediation: Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.
+      example: |
+        await fetch("https://api.exemplo.gov.br/cadastro", { method: "POST", body: JSON.stringify({ cpf }) });
+    - id: pii.vazamento.notificacao
+      title: Dado pessoal em notificação
+      severity: high
+      cwe: CWE-359
+      owasp: "A04:2021 - Insecure Design"
+      calls: ["Notifications.scheduleNotificationAsync", "Notifications.presentNotificationAsync", "expo-notifications.scheduleNotificationAsync", "expo-notifications.presentNotificationAsync", "PushNotification.localNotification", "new Notification"]
+      args: any
+      remediation: A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.
+      example: |
+        await Notifications.scheduleNotificationAsync({ content: { title: "Você tem um novo aviso" }, trigger: null });
+    - id: pii.vazamento.analytics
+      title: Dado pessoal enviado para analytics
+      severity: high
+      cwe: CWE-359
+      owasp: "A04:2021 - Insecure Design"
+      calls: ["analytics.track", "analytics.identify", "*.logEvent", "logEvent", "mixpanel.track", "amplitude.track", "gtag"]
+      args: any
+      remediation: Ferramentas de analytics são terceiros. Envie só eventos anônimos, sem dado pessoal.
+      example: |
+        analytics.track("cadastro_concluido");
+    - id: pii.vazamento.area-transferencia
+      title: Dado pessoal copiado para a área de transferência
+      severity: medium
+      cwe: CWE-200
+      owasp: "A04:2021 - Insecure Design"
+      calls: ["*Clipboard.setString", "*Clipboard.setStringAsync", "expo-clipboard.setStringAsync", "navigator.clipboard.writeText"]
+      args: any
+      remediation: Outros apps leem a área de transferência. Evite copiar dados pessoais automaticamente.
+      example: |
+        // Peça confirmação antes de copiar e limpe a área de transferência depois.
+
+python:
+  sanitizers:
+    - "hashlib.*"
+    - "bcrypt.hashpw"
+    - "*.hexdigest"
+    - "len"
+    - "httpx.*"
+    - "requests.*"
+    - "*.json"
+    - "*.raise_for_status"
+  sinks:
+    - id: pii.vazamento.log
+      title: Dado pessoal escrito no log
+      severity: high
+      cwe: CWE-532
+      owasp: "A09:2021 - Security Logging and Monitoring Failures"
+      calls: ["print", "logging.*", "logger.*", "log.*", "*.logger.*"]
+      args: any
+      remediation: Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.
+      example: |
+        logger.info("cadastro concluído", extra={"usuario_id": usuario.id})
+    - id: pii.vazamento.armazenamento
+      title: Dado pessoal salvo sem criptografia
+      severity: high
+      cwe: CWE-312
+      owasp: "A02:2021 - Cryptographic Failures"
+      calls: ["*.write", "*.writelines", "json.dump", "pickle.dump", "*.to_csv", "csv.writer.writerow", "*.writerow"]
+      args: any
+      remediation: Criptografe dados pessoais antes de gravar em arquivo, ou grave só o necessário.
+      example: |
+        arquivo.write(fernet.encrypt(cpf.encode()))
+    - id: pii.vazamento.url
+      title: Dado pessoal exposto na URL
+      severity: high
+      cwe: CWE-598
+      owasp: "A04:2021 - Insecure Design"
+      calls: ["requests.get", "requests.delete", "httpx.get", "httpx.delete", "urllib.request.urlopen", "webbrowser.open"]
+      args: [0]
+      remediation: Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL.
+      example: |
+        requests.post("https://api.exemplo.gov.br/cadastro", json={"cpf": cpf}, timeout=10)
+
+java:
+  sanitizers:
+    - "BCrypt.hashpw"
+    - "*.digest"
+    - "*.length"
+  sinks:
+    - id: pii.vazamento.log
+      title: Dado pessoal escrito no log
+      severity: high
+      cwe: CWE-532
+      owasp: "A09:2021 - Security Logging and Monitoring Failures"
+      calls: ["System.out.println", "System.out.print", "System.out.printf", "System.err.println", "logger.*", "log.*", "LOG.*", "LOGGER.*", "Log.d", "Log.i", "Log.e", "Log.w", "Log.v"]
+      args: any
+      remediation: Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.
+      example: |
+        log.info("Cadastro concluído para o usuário {}", usuario.getId());
+    - id: pii.vazamento.armazenamento
+      title: Dado pessoal salvo sem criptografia
+      severity: high
+      cwe: CWE-312
+      owasp: "A02:2021 - Cryptographic Failures"
+      calls: ["Files.write", "Files.writeString", "*.putString", "*.write"]
+      args: any
+      remediation: Use EncryptedSharedPreferences ou criptografe antes de gravar.
+      example: |
+        encryptedPrefs.edit().putString("cpf", cpf).apply();
+    - id: pii.vazamento.url
+      title: Dado pessoal exposto na URL
+      severity: high
+      cwe: CWE-598
+      owasp: "A04:2021 - Insecure Design"
+      calls: ["new URL", "*.getForObject", "*.getForEntity"]
+      args: [0]
+      remediation: Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL.
+      example: |
+        restTemplate.postForObject(URL_CADASTRO, new Cadastro(cpf), Resposta.class);

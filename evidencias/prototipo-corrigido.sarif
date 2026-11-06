@@ -1,0 +1,352 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Sentinela",
+          "semanticVersion": "1.0.0",
+          "informationUri": "https://github.com/GusRVPaulino/sast-devsecops-fiap",
+          "rules": [
+            {
+              "id": "pii.mapa.documento",
+              "name": "pii_mapa_documento",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: CPF e documentos"
+              },
+              "fullDescription": {
+                "text": "`cpf` guarda CPF ou outros documentos. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.contato",
+              "name": "pii_mapa_contato",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Contato e endereço"
+              },
+              "fullDescription": {
+                "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.saude",
+              "name": "pii_mapa_saude",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Saúde"
+              },
+              "fullDescription": {
+                "text": "`condicaoDeSaude` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.credencial",
+              "name": "pii_mapa_credencial",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Senhas e credenciais"
+              },
+              "fullDescription": {
+                "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.registro",
+              "name": "pii_mapa_registro",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Cadastro de pessoa"
+              },
+              "fullDescription": {
+                "text": "`cadastro` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "pii.mapa.documento",
+          "level": "note",
+          "message": {
+            "text": "`cpf` guarda CPF ou outros documentos. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-corrigido/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 17,
+                  "endLine": 17,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "cb1e81ae8ce44c8508e2d70fda77f369"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`telefone` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-corrigido/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "5a73f96e8d6215d68a49d40caf548197"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 1
+        },
+        {
+          "ruleId": "pii.mapa.saude",
+          "level": "note",
+          "message": {
+            "text": "`condicaoDeSaude` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-corrigido/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 19,
+                  "endLine": 19,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "5108fa5bb45316d8a9d796808eecb8ce"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.saude",
+          "level": "note",
+          "message": {
+            "text": "`medicamentos` guarda informações de saúde. É um dado pessoal sensível pela LGPD (art. 5º, II). Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-corrigido/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 20,
+                  "endLine": 20,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "69333fd316e58c12beff8c133e1983e2"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.credencial",
+          "level": "note",
+          "message": {
+            "text": "`senha` guarda senha ou código de acesso. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-corrigido/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 21,
+                  "endLine": 21,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "7f21b251e41a221da1c737e1f828677d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`cadastro` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "prototipo-corrigido/cadastroMorador.ts"
+                },
+                "region": {
+                  "startLine": 26,
+                  "endLine": 26,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "149dd282bf42b01eb4abbbf0a9056375"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        }
+      ],
+      "versionControlProvenance": [
+        {
+          "repositoryUri": "prototipo-corrigido"
+        }
+      ]
+    }
+  ]
+}
