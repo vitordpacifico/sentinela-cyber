@@ -2,7 +2,7 @@
 
 Entrega de **Cybersecurity** da Global Solution 2026.2 (FIAP, Engenharia de Software, 3º ano), tema CitizenTech.
 
-O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para a GS, ganhou um **módulo novo de dados pessoais** que protege os cidadãos atendidos pela nossa CitizenTech: o **Pluvia**, app de alagamentos que mostra ocorrências perto da pessoa, avisa sobre o carro estacionado e recebe relatos com foto ([app de Mobile](https://github.com/vitordpacifico/sentinela-mobile)). O documento de definição do grupo pede, em Cyber, o mapeamento de dados pessoais em **fotos e localização**, a taint analysis, recomendações com IA e o painel de Risco Cidadão.
+O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para a GS, ganhou um **módulo novo de dados pessoais** que protege os cidadãos atendidos pela nossa CitizenTech: o **Pluvia**, app de alagamentos que mostra ocorrências perto da pessoa, avisa sobre o carro estacionado e recebe relatos com foto ([app de Mobile](https://github.com/vitordpacifico/pluvia-mobile)). O documento de definição do grupo pede, em Cyber, o mapeamento de dados pessoais em **fotos e localização**, a taint analysis, recomendações com IA e o painel de Risco Cidadão.
 
 | Integrante | RM |
 |---|---|
@@ -67,7 +67,7 @@ Detalhado em [risco-cidadao.md](risco-cidadao.md). Em resumo:
 | `exemplos/prototipo-corrigido` (mesma função, corrigida) | Aprovado | 7, Baixo | 0 vazamentos |
 | App Pluvia de Mobile (`GS-Mobile/src`, código real) | Aprovado | 6, Baixo | 0 vazamentos; 140 campos com dado pessoal mapeados, entre eles 20 de localização e 20 de fotos |
 
-**O que a auditoria mudou no app.** Os campos mapeados mostraram onde o app guardava o telefone e o CEP do cidadão. Seguindo esses campos, a revisão manual achou um problema que o scanner não pega sozinho, porque o dado passa por dois arquivos (veja as limitações): esses dados iam para o AsyncStorage, que grava **sem criptografia**. O app foi corrigido, e agora o telefone e o CEP ficam no cofre do sistema (`expo-secure-store`: Keychain no iOS, Keystore no Android). A correção está no commit [45dc17f do app](https://github.com/vitordpacifico/sentinela-mobile/commit/45dc17f).
+**O que a auditoria mudou no app.** Os campos mapeados mostraram onde o app guardava o telefone e o CEP do cidadão. Seguindo esses campos, a revisão manual achou um problema que o scanner não pega sozinho, porque o dado passa por dois arquivos (veja as limitações): esses dados iam para o AsyncStorage, que grava **sem criptografia**. O app foi corrigido, e agora o telefone e o CEP ficam no cofre do sistema (`expo-secure-store`: Keychain no iOS, Keystore no Android). A correção está no commit [45dc17f do app](https://github.com/vitordpacifico/pluvia-mobile/commit/45dc17f).
 
 Na versão do Pluvia, o mesmo cofre guarda o local do carro e os locais favoritos, e o app gera uma cópia da foto sem os metadados (EXIF) antes de enviar um relato, para não expor onde a foto foi tirada.
 
