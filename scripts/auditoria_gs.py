@@ -5,7 +5,7 @@ o resultado completo em JSON, o SARIF e a saída do terminal:
 
 * ``prototipo-com-falhas``: protótipo de teste com vazamentos inseridos de propósito;
 * ``prototipo-corrigido``: o mesmo protótipo depois das correções;
-* ``app-mobile``: o código real do app SENTINELA de Mobile (pasta ``src``).
+* ``app-mobile``: o código real do app Pluvia de Mobile (pasta ``src``).
 
     python scripts/auditoria_gs.py                       # app em ../GS-Mobile
     python scripts/auditoria_gs.py --app C:/caminho/GS-Mobile --ai   # com a IA local (Ollama)
@@ -62,7 +62,7 @@ def auditar(nome: str, alvo: Path, saida: Path, *, ai: bool, model: str) -> None
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--app", default=str(RAIZ.parent / "GS-Mobile"), help="pasta do app SENTINELA de Mobile")
+    parser.add_argument("--app", default=str(RAIZ.parent / "GS-Mobile"), help="pasta do app Pluvia de Mobile")
     parser.add_argument("--saida", default=str(RAIZ / "evidencias"), help="onde gravar as evidências")
     parser.add_argument("--ai", action="store_true", help="usa a IA local (Ollama) para escrever os alertas")
     parser.add_argument("--model", default="llama3.2", help="modelo do Ollama")

@@ -19,6 +19,7 @@ r = peso da categoria do dado × peso da saída
 | Senhas e credenciais | 0,9 | | Armazenamento sem criptografia | 0,8 |
 | CPF e documentos | 0,8 | | Log | 0,7 |
 | Localização | 0,6 | | Analytics | 0,7 |
+| Fotos e imagens | 0,6 | | | |
 | Contato e endereço | 0,5 | | Notificação | 0,6 |
 | Identificação pessoal | 0,4 | | Área de transferência | 0,5 |
 | Cadastro de pessoa | 0,3 | | | |

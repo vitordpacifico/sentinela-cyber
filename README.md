@@ -4,7 +4,7 @@
 > Este fork ganhou um **módulo de dados pessoais**: mapeamento de PII com
 > CPF e Cartão SUS, taint analysis até saídas inseguras, alerta ao cidadão
 > escrito pela IA e o indicador **Risco Cidadão** no dashboard. Também passou a
-> analisar **TypeScript**. Ele audita o app SENTINELA de alerta de alagamentos.
+> analisar **TypeScript**. Ele audita o Pluvia, o app de alagamentos do grupo.
 >
 > Tudo sobre a entrega está em **[docs/GLOBAL_SOLUTION.md](docs/GLOBAL_SOLUTION.md)**:
 > a missão, as evidências em [`evidencias/`](evidencias), o indicador

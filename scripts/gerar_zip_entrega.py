@@ -33,7 +33,7 @@ def arquivos_do_projeto() -> list[Path]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--video", help="vídeo da demonstração, incluído na pasta video/ do ZIP")
-    parser.add_argument("--saida", default=str(RAIZ / "entrega" / "GS-Cybersecurity-SENTINELA.zip"))
+    parser.add_argument("--saida", default=str(RAIZ / "entrega" / "GS-Cybersecurity-Pluvia.zip"))
     args = parser.parse_args()
 
     destino = Path(args.saida)

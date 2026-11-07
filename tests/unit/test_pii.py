@@ -34,6 +34,9 @@ def ids(findings, prefixo="pii."):
         ("telefoneCelular", "contato"),
         ("usuario.id", "registro"),
         ("raca", "sensivel"),
+        ("relato.fotoUri", "imagem"),
+        ("selfieDoUsuario", "imagem"),
+        ("carro.latitude", "localizacao"),
     ],
 )
 def test_classifica_dado_pessoal_pelo_nome(nome, categoria):

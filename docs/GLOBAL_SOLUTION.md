@@ -2,7 +2,7 @@
 
 Entrega de **Cybersecurity** da Global Solution 2026.2 (FIAP, Engenharia de Software, 3º ano), tema CitizenTech.
 
-O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para a GS, ganhou um **módulo novo de dados pessoais** que protege os cidadãos atendidos pela nossa CitizenTech: o **SENTINELA**, app de alerta antecipado de alagamentos ([app de Mobile](https://github.com/vitordpacifico/sentinela-mobile)).
+O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para a GS, ganhou um **módulo novo de dados pessoais** que protege os cidadãos atendidos pela nossa CitizenTech: o **Pluvia**, app de alagamentos que mostra ocorrências perto da pessoa, avisa sobre o carro estacionado e recebe relatos com foto ([app de Mobile](https://github.com/vitordpacifico/sentinela-mobile)). O documento de definição do grupo pede, em Cyber, o mapeamento de dados pessoais em **fotos e localização**, a taint analysis, recomendações com IA e o painel de Risco Cidadão.
 
 | Integrante | RM |
 |---|---|
@@ -16,7 +16,7 @@ O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para
 
 | Missão | O que foi feito | Onde está |
 |---|---|---|
-| **01. Mapeamento de PII** | Regras novas no motor de parsing (Tree-sitter) que reconhecem 8 categorias de dados pessoais pelo nome de campos, variáveis e parâmetros, e acham **CPF e Cartão SUS válidos** escritos no código (com cálculo dos dígitos verificadores). Suporte novo a **TypeScript**, a linguagem do app. | `sentinela/pii/categorias.py`, `sentinela/pii/valores.py`, `sentinela/pii/detector.py`, `sentinela/engine/languages/typescript.py` |
+| **01. Mapeamento de PII** | Regras novas no motor de parsing (Tree-sitter) que reconhecem 9 categorias de dados pessoais pelo nome de campos, variáveis e parâmetros (entre elas **fotos** e **localização**, os dados centrais do Pluvia), e acham **CPF e Cartão SUS válidos** escritos no código (com cálculo dos dígitos verificadores). Suporte novo a **TypeScript**, a linguagem do app. | `sentinela/pii/categorias.py`, `sentinela/pii/valores.py`, `sentinela/pii/detector.py`, `sentinela/engine/languages/typescript.py` |
 | **02. Taint Analysis** | Segue o dado pessoal até 6 tipos de saída insegura: log, armazenamento sem criptografia, URL, notificação, analytics e área de transferência. Reconhece proteções (mascarar, hash, criptografar, `expo-secure-store`). O **Security Gate bloqueia** o merge quando o vazamento é de dado sensível, CPF ou senha. | `sentinela/pii/fluxo.py`, `sentinela/rules/pii.yml` |
 | **03. Tradução via IA** | O LLM local (Llama via Ollama) escreve um **alerta ao cidadão** em linguagem simples: o que pode acontecer, quem é afetado e o que fazer. O código chega à IA com **CPF, e-mail e telefone mascarados**. Sem IA, um alerta escrito por regras ocupa o lugar. | `sentinela/ai/assistant.py`, `sentinela/pii/alerta.py`, `sentinela/pii/valores.py` |
 | **04. Dashboard Executivo** | Indicador **Risco Cidadão** (0 a 100) com medidor, faixa de risco, dados pessoais por categoria e alertas ao cidadão. Também na API, na CLI e no relatório Markdown. | `sentinela/pii/risco.py`, `sentinela/api/static/`, `GET /api/scans/{id}/risco-cidadao` |
@@ -29,7 +29,8 @@ O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para
 | Outros dados sensíveis | `raca`, `religiao`, `biometria` | Sim | 1,0 |
 | Senhas e credenciais | `senha`, `password`, `token`, `pin` | | 0,9 |
 | CPF e documentos | `cpf`, `rg`, `cnh`, `passaporte` | | 0,8 |
-| Localização | `latitude`, `longitude`, `gps` | | 0,6 |
+| Localização | `latitude`, `longitude`, `gps`, `coordenada` | | 0,6 |
+| Fotos e imagens | `foto`, `fotoUri`, `imagem`, `selfie`, `exif` | | 0,6 |
 | Contato e endereço | `email`, `telefone`, `cep`, `endereco` | | 0,5 |
 | Identificação pessoal | `dataNascimento`, `nomeCompleto`, `sexo` | | 0,4 |
 | Cadastro de pessoa | `usuario`, `paciente`, `cidadao`, `morador` | | 0,3 |
@@ -64,9 +65,13 @@ Detalhado em [risco-cidadao.md](risco-cidadao.md). Em resumo:
 |---|---|---|---|
 | `exemplos/prototipo-com-falhas` (falhas inseridas de propósito) | **Bloqueado** | **100, Crítico** | 5 vazamentos e 1 CPF real no código |
 | `exemplos/prototipo-corrigido` (mesma função, corrigida) | Aprovado | 7, Baixo | 0 vazamentos |
-| App SENTINELA de Mobile (`GS-Mobile/src`, código real) | Aprovado | 3, Baixo | 0 vazamentos; 100 campos com dado pessoal mapeados |
+| App Pluvia de Mobile (`GS-Mobile/src`, código real) | Aprovado | 6, Baixo | 0 vazamentos; 140 campos com dado pessoal mapeados, entre eles 20 de localização e 20 de fotos |
 
 **O que a auditoria mudou no app.** Os campos mapeados mostraram onde o app guardava o telefone e o CEP do cidadão. Seguindo esses campos, a revisão manual achou um problema que o scanner não pega sozinho, porque o dado passa por dois arquivos (veja as limitações): esses dados iam para o AsyncStorage, que grava **sem criptografia**. O app foi corrigido, e agora o telefone e o CEP ficam no cofre do sistema (`expo-secure-store`: Keychain no iOS, Keystore no Android). A correção está no commit [45dc17f do app](https://github.com/vitordpacifico/sentinela-mobile/commit/45dc17f).
+
+Na versão do Pluvia, o mesmo cofre guarda o local do carro e os locais favoritos, e o app gera uma cópia da foto sem os metadados (EXIF) antes de enviar um relato, para não expor onde a foto foi tirada.
+
+**O que ainda fica em texto aberto no protótipo.** Na simulação, o "servidor" dos relatos guarda os relatos no AsyncStorage do próprio celular, com o local e o autor. Na versão real, eles ficam só na API, com acesso restrito.
 
 As evidências ficam em [`evidencias/`](../evidencias). Cada alvo tem o relatório Markdown, o JSON completo, o SARIF e a saída do terminal. Há também os prints do painel.
 
@@ -95,7 +100,7 @@ sentinela serve
 Abra `http://localhost:8000`.
 
 - O projeto **prototipo-com-falhas** mostra o Risco Cidadão crítico e os alertas.
-- O projeto **sentinela-app** mostra a queda das falhas ao longo de uma semana: o protótipo com falhas, depois corrigido, e por fim o app real.
+- O projeto **pluvia-app** mostra a queda das falhas ao longo de uma semana: o protótipo com falhas, depois corrigido, e por fim o app real.
 
 Sem `--ai`, os alertas são escritos por regras e o painel avisa isso.
 
@@ -107,17 +112,17 @@ Antes de gravar, rode `python scripts/demo_gs.py --ai` e deixe `sentinela serve`
 
 | Tempo | Mostrar | O que falar |
 |---|---|---|
-| 0:00 | Este documento, na tabela da missão | "O app SENTINELA guarda dados de moradores. Criamos no Sentinela um módulo que acha dados pessoais no código e bloqueia o merge quando eles vazam." |
+| 0:00 | Este documento, na tabela da missão | "O Pluvia guarda a localização do carro, fotos e o contato das pessoas. Criamos no Sentinela um módulo que acha dados pessoais no código e bloqueia o merge quando eles vazam." |
 | 0:20 | `exemplos/prototipo-com-falhas/cadastroMorador.ts` | "Este protótipo tem 5 vazamentos colocados de propósito: o diagnóstico vai para o celular sem criptografia e para a notificação, e o CPF vai para o log, para a URL e para o celular sem criptografia. Além disso, há um CPF real escrito no código." |
 | 0:40 | Terminal: `sentinela scan exemplos/prototipo-com-falhas --policy exemplos/politica-auditoria.yml --no-bandit` | Mostrar o caminho do dado (de onde veio até onde vazou), o **gate bloqueado** e o Risco Cidadão 100. |
 | 1:20 | O mesmo comando em `exemplos/prototipo-corrigido` | "Com as correções, o gate aprova e o risco cai para Baixo." |
 | 1:40 | Painel, projeto `prototipo-com-falhas` | O medidor do **Risco Cidadão** (crítico), a tabela por categoria e os alertas ao cidadão escritos pela IA. Abrir um vazamento e mostrar o alerta. |
-| 2:20 | Painel, projeto `sentinela-app` | "Ao longo da semana, as falhas caíram e o app real ficou com risco Baixo." Mostrar a tendência. |
+| 2:20 | Painel, projeto `pluvia-app` | "Ao longo da semana, as falhas caíram e o app real ficou com risco Baixo." Mostrar a tendência. |
 | 2:40 | O parágrafo "O que a auditoria mudou no app" | "A auditoria achou o telefone e o CEP sem criptografia no app de Mobile, e nós corrigimos." |
 
 ## Limitações conhecidas
 
-- **O fluxo é seguido dentro do mesmo arquivo.** Se um dado passa por funções de arquivos diferentes, ele não é rastreado. Um exemplo é o app de Mobile, antes da correção: o telefone e o CEP passavam do serviço de usuários para o serviço genérico de armazenamento, e esse caminho não aparecia. Quem achou o problema foi a revisão manual dos campos mapeados.
+- **O fluxo é seguido dentro do mesmo arquivo.** Se um dado passa por funções de arquivos diferentes, ele não é rastreado. Um exemplo é o app de Mobile, na versão anterior à correção: o telefone e o CEP passavam do serviço de usuários para o serviço genérico de armazenamento, e esse caminho não aparecia. Quem achou o problema foi a revisão manual dos campos mapeados.
 - **O reconhecimento é pelo nome.** Um campo com nome genérico, como `valor`, não é reconhecido como dado pessoal. Por outro lado, `tipoCidadao` é mapeado como cadastro de pessoa, mesmo sem ser um dado pessoal.
 - **Uma saída que recebe dois dados gera um achado só.** O achado mostra a primeira categoria encontrada. Por exemplo, CPF e senha no mesmo `console.log` aparecem como um vazamento de CPF.
 - **A IA local recomenda, mas não decide.** O alerta escrito pela IA não muda a severidade nem o gate, como já era no Sentinela.

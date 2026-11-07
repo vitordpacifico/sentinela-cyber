@@ -4,9 +4,9 @@ Cria dois projetos:
 
 * ``prototipo-com-falhas``: um scan do protótipo com vazamentos de dados
   pessoais. O painel mostra o Risco Cidadão crítico e os alertas ao cidadão.
-* ``sentinela-app``: três scans, como se o pipeline tivesse rodado ao longo de
+* ``pluvia-app``: três scans, como se o pipeline tivesse rodado ao longo de
   uma semana: o protótipo com falhas (há 6 dias), o protótipo corrigido (há 3
-  dias) e o código real do app SENTINELA de Mobile (hoje). A tendência mostra a
+  dias) e o código real do app Pluvia de Mobile (hoje). A tendência mostra a
   queda das falhas, e o Risco Cidadão fica baixo.
 
     python scripts/demo_gs.py                 # IA desligada: alertas escritos por regras
@@ -26,7 +26,7 @@ from sentinela.storage.db import create_all, session_scope
 from sentinela.storage.models import FindingRow, FindingState, Project, Scan, StateHistory
 
 RAIZ = Path(__file__).resolve().parents[1]
-PROJETO = "sentinela-app"
+PROJETO = "pluvia-app"
 EXTENSOES = {".ts", ".tsx", ".js", ".jsx", ".py", ".java"}
 
 
@@ -49,7 +49,7 @@ def apagar_projetos(nomes: set[str]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--app", default=str(RAIZ.parent / "GS-Mobile"), help="pasta do app SENTINELA de Mobile")
+    parser.add_argument("--app", default=str(RAIZ.parent / "GS-Mobile"), help="pasta do app Pluvia de Mobile")
     parser.add_argument("--ai", action="store_true", help="usa a IA local (Ollama) nos achados")
     parser.add_argument("--model", default="llama3.2")
     parser.add_argument("--ollama-url", default="http://localhost:11434")

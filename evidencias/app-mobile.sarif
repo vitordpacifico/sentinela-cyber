@@ -86,6 +86,58 @@
                 "security-severity": "1.0",
                 "precision": "medium"
               }
+            },
+            {
+              "id": "pii.mapa.localizacao",
+              "name": "pii_mapa_localizacao",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Localização"
+              },
+              "fullDescription": {
+                "text": "`latitudeDelta` guarda localização. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
+            },
+            {
+              "id": "pii.mapa.imagem",
+              "name": "pii_mapa_imagem",
+              "shortDescription": {
+                "text": "Dado pessoal mapeado: Fotos e imagens"
+              },
+              "fullDescription": {
+                "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+              },
+              "help": {
+                "text": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações.",
+                "markdown": "Colete só o necessário (LGPD, art. 6º, III), proteja o dado em repouso com criptografia e nunca envie para logs, URLs ou notificações."
+              },
+              "helpUri": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-359"
+                ],
+                "security-severity": "1.0",
+                "precision": "medium"
+              }
             }
           ]
         }
@@ -104,8 +156,8 @@
                   "uri": "src/app/(abas)/_layout.tsx"
                 },
                 "region": {
-                  "startLine": 15,
-                  "endLine": 15,
+                  "startLine": 25,
+                  "endLine": 25,
                   "startColumn": 9
                 }
               }
@@ -137,8 +189,8 @@
                   "uri": "src/app/_layout.tsx"
                 },
                 "region": {
-                  "startLine": 36,
-                  "endLine": 36,
+                  "startLine": 29,
+                  "endLine": 29,
                   "startColumn": 9
                 }
               }
@@ -170,8 +222,8 @@
                   "uri": "src/componentes/CampoTexto/index.tsx"
                 },
                 "region": {
-                  "startLine": 18,
-                  "endLine": 18,
+                  "startLine": 16,
+                  "endLine": 16,
                   "startColumn": 3
                 }
               }
@@ -200,18 +252,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/componentes/CartaoPonto/estilos.ts"
+                  "uri": "src/componentes/CartaoOcorrencia/estilos.ts"
                 },
                 "region": {
-                  "startLine": 18,
-                  "endLine": 18,
+                  "startLine": 19,
+                  "endLine": 19,
                   "startColumn": 3
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "dd38d5c2632a7c6dd936d9c924854f60"
+            "sentinela/v1": "056ad54dd25ab0735f59a0baabbe32f8"
           },
           "properties": {
             "severity": "info",
@@ -222,6 +274,72 @@
             "status": "open"
           },
           "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitudeDelta` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/componentes/Mapa/index.tsx"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 22,
+                  "startColumn": 17
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "287230b383240d5a0a439479c39fa15a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`longitudeDelta` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/componentes/Mapa/index.tsx"
+                },
+                "region": {
+                  "startLine": 22,
+                  "endLine": 22,
+                  "startColumn": 38
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "287230b383240d5a0a439479c39fa15a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
         },
         {
           "ruleId": "pii.mapa.credencial",
@@ -255,72 +373,6 @@
             "status": "open"
           },
           "ruleIndex": 1
-        },
-        {
-          "ruleId": "pii.mapa.registro",
-          "level": "note",
-          "message": {
-            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/contexto/AlertasContext.tsx"
-                },
-                "region": {
-                  "startLine": 34,
-                  "endLine": 34,
-                  "startColumn": 9
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "sentinela/v1": "ca44078b3276041a82c501cf5bbcebed"
-          },
-          "properties": {
-            "severity": "info",
-            "confidence": "medium",
-            "engines": [
-              "rule"
-            ],
-            "status": "open"
-          },
-          "ruleIndex": 0
-        },
-        {
-          "ruleId": "pii.mapa.registro",
-          "level": "note",
-          "message": {
-            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/contexto/AlertasContext.tsx"
-                },
-                "region": {
-                  "startLine": 39,
-                  "endLine": 39,
-                  "startColumn": 9
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "sentinela/v1": "649da1bad3c1af6f7295ed94b5bac3c2"
-          },
-          "properties": {
-            "severity": "info",
-            "confidence": "medium",
-            "engines": [
-              "rule"
-            ],
-            "status": "open"
-          },
-          "ruleIndex": 0
         },
         {
           "ruleId": "pii.mapa.registro",
@@ -368,8 +420,8 @@
                   "uri": "src/contexto/AutenticacaoContext.tsx"
                 },
                 "region": {
-                  "startLine": 46,
-                  "endLine": 46,
+                  "startLine": 44,
+                  "endLine": 44,
                   "startColumn": 9
                 }
               }
@@ -401,8 +453,8 @@
                   "uri": "src/contexto/AutenticacaoContext.tsx"
                 },
                 "region": {
-                  "startLine": 60,
-                  "endLine": 60,
+                  "startLine": 57,
+                  "endLine": 57,
                   "startColumn": 30
                 }
               }
@@ -434,8 +486,8 @@
                   "uri": "src/contexto/AutenticacaoContext.tsx"
                 },
                 "region": {
-                  "startLine": 60,
-                  "endLine": 60,
+                  "startLine": 57,
+                  "endLine": 57,
                   "startColumn": 30
                 }
               }
@@ -455,27 +507,27 @@
           "ruleIndex": 1
         },
         {
-          "ruleId": "pii.mapa.contato",
+          "ruleId": "pii.mapa.registro",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/dominio/tipos.ts"
+                  "uri": "src/contexto/AvisosContext.tsx"
                 },
                 "region": {
-                  "startLine": 14,
-                  "endLine": 14,
-                  "startColumn": 3
+                  "startLine": 29,
+                  "endLine": 29,
+                  "startColumn": 9
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "730fdd229a56a68b798b6432e3fa21b5"
+            "sentinela/v1": "268b729e778ece56dd7d246e1ecd2cb8"
           },
           "properties": {
             "severity": "info",
@@ -485,7 +537,238 @@
             ],
             "status": "open"
           },
-          "ruleIndex": 2
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/AvisosContext.tsx"
+                },
+                "region": {
+                  "startLine": 35,
+                  "endLine": 35,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ecb3e1df763e4b006770c5c61b72888e"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/LocaisContext.tsx"
+                },
+                "region": {
+                  "startLine": 38,
+                  "endLine": 38,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "6b10caec8c8cdb58fdcaf55cc8ab2590"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/LocaisContext.tsx"
+                },
+                "region": {
+                  "startLine": 39,
+                  "endLine": 39,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ebe248a8362ae2bbf79ed62d065e0f75"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`exigirUsuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/contexto/LocaisContext.tsx"
+                },
+                "region": {
+                  "startLine": 68,
+                  "endLine": 68,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "c8a80152f299cec5fcaa885790a5f44f"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/geo.ts"
+                },
+                "region": {
+                  "startLine": 2,
+                  "endLine": 2,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "3a871909f2a36e0397dc97180e3eb21d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/geo.ts"
+                },
+                "region": {
+                  "startLine": 3,
+                  "endLine": 3,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "02746c7ae8aa69aa5c92edf587eafa8d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/dominio/relato.ts"
+                },
+                "region": {
+                  "startLine": 26,
+                  "endLine": 26,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "8198ba1280da4a4497b2ba49b7fcc022"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
         },
         {
           "ruleId": "pii.mapa.contato",
@@ -500,8 +783,8 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 13,
-                  "endLine": 13,
+                  "startLine": 8,
+                  "endLine": 8,
                   "startColumn": 3
                 }
               }
@@ -533,8 +816,8 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 17,
-                  "endLine": 17,
+                  "startLine": 11,
+                  "endLine": 11,
                   "startColumn": 3
                 }
               }
@@ -566,8 +849,8 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 18,
-                  "endLine": 18,
+                  "startLine": 12,
+                  "endLine": 12,
                   "startColumn": 3
                 }
               }
@@ -599,8 +882,8 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 13,
+                  "endLine": 13,
                   "startColumn": 3
                 }
               }
@@ -632,8 +915,8 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 24,
-                  "endLine": 24,
+                  "startLine": 17,
+                  "endLine": 17,
                   "startColumn": 8
                 }
               }
@@ -665,8 +948,8 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 33,
-                  "endLine": 33,
+                  "startLine": 26,
+                  "endLine": 26,
                   "startColumn": 3
                 }
               }
@@ -698,15 +981,15 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 38,
-                  "endLine": 38,
+                  "startLine": 34,
+                  "endLine": 34,
                   "startColumn": 3
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "c13c3c2685852cfe4f011316bd5be076"
+            "sentinela/v1": "c3095e828931caa7038431c6822060da"
           },
           "properties": {
             "severity": "info",
@@ -731,8 +1014,8 @@
                   "uri": "src/dominio/usuario.ts"
                 },
                 "region": {
-                  "startLine": 42,
-                  "endLine": 42,
+                  "startLine": 37,
+                  "endLine": 37,
                   "startColumn": 14
                 }
               }
@@ -755,72 +1038,6 @@
           "ruleId": "pii.mapa.registro",
           "level": "note",
           "message": {
-            "text": "`USUARIO` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/servicos/alertas/__tests__/monitor.test.ts"
-                },
-                "region": {
-                  "startLine": 22,
-                  "endLine": 22,
-                  "startColumn": 7
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "sentinela/v1": "0462bb654f5b6211ea193affb53f79fe"
-          },
-          "properties": {
-            "severity": "info",
-            "confidence": "medium",
-            "engines": [
-              "rule"
-            ],
-            "status": "open"
-          },
-          "ruleIndex": 0
-        },
-        {
-          "ruleId": "pii.mapa.contato",
-          "level": "note",
-          "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/servicos/alertas/__tests__/monitor.test.ts"
-                },
-                "region": {
-                  "startLine": 32,
-                  "endLine": 32,
-                  "startColumn": 5
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "sentinela/v1": "b3671a6ce57e05133581acb6fc96cff4"
-          },
-          "properties": {
-            "severity": "info",
-            "confidence": "medium",
-            "engines": [
-              "rule"
-            ],
-            "status": "open"
-          },
-          "ruleIndex": 2
-        },
-        {
-          "ruleId": "pii.mapa.registro",
-          "level": "note",
-          "message": {
             "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
@@ -838,7 +1055,7 @@
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "7459e9d8f5b5aec04f7ce941369bd45e"
+            "sentinela/v1": "4b6b355e4050769681121ace130e0f60"
           },
           "properties": {
             "severity": "info",
@@ -854,39 +1071,6 @@
           "ruleId": "pii.mapa.contato",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/servicos/armazenamento/__tests__/armazenamento.test.ts"
-                },
-                "region": {
-                  "startLine": 24,
-                  "endLine": 24,
-                  "startColumn": 3
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "sentinela/v1": "80f4a87828764e2d589c7e6dd18fd702"
-          },
-          "properties": {
-            "severity": "info",
-            "confidence": "medium",
-            "engines": [
-              "rule"
-            ],
-            "status": "open"
-          },
-          "ruleIndex": 2
-        },
-        {
-          "ruleId": "pii.mapa.contato",
-          "level": "note",
-          "message": {
             "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
@@ -896,8 +1080,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 21,
+                  "endLine": 21,
                   "startColumn": 3
                 }
               }
@@ -929,8 +1113,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 20,
-                  "endLine": 20,
+                  "startLine": 22,
+                  "endLine": 22,
                   "startColumn": 3
                 }
               }
@@ -962,8 +1146,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 21,
-                  "endLine": 21,
+                  "startLine": 23,
+                  "endLine": 23,
                   "startColumn": 3
                 }
               }
@@ -995,8 +1179,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 22,
-                  "endLine": 22,
+                  "startLine": 24,
+                  "endLine": 24,
                   "startColumn": 3
                 }
               }
@@ -1028,8 +1212,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 23,
-                  "endLine": 23,
+                  "startLine": 25,
+                  "endLine": 25,
                   "startColumn": 3
                 }
               }
@@ -1061,8 +1245,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 29,
-                  "endLine": 29,
+                  "startLine": 31,
+                  "endLine": 31,
                   "startColumn": 9
                 }
               }
@@ -1094,8 +1278,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 118,
-                  "endLine": 118,
+                  "startLine": 129,
+                  "endLine": 129,
                   "startColumn": 11
                 }
               }
@@ -1127,8 +1311,8 @@
                   "uri": "src/servicos/armazenamento/__tests__/usuariosServico.test.ts"
                 },
                 "region": {
-                  "startLine": 118,
-                  "endLine": 118,
+                  "startLine": 129,
+                  "endLine": 129,
                   "startColumn": 11
                 }
               }
@@ -1157,18 +1341,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/servicos/armazenamento/alertasServico.ts"
+                  "uri": "src/servicos/armazenamento/armazenamento.ts"
                 },
                 "region": {
-                  "startLine": 10,
-                  "endLine": 10,
-                  "startColumn": 8
+                  "startLine": 11,
+                  "endLine": 11,
+                  "startColumn": 17
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "600dbe2286a892cb1a3b288da7e71141"
+            "sentinela/v1": "5809d8aae5e920b7e2bb9a37ec8e2596"
           },
           "properties": {
             "severity": "info",
@@ -1190,18 +1374,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/servicos/armazenamento/armazenamento.ts"
+                  "uri": "src/servicos/armazenamento/avisosServico.ts"
                 },
                 "region": {
-                  "startLine": 17,
-                  "endLine": 17,
-                  "startColumn": 19
+                  "startLine": 10,
+                  "endLine": 10,
+                  "startColumn": 8
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "c5bf7ab47cbf0c56639b5f933bff80fe"
+            "sentinela/v1": "bfdc8e2ee9779bdd40493015c624eb09"
           },
           "properties": {
             "severity": "info",
@@ -1226,8 +1410,8 @@
                   "uri": "src/servicos/armazenamento/cofre.ts"
                 },
                 "region": {
-                  "startLine": 18,
-                  "endLine": 18,
+                  "startLine": 7,
+                  "endLine": 7,
                   "startColumn": 3
                 }
               }
@@ -1259,8 +1443,8 @@
                   "uri": "src/servicos/armazenamento/cofre.ts"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 8,
+                  "endLine": 8,
                   "startColumn": 3
                 }
               }
@@ -1292,15 +1476,15 @@
                   "uri": "src/servicos/armazenamento/cofre.ts"
                 },
                 "region": {
-                  "startLine": 29,
-                  "endLine": 29,
-                  "startColumn": 1
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 12
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "44401f7c5a078bd792aab0595773655f"
+            "sentinela/v1": "11d5db928fae7a351583e106a7a46591"
           },
           "properties": {
             "severity": "info",
@@ -1322,18 +1506,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/servicos/armazenamento/pontosSeguidosServico.ts"
+                  "uri": "src/servicos/armazenamento/locaisServico.ts"
                 },
                 "region": {
-                  "startLine": 8,
-                  "endLine": 8,
+                  "startLine": 26,
+                  "endLine": 26,
                   "startColumn": 8
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "b9c444b335375c982b8d09965125f9c7"
+            "sentinela/v1": "12368ef0eed4af74832b91537a5ef472"
           },
           "properties": {
             "severity": "info",
@@ -1358,8 +1542,8 @@
                   "uri": "src/servicos/armazenamento/sessaoServico.ts"
                 },
                 "region": {
-                  "startLine": 5,
-                  "endLine": 5,
+                  "startLine": 4,
+                  "endLine": 4,
                   "startColumn": 3
                 }
               }
@@ -1391,8 +1575,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 23,
-                  "endLine": 23,
+                  "startLine": 20,
+                  "endLine": 20,
                   "startColumn": 3
                 }
               }
@@ -1424,8 +1608,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 24,
-                  "endLine": 24,
+                  "startLine": 21,
+                  "endLine": 21,
                   "startColumn": 3
                 }
               }
@@ -1457,8 +1641,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 25,
-                  "endLine": 25,
+                  "startLine": 22,
+                  "endLine": 22,
                   "startColumn": 3
                 }
               }
@@ -1490,8 +1674,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 26,
-                  "endLine": 26,
+                  "startLine": 23,
+                  "endLine": 23,
                   "startColumn": 3
                 }
               }
@@ -1523,8 +1707,8 @@
                   "uri": "src/servicos/armazenamento/usuariosServico.ts"
                 },
                 "region": {
-                  "startLine": 27,
-                  "endLine": 27,
+                  "startLine": 24,
+                  "endLine": 24,
                   "startColumn": 3
                 }
               }
@@ -1544,10 +1728,76 @@
           "ruleIndex": 1
         },
         {
-          "ruleId": "pii.mapa.contato",
+          "ruleId": "pii.mapa.localizacao",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/usuariosServico.ts"
+                },
+                "region": {
+                  "startLine": 59,
+                  "endLine": 59,
+                  "startColumn": 12
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d0b9ee17b685ff41ba0cccb141cd86fd"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/armazenamento/usuariosServico.ts"
+                },
+                "region": {
+                  "startLine": 59,
+                  "endLine": 59,
+                  "startColumn": 32
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d0b9ee17b685ff41ba0cccb141cd86fd"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
@@ -1556,15 +1806,15 @@
                   "uri": "src/servicos/dados/__tests__/api.test.ts"
                 },
                 "region": {
-                  "startLine": 6,
-                  "endLine": 6,
-                  "startColumn": 3
+                  "startLine": 8,
+                  "endLine": 8,
+                  "startColumn": 12
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "c0d1a0b0036c846210209e72ce649a3d"
+            "sentinela/v1": "094adb682fe9f3e46426ff6e3907cf86"
           },
           "properties": {
             "severity": "info",
@@ -1574,13 +1824,178 @@
             ],
             "status": "open"
           },
-          "ruleIndex": 2
+          "ruleIndex": 3
         },
         {
-          "ruleId": "pii.mapa.contato",
+          "ruleId": "pii.mapa.localizacao",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/__tests__/api.test.ts"
+                },
+                "region": {
+                  "startLine": 8,
+                  "endLine": 8,
+                  "startColumn": 32
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "094adb682fe9f3e46426ff6e3907cf86"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoUrl` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/__tests__/api.test.ts"
+                },
+                "region": {
+                  "startLine": 27,
+                  "endLine": 27,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "1e6905c42778a6540919ceceff272369"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoId` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/__tests__/api.test.ts"
+                },
+                "region": {
+                  "startLine": 88,
+                  "endLine": 88,
+                  "startColumn": 38
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "543a15ae68b1d711244b908dc83ee1e3"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/__tests__/api.test.ts"
+                },
+                "region": {
+                  "startLine": 90,
+                  "endLine": 90,
+                  "startColumn": 79
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "0fb5ba887562564091de8cbfa4f5a358"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/__tests__/simulacao.test.ts"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "2ddf5823fa76798b6fe0e25d262f4eff"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
@@ -1589,15 +2004,15 @@
                   "uri": "src/servicos/dados/api.ts"
                 },
                 "region": {
-                  "startLine": 63,
-                  "endLine": 63,
-                  "startColumn": 5
+                  "startLine": 85,
+                  "endLine": 85,
+                  "startColumn": 12
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "3abb0ed7f454e38e92550516df5f0007"
+            "sentinela/v1": "f75e3b6e08c8a42c415454f4a9e65761"
           },
           "properties": {
             "severity": "info",
@@ -1607,13 +2022,145 @@
             ],
             "status": "open"
           },
-          "ruleIndex": 2
+          "ruleIndex": 3
         },
         {
-          "ruleId": "pii.mapa.contato",
+          "ruleId": "pii.mapa.localizacao",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/api.ts"
+                },
+                "region": {
+                  "startLine": 85,
+                  "endLine": 85,
+                  "startColumn": 49
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "f75e3b6e08c8a42c415454f4a9e65761"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/api.ts"
+                },
+                "region": {
+                  "startLine": 174,
+                  "endLine": 174,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "1b1a8dcf1bacfba3d8af36efa7a95541"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoId` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/api.ts"
+                },
+                "region": {
+                  "startLine": 211,
+                  "endLine": 211,
+                  "startColumn": 13
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "19fa4d9b3c48cc7f69b54b60c772bcf8"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`_foto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/api.ts"
+                },
+                "region": {
+                  "startLine": 212,
+                  "endLine": 212,
+                  "startColumn": 13
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d3c67218a545d793dfca6d5c8c2c0919"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
@@ -1622,15 +2169,15 @@
                   "uri": "src/servicos/dados/simulacao.ts"
                 },
                 "region": {
-                  "startLine": 44,
-                  "endLine": 44,
-                  "startColumn": 3
+                  "startLine": 66,
+                  "endLine": 66,
+                  "startColumn": 14
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "9e32c301002460a84be1ca16eab2bf34"
+            "sentinela/v1": "d1aea9b498a9deea1cc902d7acfef1c1"
           },
           "properties": {
             "severity": "info",
@@ -1640,7 +2187,205 @@
             ],
             "status": "open"
           },
-          "ruleIndex": 2
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dados/simulacao.ts"
+                },
+                "region": {
+                  "startLine": 66,
+                  "endLine": 66,
+                  "startColumn": 34
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d1aea9b498a9deea1cc902d7acfef1c1"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`exif` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dispositivo/fotos.ts"
+                },
+                "region": {
+                  "startLine": 30,
+                  "endLine": 30,
+                  "startColumn": 90
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "23e3bf5349c07c42fad26c032c0cdc6d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`foto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dispositivo/fotos.ts"
+                },
+                "region": {
+                  "startLine": 37,
+                  "endLine": 37,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "41a2163aad69030f628328634ef1b9d7"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dispositivo/localizacao.ts"
+                },
+                "region": {
+                  "startLine": 14,
+                  "endLine": 14,
+                  "startColumn": 14
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e6b33eadfded02bf8a3cac5285189437"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dispositivo/localizacao.ts"
+                },
+                "region": {
+                  "startLine": 14,
+                  "endLine": 14,
+                  "startColumn": 49
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e6b33eadfded02bf8a3cac5285189437"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`temFoto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/ia/triagem.ts"
+                },
+                "region": {
+                  "startLine": 10,
+                  "endLine": 10,
+                  "startColumn": 8
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "ede1dcbb89797cbecc38dc4d97c10a54"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
         },
         {
           "ruleId": "pii.mapa.credencial",
@@ -1655,8 +2400,8 @@
                   "uri": "src/servicos/seguranca/senha.ts"
                 },
                 "region": {
-                  "startLine": 18,
-                  "endLine": 18,
+                  "startLine": 11,
+                  "endLine": 11,
                   "startColumn": 8
                 }
               }
@@ -1685,18 +2430,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/Alertas/index.tsx"
+                  "uri": "src/telas/Areas/index.tsx"
                 },
                 "region": {
-                  "startLine": 20,
-                  "endLine": 20,
+                  "startLine": 31,
+                  "endLine": 31,
                   "startColumn": 9
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "16e7992f9f4a26de1db186952db9d092"
+            "sentinela/v1": "179fe47250984bae0f8e93905eb77426"
           },
           "properties": {
             "severity": "info",
@@ -1718,18 +2463,84 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/Alertas/index.tsx"
+                  "uri": "src/telas/Areas/index.tsx"
                 },
                 "region": {
-                  "startLine": 25,
-                  "endLine": 25,
+                  "startLine": 46,
+                  "endLine": 46,
                   "startColumn": 9
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "8a067633bf9bf1831d5fa2c0f3f63368"
+            "sentinela/v1": "52742a39103265477c946c97faae6a35"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Avisos/index.tsx"
+                },
+                "region": {
+                  "startLine": 32,
+                  "endLine": 32,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "90eb2a00f1a6f53aae415b3b89fcc757"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Avisos/index.tsx"
+                },
+                "region": {
+                  "startLine": 36,
+                  "endLine": 36,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "dcc1dec300290f7ac5563252257cdabb"
           },
           "properties": {
             "severity": "info",
@@ -1754,8 +2565,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 31,
-                  "endLine": 31,
+                  "startLine": 32,
+                  "endLine": 32,
                   "startColumn": 3
                 }
               }
@@ -1787,8 +2598,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 32,
-                  "endLine": 32,
+                  "startLine": 33,
+                  "endLine": 33,
                   "startColumn": 3
                 }
               }
@@ -1820,8 +2631,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 33,
-                  "endLine": 33,
+                  "startLine": 34,
+                  "endLine": 34,
                   "startColumn": 3
                 }
               }
@@ -1853,8 +2664,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 34,
-                  "endLine": 34,
+                  "startLine": 35,
+                  "endLine": 35,
                   "startColumn": 3
                 }
               }
@@ -1886,8 +2697,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 42,
-                  "endLine": 42,
+                  "startLine": 45,
+                  "endLine": 45,
                   "startColumn": 9
                 }
               }
@@ -1919,8 +2730,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 43,
-                  "endLine": 43,
+                  "startLine": 46,
+                  "endLine": 46,
                   "startColumn": 9
                 }
               }
@@ -1952,8 +2763,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 44,
-                  "endLine": 44,
+                  "startLine": 47,
+                  "endLine": 47,
                   "startColumn": 9
                 }
               }
@@ -1985,15 +2796,15 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 45,
-                  "endLine": 45,
+                  "startLine": 48,
+                  "endLine": 48,
                   "startColumn": 9
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "3df0ac146cfa40594e5d01d717351faa"
+            "sentinela/v1": "53d8579080c27e7a6b9770d5863bd629"
           },
           "properties": {
             "severity": "info",
@@ -2018,15 +2829,15 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 45,
-                  "endLine": 45,
+                  "startLine": 48,
+                  "endLine": 48,
                   "startColumn": 9
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "3df0ac146cfa40594e5d01d717351faa"
+            "sentinela/v1": "53d8579080c27e7a6b9770d5863bd629"
           },
           "properties": {
             "severity": "info",
@@ -2051,8 +2862,8 @@
                   "uri": "src/telas/Cadastro/index.tsx"
                 },
                 "region": {
-                  "startLine": 46,
-                  "endLine": 46,
+                  "startLine": 49,
+                  "endLine": 49,
                   "startColumn": 9
                 }
               }
@@ -2084,8 +2895,8 @@
                   "uri": "src/telas/Entrar/index.tsx"
                 },
                 "region": {
-                  "startLine": 21,
-                  "endLine": 21,
+                  "startLine": 20,
+                  "endLine": 20,
                   "startColumn": 9
                 }
               }
@@ -2117,8 +2928,8 @@
                   "uri": "src/telas/Entrar/index.tsx"
                 },
                 "region": {
-                  "startLine": 21,
-                  "endLine": 21,
+                  "startLine": 20,
+                  "endLine": 20,
                   "startColumn": 9
                 }
               }
@@ -2150,8 +2961,8 @@
                   "uri": "src/telas/Entrar/index.tsx"
                 },
                 "region": {
-                  "startLine": 22,
-                  "endLine": 22,
+                  "startLine": 21,
+                  "endLine": 21,
                   "startColumn": 9
                 }
               }
@@ -2183,8 +2994,8 @@
                   "uri": "src/telas/Entrar/index.tsx"
                 },
                 "region": {
-                  "startLine": 22,
-                  "endLine": 22,
+                  "startLine": 21,
+                  "endLine": 21,
                   "startColumn": 9
                 }
               }
@@ -2213,11 +3024,110 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/telas/Mapa/index.tsx"
+                },
+                "region": {
+                  "startLine": 66,
+                  "endLine": 66,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e20b77dc0bb17b6c13e1d97ef605f744"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Ocorrencia/estilos.ts"
+                },
+                "region": {
+                  "startLine": 6,
+                  "endLine": 6,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "56749bbdaa1c18710834eb6827f21372"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Ocorrencia/index.tsx"
+                },
+                "region": {
+                  "startLine": 32,
+                  "endLine": 32,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "14d2bc1138786e357cad5cad16bb1d2b"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 45,
-                  "endLine": 45,
+                  "startLine": 40,
+                  "endLine": 40,
                   "startColumn": 1
                 }
               }
@@ -2249,8 +3159,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 48,
-                  "endLine": 48,
+                  "startLine": 43,
+                  "endLine": 43,
                   "startColumn": 9
                 }
               }
@@ -2282,8 +3192,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 48,
-                  "endLine": 48,
+                  "startLine": 43,
+                  "endLine": 43,
                   "startColumn": 9
                 }
               }
@@ -2315,8 +3225,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 49,
-                  "endLine": 49,
+                  "startLine": 44,
+                  "endLine": 44,
                   "startColumn": 9
                 }
               }
@@ -2348,8 +3258,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 49,
-                  "endLine": 49,
+                  "startLine": 44,
+                  "endLine": 44,
                   "startColumn": 9
                 }
               }
@@ -2381,8 +3291,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 50,
-                  "endLine": 50,
+                  "startLine": 45,
+                  "endLine": 45,
                   "startColumn": 9
                 }
               }
@@ -2414,8 +3324,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 50,
-                  "endLine": 50,
+                  "startLine": 45,
+                  "endLine": 45,
                   "startColumn": 9
                 }
               }
@@ -2447,8 +3357,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 119,
-                  "endLine": 119,
+                  "startLine": 113,
+                  "endLine": 113,
                   "startColumn": 9
                 }
               }
@@ -2480,8 +3390,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 119,
-                  "endLine": 119,
+                  "startLine": 113,
+                  "endLine": 113,
                   "startColumn": 9
                 }
               }
@@ -2513,8 +3423,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 190,
-                  "endLine": 190,
+                  "startLine": 184,
+                  "endLine": 184,
                   "startColumn": 9
                 }
               }
@@ -2534,27 +3444,27 @@
           "ruleIndex": 0
         },
         {
-          "ruleId": "pii.mapa.contato",
+          "ruleId": "pii.mapa.imagem",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+            "text": "`foto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/Ponto/estilos.ts"
+                  "uri": "src/telas/Relatar/estilos.ts"
                 },
                 "region": {
-                  "startLine": 6,
-                  "endLine": 6,
+                  "startLine": 7,
+                  "endLine": 7,
                   "startColumn": 3
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "f86a38ef155436d37980861b4868379a"
+            "sentinela/v1": "b42ef445f61be7def63a8a2759286c77"
           },
           "properties": {
             "severity": "info",
@@ -2564,7 +3474,40 @@
             ],
             "status": "open"
           },
-          "ruleIndex": 2
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`confirmacaoFoto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Relatar/index.tsx"
+                },
+                "region": {
+                  "startLine": 37,
+                  "endLine": 37,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "7da052bf1ec335f22acce781fac30748"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
         },
         {
           "ruleId": "pii.mapa.registro",
@@ -2576,18 +3519,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/Ponto/index.tsx"
+                  "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 30,
-                  "endLine": 30,
+                  "startLine": 42,
+                  "endLine": 42,
                   "startColumn": 9
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "511862280ecf5c88670e17ccf1fd9b3e"
+            "sentinela/v1": "487a64362f2a64746cc534a2d43143f1"
           },
           "properties": {
             "severity": "info",
@@ -2600,27 +3543,126 @@
           "ruleIndex": 0
         },
         {
-          "ruleId": "pii.mapa.registro",
+          "ruleId": "pii.mapa.imagem",
           "level": "note",
           "message": {
-            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+            "text": "`foto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/Pontos/index.tsx"
+                  "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 48,
+                  "endLine": 48,
                   "startColumn": 9
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "732209a05872600be90b28486a21b2ab"
+            "sentinela/v1": "4e961b5b631384c5b8ae7b58b9f7b98d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`setFoto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Relatar/index.tsx"
+                },
+                "region": {
+                  "startLine": 48,
+                  "endLine": 48,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "4e961b5b631384c5b8ae7b58b9f7b98d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`setConfirmacaoFoto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Relatar/index.tsx"
+                },
+                "region": {
+                  "startLine": 49,
+                  "endLine": 49,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "d656cac7f946111f715ad7c35295c422"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuarioId` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Relatar/index.tsx"
+                },
+                "region": {
+                  "startLine": 55,
+                  "endLine": 55,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "391b403244ed5c8969c26c9249aa8fa6"
           },
           "properties": {
             "severity": "info",
@@ -2633,16 +3675,82 @@
           "ruleIndex": 0
         },
         {
-          "ruleId": "pii.mapa.registro",
+          "ruleId": "pii.mapa.imagem",
           "level": "note",
           "message": {
-            "text": "`cidadao` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+            "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/Pontos/index.tsx"
+                  "uri": "src/telas/Relatar/index.tsx"
+                },
+                "region": {
+                  "startLine": 120,
+                  "endLine": 120,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "8f80a82ea319b1ae0e9081d2f194acee"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`foto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Relato/estilos.ts"
+                },
+                "region": {
+                  "startLine": 7,
+                  "endLine": 7,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e606a64c587e3757af24172a4f22786c"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Relato/index.tsx"
                 },
                 "region": {
                   "startLine": 23,
@@ -2653,7 +3761,7 @@
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "1cac154e56e9be142df62ff8c5e4a51c"
+            "sentinela/v1": "7cc5b95e1c0b3777c5022bc4d31a36c2"
           },
           "properties": {
             "severity": "info",
@@ -2876,8 +3984,8 @@
                   "uri": "src/telas/__tests__/Entrar.test.tsx"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 18,
+                  "endLine": 18,
                   "startColumn": 1
                 }
               }
@@ -2909,8 +4017,8 @@
                   "uri": "src/telas/__tests__/Entrar.test.tsx"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 18,
+                  "endLine": 18,
                   "startColumn": 1
                 }
               }
@@ -2930,27 +4038,27 @@
           "ruleIndex": 1
         },
         {
-          "ruleId": "pii.mapa.contato",
+          "ruleId": "pii.mapa.localizacao",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/__tests__/Limites.test.tsx"
+                  "uri": "src/telas/__tests__/MeuCarro.test.tsx"
                 },
                 "region": {
-                  "startLine": 15,
-                  "endLine": 15,
-                  "startColumn": 3
+                  "startLine": 65,
+                  "endLine": 65,
+                  "startColumn": 14
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "93e48eb96502f56a5faa58a632933f8b"
+            "sentinela/v1": "f7efa6ca17329bb332914bf43c18e481"
           },
           "properties": {
             "severity": "info",
@@ -2960,30 +4068,30 @@
             ],
             "status": "open"
           },
-          "ruleIndex": 2
+          "ruleIndex": 3
         },
         {
-          "ruleId": "pii.mapa.contato",
+          "ruleId": "pii.mapa.localizacao",
           "level": "note",
           "message": {
-            "text": "`endereco` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/telas/__tests__/Painel.test.tsx"
+                  "uri": "src/telas/__tests__/MeuCarro.test.tsx"
                 },
                 "region": {
-                  "startLine": 14,
-                  "endLine": 14,
-                  "startColumn": 5
+                  "startLine": 65,
+                  "endLine": 65,
+                  "startColumn": 34
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "c83853274f30ac4ae1eace50ca5c0331"
+            "sentinela/v1": "f7efa6ca17329bb332914bf43c18e481"
           },
           "properties": {
             "severity": "info",
@@ -2993,7 +4101,7 @@
             ],
             "status": "open"
           },
-          "ruleIndex": 2
+          "ruleIndex": 3
         },
         {
           "ruleId": "pii.mapa.registro",
@@ -3008,8 +4116,8 @@
                   "uri": "src/telas/__tests__/Perfil.test.tsx"
                 },
                 "region": {
-                  "startLine": 17,
-                  "endLine": 17,
+                  "startLine": 19,
+                  "endLine": 19,
                   "startColumn": 5
                 }
               }
@@ -3041,8 +4149,8 @@
                   "uri": "src/telas/__tests__/Perfil.test.tsx"
                 },
                 "region": {
-                  "startLine": 21,
-                  "endLine": 21,
+                  "startLine": 23,
+                  "endLine": 23,
                   "startColumn": 9
                 }
               }
@@ -3074,8 +4182,8 @@
                   "uri": "src/telas/__tests__/Perfil.test.tsx"
                 },
                 "region": {
-                  "startLine": 23,
-                  "endLine": 23,
+                  "startLine": 25,
+                  "endLine": 25,
                   "startColumn": 5
                 }
               }
@@ -3107,8 +4215,8 @@
                   "uri": "src/telas/__tests__/Perfil.test.tsx"
                 },
                 "region": {
-                  "startLine": 24,
-                  "endLine": 24,
+                  "startLine": 26,
+                  "endLine": 26,
                   "startColumn": 5
                 }
               }
@@ -3140,8 +4248,8 @@
                   "uri": "src/telas/__tests__/Perfil.test.tsx"
                 },
                 "region": {
-                  "startLine": 25,
-                  "endLine": 25,
+                  "startLine": 27,
+                  "endLine": 27,
                   "startColumn": 5
                 }
               }
@@ -3173,15 +4281,15 @@
                   "uri": "src/telas/__tests__/Perfil.test.tsx"
                 },
                 "region": {
-                  "startLine": 26,
-                  "endLine": 26,
+                  "startLine": 28,
+                  "endLine": 28,
                   "startColumn": 5
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "47eb91bc70ce4df1ce4bc783db764370"
+            "sentinela/v1": "43091fc4a42a2b1c27a856afdf2b49fe"
           },
           "properties": {
             "severity": "info",
@@ -3206,8 +4314,8 @@
                   "uri": "src/telas/__tests__/Perfil.test.tsx"
                 },
                 "region": {
-                  "startLine": 27,
-                  "endLine": 27,
+                  "startLine": 29,
+                  "endLine": 29,
                   "startColumn": 5
                 }
               }
@@ -3227,6 +4335,270 @@
           "ruleIndex": 1
         },
         {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 49,
+                  "endLine": 49,
+                  "startColumn": 14
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "35b19d419067b647b4370cc6969a6b7a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Perfil.test.tsx"
+                },
+                "region": {
+                  "startLine": 49,
+                  "endLine": 49,
+                  "startColumn": 34
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "35b19d419067b647b4370cc6969a6b7a"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.registro",
+          "level": "note",
+          "message": {
+            "text": "`usuario` guarda dados do cadastro. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Relatar.test.tsx"
+                },
+                "region": {
+                  "startLine": 17,
+                  "endLine": 17,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "a1f63beb738add86953bffd2aecaa4e6"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 0
+        },
+        {
+          "ruleId": "pii.mapa.contato",
+          "level": "note",
+          "message": {
+            "text": "`email` guarda telefone, e-mail ou endereço. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Relatar.test.tsx"
+                },
+                "region": {
+                  "startLine": 17,
+                  "endLine": 17,
+                  "startColumn": 39
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "e21612eaf77b29b8baa0f6bb93af331d"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 2
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/__tests__/Relatar.test.tsx"
+                },
+                "region": {
+                  "startLine": 67,
+                  "endLine": 67,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "a8c75f76b57eaab071cc04b4c8956ca1"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`latitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/testes/fabricas.ts"
+                },
+                "region": {
+                  "startLine": 6,
+                  "endLine": 6,
+                  "startColumn": 26
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "55f79f23137052d14c28ef282fe6267e"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.localizacao",
+          "level": "note",
+          "message": {
+            "text": "`longitude` guarda localização. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/testes/fabricas.ts"
+                },
+                "region": {
+                  "startLine": 6,
+                  "endLine": 6,
+                  "startColumn": 46
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "55f79f23137052d14c28ef282fe6267e"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 3
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
+            "text": "`fotoUri` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/testes/fabricas.ts"
+                },
+                "region": {
+                  "startLine": 67,
+                  "endLine": 67,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "baaa05e0a0ee57808b54bc2b6668eba5"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
           "ruleId": "pii.mapa.contato",
           "level": "note",
           "message": {
@@ -3239,8 +4611,8 @@
                   "uri": "src/utilitarios/__tests__/validacoes.test.ts"
                 },
                 "region": {
-                  "startLine": 27,
-                  "endLine": 27,
+                  "startLine": 31,
+                  "endLine": 31,
                   "startColumn": 79
                 }
               }
@@ -3272,8 +4644,8 @@
                   "uri": "src/utilitarios/validacoes.ts"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 18,
+                  "endLine": 18,
                   "startColumn": 8
                 }
               }
@@ -3305,8 +4677,8 @@
                   "uri": "src/utilitarios/validacoes.ts"
                 },
                 "region": {
-                  "startLine": 27,
-                  "endLine": 27,
+                  "startLine": 25,
+                  "endLine": 25,
                   "startColumn": 8
                 }
               }
@@ -3338,8 +4710,8 @@
                   "uri": "src/utilitarios/validacoes.ts"
                 },
                 "region": {
-                  "startLine": 36,
-                  "endLine": 36,
+                  "startLine": 34,
+                  "endLine": 34,
                   "startColumn": 8
                 }
               }
@@ -3371,8 +4743,8 @@
                   "uri": "src/utilitarios/validacoes.ts"
                 },
                 "region": {
-                  "startLine": 44,
-                  "endLine": 44,
+                  "startLine": 42,
+                  "endLine": 42,
                   "startColumn": 8
                 }
               }

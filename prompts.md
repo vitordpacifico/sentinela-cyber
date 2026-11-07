@@ -40,6 +40,12 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 
 **Resultado:** O problema que a auditoria apontou no app (telefone e CEP sem criptografia) foi corrigido no repositório de Mobile. A auditoria e os prints do painel foram refeitos, o roteiro do vídeo foi reduzido para 3 minutos e o script da demonstração passou a poder rodar de novo sem duplicar scans.
 
+### 5. Acompanhar a mudança do app para o Pluvia (07/11/2026)
+
+**Pedido:** Adaptar a entrega ao documento de definição do grupo, que troca o app de Mobile pelo Pluvia (proposta "Alaga") e pede, em Cyber, o mapeamento de dados pessoais em fotos e localização.
+
+**Resultado:** Categoria nova "Fotos e imagens" no mapeamento de PII, termo "coordenada" na localização, auditoria refeita no código do Pluvia (aprovado, Risco Cidadão 6, 140 campos mapeados), prints do painel refeitos e documentação atualizada. 3 testes novos (111 no total).
+
 ## Decisões sugeridas pela IA, para o grupo revisar
 
 - Usar o Sentinela do grupo como base, porque o PDF fala em "novas regras no motor de parsing", "o LLM" e "Dashboard Atualizado".
@@ -47,10 +53,11 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 - Pesos das categorias e das saídas, e a fórmula do Risco Cidadão (`docs/risco-cidadao.md`).
 - Gravidade do vazamento definida pela categoria do dado: saúde é crítica; CPF e senha são altos.
 - Protótipo de auditoria com CPF e saúde, já que o app de Mobile entregue não coleta esses dados.
+- Fotos com o mesmo peso da localização (0,6), porque podem mostrar rosto, placa ou casa.
 
 ## Verificações feitas
 
-- 108 testes automatizados passando, incluindo os 63 originais do Sentinela.
+- 111 testes automatizados passando, incluindo os 63 originais do Sentinela.
 - `ruff check` e `ruff format` sem erros.
 - O Security Gate do próprio repositório continua aprovado.
 - Auditoria executada nos três alvos, com as evidências em `evidencias/`.
