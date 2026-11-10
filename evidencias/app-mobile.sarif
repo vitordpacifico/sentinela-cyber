@@ -519,8 +519,8 @@
                   "uri": "src/contexto/AvisosContext.tsx"
                 },
                 "region": {
-                  "startLine": 29,
-                  "endLine": 29,
+                  "startLine": 30,
+                  "endLine": 30,
                   "startColumn": 9
                 }
               }
@@ -552,8 +552,8 @@
                   "uri": "src/contexto/AvisosContext.tsx"
                 },
                 "region": {
-                  "startLine": 35,
-                  "endLine": 35,
+                  "startLine": 36,
+                  "endLine": 36,
                   "startColumn": 9
                 }
               }
@@ -2226,6 +2226,39 @@
           "ruleId": "pii.mapa.imagem",
           "level": "note",
           "message": {
+            "text": "`imagem` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/servicos/dispositivo/fotos.ts"
+                },
+                "region": {
+                  "startLine": 13,
+                  "endLine": 13,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "cd794e894e2d115dfd6599b1e8f75594"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
             "text": "`exif` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
@@ -2235,8 +2268,8 @@
                   "uri": "src/servicos/dispositivo/fotos.ts"
                 },
                 "region": {
-                  "startLine": 30,
-                  "endLine": 30,
+                  "startLine": 29,
+                  "endLine": 29,
                   "startColumn": 90
                 }
               }
@@ -2268,8 +2301,8 @@
                   "uri": "src/servicos/dispositivo/fotos.ts"
                 },
                 "region": {
-                  "startLine": 37,
-                  "endLine": 37,
+                  "startLine": 36,
+                  "endLine": 36,
                   "startColumn": 9
                 }
               }
@@ -2301,8 +2334,8 @@
                   "uri": "src/servicos/dispositivo/localizacao.ts"
                 },
                 "region": {
-                  "startLine": 14,
-                  "endLine": 14,
+                  "startLine": 35,
+                  "endLine": 35,
                   "startColumn": 14
                 }
               }
@@ -2334,8 +2367,8 @@
                   "uri": "src/servicos/dispositivo/localizacao.ts"
                 },
                 "region": {
-                  "startLine": 14,
-                  "endLine": 14,
+                  "startLine": 35,
+                  "endLine": 35,
                   "startColumn": 49
                 }
               }

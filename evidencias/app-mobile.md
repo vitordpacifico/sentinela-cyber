@@ -13,8 +13,8 @@ Nenhum vazamento de dado pessoal encontrado. O índice reflete só os dados que 
 |---|---:|---:|
 | Cadastro de pessoa | 42 | 0 |
 | Contato e endereço | 40 | 0 |
+| Fotos e imagens | 21 | 0 |
 | Localização | 20 | 0 |
-| Fotos e imagens | 20 | 0 |
 | Senhas e credenciais | 18 | 0 |
 
 Nenhuma vulnerabilidade aberta encontrada nos arquivos alterados. 🎉
