@@ -1,28 +1,3 @@
-"""Análise semântica com LLM local (Ollama + Llama 3).
-
-Para cada achado, o modelo recebe a regra, o caminho do dado contaminado e
-uma janela de código ao redor (com segredos já mascarados pelo motor) e
-devolve, em uma única resposta JSON:
-
-* **veredito** — ``true_positive``, ``false_positive`` ou ``uncertain``,
-  com confiança e justificativa citando a linha decisiva;
-* **severidade sugerida** — reavaliação no contexto (ex.: SQL Injection em
-  script de migração interno vs. em endpoint público);
-* **correção** — explicação curta e o bloco de código corrigido;
-* **alerta ao cidadão** (só para achados de dados pessoais) — a falha
-  explicada em linguagem simples: o que pode acontecer com a pessoa, quem é
-  afetado e o que a equipe deve fazer. O código chega à IA com CPF, e-mail e
-  telefone mascarados (``sentinela/pii/valores.py``).
-
-Princípios:
-
-* a IA **recomenda**; quem aplica é uma pessoa. Status, severidade efetiva
-  e decisão do Security Gate nunca dependem só do modelo;
-* sem Ollama a plataforma funciona igual — a remediação vem das regras e o
-  campo de IA fica vazio. Uma falha de conexão desliga a IA pelo resto do
-  scan (circuit breaker), então um modelo fora do ar custa um timeout, não N.
-"""
-
 from __future__ import annotations
 
 import json
@@ -54,7 +29,6 @@ class AIAssessment:
 
     @property
     def dismisses(self) -> bool:
-        """Provável falso positivo com confiança suficiente para recolher no PR."""
 
         return self.verdict == "false_positive" and self.confidence in {"high", "medium"}
 
@@ -144,7 +118,6 @@ _INSTRUCAO_ALERTA = (
 
 
 def precisa_de_ia(finding: Finding) -> bool:
-    """O mapeamento de dados pessoais é inventário, não falha: não vai para a IA."""
 
     return not finding.rule_id.startswith("pii.mapa.")
 
@@ -190,7 +163,6 @@ def build_prompt(finding: Finding) -> str:
 
 
 def _referencia_de_correcao(finding: Finding) -> str:
-    """Correção recomendada pela regra, para o modelo não sugerir um código que repete a falha."""
 
     if not finding.remediation and not finding.safe_example:
         return ""
@@ -239,7 +211,6 @@ def parse_assessment(payload: Mapping[str, Any], *, model: str, current: Severit
 
 
 def _parse_alerta(bruto: Any) -> dict[str, str] | None:
-    """Aceita o alerta só se todos os campos vierem preenchidos com texto."""
 
     if not isinstance(bruto, Mapping):
         return None

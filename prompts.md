@@ -52,6 +52,12 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 
 **Resultado:** Ollama e `llama3.2` instalados. O teste mostrou que nenhuma resposta da IA era aproveitada: o modelo levava mais que o limite de 60 segundos, a resposta era cortada e o alerta ficava fora do formato pedido, e a IA era chamada também para os achados de mapeamento. Correções: limite de 180 segundos, resposta mais longa, alerta dentro do formato JSON, correção recomendada da regra enviada como referência, uma segunda tentativa quando a resposta vem incompleta e mapeamento fora da IA. Modelo padrão trocado para `llama3.2`. Evidências e prints do painel refeitos com a IA. 3 testes novos (114 no total).
 
+### 7. Remover os comentários do código (11/11/2026)
+
+**Pedido:** Remover a maior parte dos comentários do código, mantendo o registro do uso de IA neste arquivo.
+
+**Resultado:** Comentários e docstrings removidos dos arquivos Python, do JavaScript e do CSS do painel, sem alterar o comportamento. Ficaram só os marcadores que as ferramentas usam (`# noqa` e `# type: ignore`), as docstrings que viram texto de ajuda dos scripts e a documentação de uma rota da API. Os arquivos de exemplo vulneráveis (`benchmark/corpus`, `tests/fixtures` e `exemplos`) não foram alterados, porque são dados de teste. Testes, lint e Security Gate sem erros.
+
 ## Decisões sugeridas pela IA, para o grupo revisar
 
 - Usar o Sentinela do grupo como base, porque o PDF fala em "novas regras no motor de parsing", "o LLM" e "Dashboard Atualizado".

@@ -35,7 +35,6 @@ def test_review_persists_across_scans_by_fingerprint(client):
     ).json()
     assert updated["history"][0]["to"] == "accepted_risk"
 
-    # O código ganhou linhas acima: mesmo achado, outra linha, decisão mantida.
     second = _scan(client, [{"path": "app/views.py", "content": "# novo\n\n" + VULN}])
     again = client.get(f"/api/scans/{second['id']}/findings").json()[0]
     assert again["line"] == finding["line"] + 2

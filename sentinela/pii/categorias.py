@@ -1,15 +1,3 @@
-"""Categorias de dados pessoais e a regra que reconhece cada uma pelo nome.
-
-O nome de um campo ou variável (``cpfDoMorador``, ``data_nascimento``,
-``usuario.senha``) é quebrado em palavras e comparado com os termos de cada
-categoria. Assim o motor reconhece o dado em Python, JavaScript, TypeScript e
-Java, em português ou inglês, em camelCase ou snake_case.
-
-A classificação segue a LGPD (Lei 13.709/2018): dados de saúde, origem racial,
-religião, vida sexual, biometria e genética são **dados pessoais sensíveis**
-(art. 5º, II) e pesam mais no índice Risco Cidadão.
-"""
-
 from __future__ import annotations
 
 import re
@@ -23,10 +11,10 @@ class CategoriaPII:
     id: str
     rotulo: str
     sensivel: bool
-    peso: float  # 0 a 1: quanto a exposição deste dado prejudica o cidadão
-    severidade: Severity  # severidade de um vazamento comprovado
-    descricao_cidadao: str  # como o dado aparece num alerta para o cidadão
-    termos: tuple[tuple[str, ...], ...]  # cada termo é uma sequência de palavras
+    peso: float
+    severidade: Severity
+    descricao_cidadao: str
+    termos: tuple[tuple[str, ...], ...]
 
 
 def _termos(*textos: str) -> tuple[tuple[str, ...], ...]:
@@ -260,7 +248,6 @@ CATEGORIAS: tuple[CategoriaPII, ...] = (
 
 POR_ID = {categoria.id: categoria for categoria in CATEGORIAS}
 
-# Palavras que indicam que o dado já está protegido: não é mais o dado pessoal em si.
 _PROTEGIDO = {
     "hash",
     "hashed",
@@ -320,7 +307,6 @@ _ACENTOS = str.maketrans(
 
 
 def palavras(nome: str) -> list[str]:
-    """``cpfDoMorador`` -> ["cpf", "do", "morador"]; ``data_nascimento`` -> ["data", "nascimento"]."""
 
     texto = _CAMEL.sub(" ", nome.translate(_ACENTOS))
     return [parte for parte in re.split(r"[^A-Za-z0-9]+", texto.lower()) if parte]
@@ -332,20 +318,12 @@ def _contem(sequencia: list[str], termo: tuple[str, ...]) -> bool:
 
 
 def nome_protegido(nome: str) -> bool:
-    """``usuario.senhaHash`` ou ``cpfMascarado``: o último segmento indica dado já protegido."""
 
     ultimo = nome.split(".")[-1]
     return bool(set(palavras(ultimo)) & _PROTEGIDO)
 
 
 def classificar_nome(nome: str) -> CategoriaPII | None:
-    """Categoria do dado pessoal que o nome indica, ou ``None``.
-
-    Usa só o último segmento de nomes pontuados (``usuario.senha`` -> senha),
-    mas cai para o objeto inteiro (``usuario.id`` -> cadastro de pessoa).
-    Nomes que indicam dado já protegido (``senhaHash``, ``cpfMascarado``) ou
-    que são só metadados do campo (``cpfValido``, ``emailInput``) são ignorados.
-    """
 
     segmentos = [s for s in nome.split(".") if s]
     if not segmentos:

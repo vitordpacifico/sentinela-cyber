@@ -1,13 +1,3 @@
-"""Contrato comum entre o Tree-sitter de cada linguagem e o resto do motor.
-
-Cada linguagem tem uma AST diferente (``call`` em Python, ``call_expression``
-em JS, ``method_invocation`` em Java). Os adaptadores escondem essa diferença
-atrás de perguntas que as regras e a taint analysis fazem: "qual o nome
-qualificado desta chamada?", "este argumento é constante?", "que variável
-esta atribuição define?". Assim uma única implementação de regras e de taint
-serve às três linguagens.
-"""
-
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -27,16 +17,12 @@ class Param:
 
 @dataclass
 class FileContext:
-    """Informação de arquivo inteiro usada para resolver nomes de chamada."""
-
-    aliases: dict[str, str] = field(default_factory=dict)  # nome local -> qualificado
-    var_types: dict[str, str] = field(default_factory=dict)  # variável -> tipo (Java)
+    aliases: dict[str, str] = field(default_factory=dict)
+    var_types: dict[str, str] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
 class NamedLiteral:
-    """Um literal string ligado a um nome (variável, campo, kwarg, chave)."""
-
     name: str
     value: str
     node: Node
@@ -44,7 +30,6 @@ class NamedLiteral:
 
 class LanguageAdapter(ABC):
     name: str = ""
-    # Linguagem cujas regras (.yml) este adaptador usa. TypeScript reaproveita as do JavaScript.
     rules_language: str = ""
     extensions: tuple[str, ...] = ()
     call_types: frozenset[str] = frozenset()
@@ -65,7 +50,6 @@ class LanguageAdapter(ABC):
     def parse(self, source: str) -> Tree:
         return self._parser.parse(source.encode("utf-8"))
 
-    # ------------------------------------------------------------------ texto
     @staticmethod
     def text(node: Node | None) -> str:
         if node is None:
@@ -80,9 +64,7 @@ class LanguageAdapter(ABC):
     def end_line(node: Node) -> int:
         return node.end_point[0] + 1
 
-    # --------------------------------------------------------------- travessia
     def walk(self, node: Node, *, into_functions: bool = True) -> Iterator[Node]:
-        """Pré-ordem. Com ``into_functions=False`` não desce em funções aninhadas."""
 
         stack = [node]
         while stack:
@@ -104,13 +86,11 @@ class LanguageAdapter(ABC):
             if child.type in self.call_types:
                 yield child
 
-    # ------------------------------------------------------- abstrações chave
     @abstractmethod
     def build_context(self, root: Node) -> FileContext: ...
 
     @abstractmethod
-    def call_name(self, node: Node, ctx: FileContext) -> str | None:
-        """Nome qualificado e normalizado, ex. ``subprocess.run``."""
+    def call_name(self, node: Node, ctx: FileContext) -> str | None: ...
 
     @abstractmethod
     def call_args(self, node: Node) -> list[Node]: ...
@@ -122,12 +102,10 @@ class LanguageAdapter(ABC):
         return None
 
     @abstractmethod
-    def assignment_targets(self, node: Node) -> list[tuple[str, Node | None]]:
-        """Para nós de atribuição: lista de (nome alvo, nó do valor)."""
+    def assignment_targets(self, node: Node) -> list[tuple[str, Node | None]]: ...
 
     @abstractmethod
-    def loop_binding(self, node: Node) -> tuple[list[str], Node | None]:
-        """Para laços ``for x in y``: (variáveis, iterável)."""
+    def loop_binding(self, node: Node) -> tuple[list[str], Node | None]: ...
 
     @abstractmethod
     def function_name(self, node: Node) -> str: ...
@@ -139,30 +117,24 @@ class LanguageAdapter(ABC):
         return node.child_by_field_name("body")
 
     @abstractmethod
-    def reference_name(self, node: Node) -> str | None:
-        """Nome pontuado de um identificador/acesso a membro, ou None."""
+    def reference_name(self, node: Node) -> str | None: ...
 
     @abstractmethod
-    def string_value(self, node: Node) -> str | None:
-        """Valor de um literal string sem interpolação; None caso contrário."""
+    def string_value(self, node: Node) -> str | None: ...
 
     @abstractmethod
-    def is_constant(self, node: Node) -> bool:
-        """Literal (ou combinação de literais) que não pode carregar entrada externa."""
+    def is_constant(self, node: Node) -> bool: ...
 
     @abstractmethod
-    def is_dynamic_string(self, node: Node) -> bool:
-        """String montada com partes variáveis (concatenação, f-string, template...)."""
+    def is_dynamic_string(self, node: Node) -> bool: ...
 
     @abstractmethod
     def named_literals(self, root: Node) -> Iterator[NamedLiteral]: ...
 
     def member_assignment(self, node: Node) -> tuple[str, Node] | None:
-        """``obj.prop = valor`` -> (prop, valor). Só relevante em JS (DOM)."""
 
         return None
 
-    # -------------------------------------------------------------- utilidades
     def string_literals(self, root: Node) -> Iterator[tuple[str, Node]]:
         for node in self.walk(root):
             if node.type in self.string_types:
@@ -172,7 +144,6 @@ class LanguageAdapter(ABC):
 
     @staticmethod
     def normalize_call_name(raw: str) -> str:
-        """``Runtime.getRuntime().exec`` -> ``Runtime.getRuntime.exec``."""
 
         out = []
         depth = 0

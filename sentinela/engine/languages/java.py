@@ -1,11 +1,3 @@
-"""Adaptador Tree-sitter para Java.
-
-Java não tem "funções soltas": as chamadas perigosas são métodos de objetos
-(``stmt.executeQuery(sql)``). Para que uma regra diga ``Statement.executeQuery``
-em vez de adivinhar pelo nome da variável, o adaptador registra o tipo
-declarado de cada variável, parâmetro e campo do arquivo.
-"""
-
 from __future__ import annotations
 
 from collections.abc import Iterator
@@ -44,7 +36,6 @@ class JavaAdapter(LanguageAdapter):
     def _grammar(self) -> Any:
         return tree_sitter_java.language()
 
-    # ------------------------------------------------------------ contexto
     def build_context(self, root: Node) -> FileContext:
         ctx = FileContext()
         for node in self.walk(root):
@@ -73,7 +64,6 @@ class JavaAdapter(LanguageAdapter):
         text = self.text(node)
         return text.rsplit(".", 1)[-1] if text else None
 
-    # ------------------------------------------------------------ chamadas
     def call_name(self, node: Node, ctx: FileContext) -> str | None:
         if node.type == "object_creation_expression":
             return f"new {self._simple_type(node.child_by_field_name('type'))}"
@@ -100,7 +90,6 @@ class JavaAdapter(LanguageAdapter):
     def call_receiver(self, node: Node) -> Node | None:
         return node.child_by_field_name("object")
 
-    # ---------------------------------------------------------- atribuições
     def assignment_targets(self, node: Node) -> list[tuple[str, Node | None]]:
         if node.type == "variable_declarator":
             return [(self.text(node.child_by_field_name("name")), node.child_by_field_name("value"))]
@@ -113,7 +102,6 @@ class JavaAdapter(LanguageAdapter):
         name = self.text(node.child_by_field_name("name"))
         return ([name] if name else []), node.child_by_field_name("value")
 
-    # ------------------------------------------------------------- funções
     def function_name(self, node: Node) -> str:
         return self.text(node.child_by_field_name("name")) or "<lambda>"
 
@@ -141,7 +129,6 @@ class JavaAdapter(LanguageAdapter):
             )
         return result
 
-    # -------------------------------------------------------------- valores
     def reference_name(self, node: Node) -> str | None:
         if node.type == "identifier":
             return self.text(node)
@@ -179,7 +166,6 @@ class JavaAdapter(LanguageAdapter):
             )
             return operator == "+" and has_string and not self.is_constant(node)
         if node.type == "method_invocation":
-            # String.format("...%s", x) / "...".formatted(x)
             name = self.text(node.child_by_field_name("name"))
             receiver = self.text(node.child_by_field_name("object"))
             return (name == "format" and receiver == "String") or name == "formatted"
@@ -197,7 +183,6 @@ class JavaAdapter(LanguageAdapter):
                 if literal is not None and left is not None:
                     yield NamedLiteral(self.text(left).rsplit(".", 1)[-1], literal, node)
             elif node.type == "method_invocation":
-                # props.setProperty("db.password", "...") / headers.put("token", "...")
                 args = self.call_args(node)
                 if len(args) == 2:
                     key = self.string_value(args[0])

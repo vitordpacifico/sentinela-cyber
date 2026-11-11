@@ -47,7 +47,7 @@ def test_sanitizer_stops_taint():
     )
     rules = _rules(source)
     assert "python.taint.command-injection" not in rules
-    assert rules == {"python.command.os-system": [5]}  # o padrão ainda avisa, com evidência única
+    assert rules == {"python.command.os-system": [5]}
 
 
 def test_interprocedural_parameter_to_sink():

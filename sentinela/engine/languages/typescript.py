@@ -1,18 +1,3 @@
-"""Adaptador Tree-sitter para TypeScript e TSX (React Native, Expo, Angular, Node).
-
-TypeScript é JavaScript com tipos. A gramática TSX gera a mesma AST do
-JavaScript para expressões e chamadas, então este adaptador herda tudo do
-``JavaScriptAdapter`` e só trata o que muda:
-
-* parâmetros tipados (``required_parameter`` / ``optional_parameter``);
-* expressões que só existem por causa dos tipos (``valor as string``,
-  ``usuario!``, ``x satisfies T``): elas não mudam o dado, então a taint
-  analysis atravessa esses nós normalmente.
-
-As regras e as fontes/sinks de taint são as mesmas do JavaScript
-(``rules_language = "javascript"``).
-"""
-
 from __future__ import annotations
 
 from typing import Any
@@ -23,7 +8,6 @@ from tree_sitter import Node
 from sentinela.engine.languages.base import Param
 from sentinela.engine.languages.javascript import JavaScriptAdapter
 
-# Nós de tipo que embrulham uma expressão sem alterar o valor.
 _WRAPPERS = {"as_expression", "non_null_expression", "satisfies_expression", "type_assertion"}
 
 
@@ -33,7 +17,6 @@ class TypeScriptAdapter(JavaScriptAdapter):
     extensions = (".ts", ".tsx", ".mts", ".cts")
 
     def _grammar(self) -> Any:
-        # A gramática TSX aceita .ts e .tsx; só não aceita a coerção antiga ``<T>valor``.
         return tree_sitter_typescript.language_tsx()
 
     def function_params(self, node: Node) -> list[Param]:

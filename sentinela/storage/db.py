@@ -1,5 +1,3 @@
-"""Engine e sessões do banco."""
-
 from __future__ import annotations
 
 from collections.abc import Iterator
@@ -42,7 +40,6 @@ def session_scope(url: str | None = None) -> Iterator[Session]:
 
 
 def create_all(url: str | None = None) -> None:
-    """Usado em testes e no modo SQLite de desenvolvimento; produção usa Alembic."""
 
     Base.metadata.create_all(get_engine(url))
 

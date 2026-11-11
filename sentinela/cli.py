@@ -1,17 +1,3 @@
-"""CLI ``sentinela`` — análise local e Security Gate para pipelines CI/CD.
-
-Exemplos::
-
-    sentinela scan src/                       # analisa um diretório
-    sentinela scan . --diff origin/main       # só arquivos alterados no PR
-    sentinela scan . --sarif out.sarif --markdown pr.md --ai
-    sentinela scan . --api http://sentinela:8000 --project loja   # envia ao servidor
-    sentinela serve                           # sobe a API + dashboard
-
-Código de saída: 0 = gate aprovado (ou com avisos), 1 = gate bloqueado,
-2 = erro de uso. Use ``--no-fail`` para só reportar.
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -70,7 +56,6 @@ def main(argv: list[str] | None = None) -> int:
     return _scan(args)
 
 
-# --------------------------------------------------------------------- scan
 def _scan(args: argparse.Namespace) -> int:
     files = _collect(args.paths, args.diff)
     if not files:
@@ -89,7 +74,6 @@ def _scan(args: argparse.Namespace) -> int:
             args.sarif,
             json.dumps(to_sarif(findings, commit_sha=commit, repository=args.project), indent=2, ensure_ascii=False),
         )
-    # O Risco Cidadão segue a mesma política do gate: código ignorado não entra na conta.
     risco = calcular_risco_cidadao([f for f in findings if not ignorado(f, policy)])
     if args.markdown:
         _write(args.markdown, pr_comment(findings, gate, risco=risco))
@@ -190,7 +174,6 @@ def _finding_dict(finding) -> dict:
     }
 
 
-# ------------------------------------------------------------------ arquivos
 def _collect(paths: list[str], diff_ref: str | None) -> list[SourceFile]:
     candidates: list[Path] = []
     if diff_ref:
@@ -223,7 +206,6 @@ def _collect(paths: list[str], diff_ref: str | None) -> list[SourceFile]:
     return files
 
 
-# ------------------------------------------------------------------- saída
 def _print_report(findings: list[dict], gate: dict, file_count: int) -> None:
     color = sys.stdout.isatty()
     print(f"\nSentinela {__version__} — {file_count} arquivo(s) analisado(s), {len(findings)} achado(s)\n")

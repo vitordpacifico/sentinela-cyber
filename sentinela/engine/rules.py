@@ -1,5 +1,3 @@
-"""Motor de regras declarativas (YAML) sobre a AST de qualquer linguagem."""
-
 from __future__ import annotations
 
 import re
@@ -77,8 +75,6 @@ def _default_refs(cwe: str) -> tuple[str, ...]:
 
 
 class RuleMatcher:
-    """Aplica as regras de uma linguagem a um arquivo já parseado."""
-
     def __init__(self, adapter: LanguageAdapter, rules: tuple[Rule, ...]) -> None:
         self.adapter = adapter
         self.call_rules = [rule for rule in rules if "call" in rule.match]
@@ -108,7 +104,6 @@ class RuleMatcher:
                     findings.append(self._finding(rule, node, path, source_lines))
         return findings
 
-    # ------------------------------------------------------------ condições
     def _call_conditions(self, rule: Rule, node: Node) -> bool:
         adapter = self.adapter
         match = rule.match

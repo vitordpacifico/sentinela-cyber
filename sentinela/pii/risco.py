@@ -1,23 +1,3 @@
-"""Indicador Risco Cidadão: de 0 a 100, quanto os dados das pessoas estão expostos.
-
-Fórmula (documentada em ``docs/risco-cidadao.md``):
-
-1. Cada vazamento comprovado ou documento real no código tem um risco
-   ``r = peso da categoria × peso da saída``. Exemplo: diagnóstico (1,0) na URL
-   (1,0) = 1,0; e-mail (0,5) no log (0,7) = 0,35.
-2. Os riscos se somam como probabilidades independentes:
-   ``A = 100 × (1 − Π(1 − r))``. Um único vazamento grave já leva o índice
-   para perto de 100; vários vazamentos leves também sobem o índice.
-3. O mapeamento (dado pessoal guardado, sem vazamento) pesa pouco, até 15
-   pontos: ``B = min(15, 2 × soma dos pesos das categorias mapeadas)``.
-4. ``Índice = A + B × (1 − A/100)``, arredondado.
-
-Faixas: 0–19 Baixo, 20–49 Moderado, 50–79 Alto, 80–100 Crítico.
-
-Só entram achados abertos ou confirmados. Falso positivo, risco aceito e
-corrigido saem da conta.
-"""
-
 from __future__ import annotations
 
 from collections import defaultdict
@@ -48,7 +28,6 @@ def _campo(achado: Any, nome: str, padrao: Any = None) -> Any:
 
 
 def risco_do_achado(rule_id: str) -> float:
-    """Risco de um vazamento ou documento real (0 a 1). Mapeamento devolve 0."""
 
     categoria = categoria_do_achado(rule_id)
     partes = rule_id.split(".")
@@ -69,7 +48,7 @@ def calcular_risco_cidadao(achados: list[Any]) -> dict[str, Any]:
         if str(_campo(a, "rule_id", "")).startswith("pii.") and _campo(a, "status", "open") not in _STATUS_FECHADOS
     ]
 
-    sobra = 1.0  # probabilidade de nenhum vazamento atingir o cidadão
+    sobra = 1.0
     por_categoria: dict[str, dict[str, Any]] = defaultdict(lambda: {"mapeados": 0, "vazamentos": 0, "sobra": 1.0})
     mapeadas: set[str] = set()
     graves: list[tuple[float, Any]] = []

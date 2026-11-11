@@ -1,16 +1,3 @@
-"""Reconhece e mascara valores de dados pessoais dentro de texto.
-
-* **CPF**: 11 dígitos, com ou sem pontuação, e dígitos verificadores corretos
-  (o mesmo cálculo da Receita Federal). Sequências como 111.111.111-11 são
-  descartadas.
-* **Cartão Nacional de Saúde (CNS / Cartão SUS)**: 15 dígitos com o cálculo de
-  validação do Ministério da Saúde.
-
-O mascaramento é aplicado antes de qualquer trecho de código ir para a IA,
-para o banco ou para os relatórios: o CPF vira ``***.***.***-09``, o e-mail
-``a***@dominio.com`` e o telefone ``(**) *****-4321``.
-"""
-
 from __future__ import annotations
 
 import re
@@ -49,7 +36,6 @@ def encontrar_cns(texto: str) -> list[str]:
 
 
 def mascarar_dados_pessoais(texto: str) -> str:
-    """Esconde CPF, Cartão SUS, e-mail e telefone, mantendo o formato para leitura."""
 
     if not texto:
         return texto

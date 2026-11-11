@@ -33,7 +33,7 @@ def test_annotated_parameter_is_a_source_and_types_resolve_receivers():
 def test_integer_parse_sanitizes_but_raw_parameter_does_not():
     rules = _rules(CONTROLLER)
     assert rules["java.taint.command-injection"] == [11]
-    assert rules["java.command.runtime-exec"] == [10]  # padrão sozinho na linha sanitizada
+    assert rules["java.command.runtime-exec"] == [10]
 
 
 def test_weak_crypto_rules():

@@ -1,5 +1,3 @@
-"""Adaptador Tree-sitter para Python."""
-
 from __future__ import annotations
 
 from collections.abc import Iterator
@@ -30,7 +28,6 @@ class PythonAdapter(LanguageAdapter):
     def _grammar(self) -> Any:
         return tree_sitter_python.language()
 
-    # ------------------------------------------------------------ contexto
     def build_context(self, root: Node) -> FileContext:
         ctx = FileContext()
         for node in self.walk(root):
@@ -55,7 +52,6 @@ class PythonAdapter(LanguageAdapter):
                         ctx.aliases[alias] = f"{module}.{name}"
         return ctx
 
-    # ------------------------------------------------------------ chamadas
     def call_name(self, node: Node, ctx: FileContext) -> str | None:
         function = node.child_by_field_name("function")
         if function is None:
@@ -94,7 +90,6 @@ class PythonAdapter(LanguageAdapter):
             return function.child_by_field_name("object")
         return None
 
-    # ---------------------------------------------------------- atribuições
     def assignment_targets(self, node: Node) -> list[tuple[str, Node | None]]:
         left = node.child_by_field_name("left")
         right = node.child_by_field_name("right")
@@ -122,7 +117,6 @@ class PythonAdapter(LanguageAdapter):
             node.child_by_field_name("right"),
         )
 
-    # ------------------------------------------------------------- funções
     def function_name(self, node: Node) -> str:
         return self.text(node.child_by_field_name("name")) or "<lambda>"
 
@@ -149,7 +143,6 @@ class PythonAdapter(LanguageAdapter):
                 )
         return result
 
-    # -------------------------------------------------------------- valores
     def reference_name(self, node: Node) -> str | None:
         if node.type == "identifier":
             return self.text(node)
@@ -197,7 +190,6 @@ class PythonAdapter(LanguageAdapter):
                 return not self.is_constant(node)
             return bool(left and self.is_dynamic_string(left))
         if node.type == "call":
-            # "...".format(x)
             function = node.child_by_field_name("function")
             if function is not None and function.type == "attribute":
                 obj = function.child_by_field_name("object")

@@ -1,5 +1,3 @@
-"""API REST do Sentinela (FastAPI)."""
-
 from __future__ import annotations
 
 import io
@@ -29,7 +27,6 @@ STATIC_DIR = Path(__file__).parent / "static"
 _SKIP_DIRS = {".git", "node_modules", "venv", ".venv", "__pycache__", "dist", "build", "target", ".idea"}
 
 
-# ------------------------------------------------------------------ schemas
 class FileIn(BaseModel):
     path: str = Field(min_length=1, max_length=1024)
     content: str
@@ -51,7 +48,6 @@ class ReviewIn(BaseModel):
     actor: str = "dashboard"
 
 
-# ---------------------------------------------------------------------- app
 def require_token(x_api_token: str | None = Header(default=None)) -> None:
     expected = get_settings().api_token
     if expected and x_api_token != expected:
@@ -78,7 +74,6 @@ def health() -> dict[str, Any]:
     return {"status": "ok", "version": __version__, "mode": settings.execution_mode, "ai_enabled": settings.ai_enabled}
 
 
-# -------------------------------------------------------------------- scans
 @app.post("/api/scans", status_code=202, tags=["scans"], dependencies=[Depends(require_token)])
 def create_scan(body: ScanIn) -> dict[str, Any]:
     files = [(_safe_path(f.path), f.content) for f in body.files]
@@ -185,7 +180,6 @@ def get_markdown(scan_id: str) -> str:
         return pr_comment(findings, gate, risco=calcular_risco_cidadao(findings))
 
 
-# ------------------------------------------------------------------ achados
 @app.patch("/api/findings/{finding_id}", tags=["achados"], dependencies=[Depends(require_token)])
 def review_finding(finding_id: str, body: ReviewIn) -> dict[str, Any]:
     try:
@@ -196,7 +190,6 @@ def review_finding(finding_id: str, body: ReviewIn) -> dict[str, Any]:
         raise HTTPException(422, str(exc)) from exc
 
 
-# ----------------------------------------------------------------- projetos
 @app.get("/api/projects", tags=["projetos"])
 def projects() -> list[dict[str, Any]]:
     with session_scope() as session:
@@ -215,7 +208,7 @@ def metrics(name: str) -> dict[str, Any]:
 @app.get("/api/rules", tags=["regras"])
 def rules() -> list[dict[str, Any]]:
     catalog = []
-    for language in ("python", "javascript", "java"):  # TypeScript usa as regras do JavaScript
+    for language in ("python", "javascript", "java"):
         for rule in load_rules(language):
             catalog.append(
                 {
@@ -255,7 +248,6 @@ def rules() -> list[dict[str, Any]]:
     return catalog
 
 
-# ------------------------------------------------------------------ helpers
 def _start_scan(*, project: str, files: list[tuple[str, str]], **meta: Any) -> dict[str, Any]:
     with session_scope() as session:
         scan = services.create_scan(session, project=project, files=files, **meta)
@@ -310,7 +302,6 @@ def _safe_path(path: str) -> str:
 
 
 def _files_from_zip(data: bytes) -> list[tuple[str, str]]:
-    """Lê o zip em memória (nada é extraído em disco, então não há zip slip)."""
 
     files = []
     try:
@@ -325,7 +316,7 @@ def _files_from_zip(data: bytes) -> list[tuple[str, str]]:
         if set(PurePosixPath(path).parts) & _SKIP_DIRS or detect_language(path) is None:
             continue
         total += info.file_size
-        if total > 50_000_000:  # proteção contra zip bomb
+        if total > 50_000_000:
             raise HTTPException(413, "Conteúdo descompactado grande demais")
         files.append((path, archive.read(info).decode("utf-8", errors="replace")))
     return files

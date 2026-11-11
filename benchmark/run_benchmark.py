@@ -1,17 +1,3 @@
-"""Benchmark de precisão e recall do Sentinela.
-
-A verdade está no próprio corpus: uma linha que termina com
-``# expect: CWE-N`` (ou ``// expect: CWE-N``) é uma vulnerabilidade real.
-Qualquer outro achado é falso positivo.
-
-    python -m benchmark.run_benchmark
-    python -m benchmark.run_benchmark --markdown benchmark/RESULTS.md
-    python -m benchmark.run_benchmark --ai --ollama-url http://localhost:11434
-
-Compara configurações do motor para mostrar a contribuição de cada camada
-(regras → taint → Bandit → IA) e compara com o Bandit sozinho.
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -28,7 +14,6 @@ from sentinela.engine.scanner import ScanOptions, scan_files
 
 CORPUS = Path(__file__).resolve().parent / "corpus"
 _EXPECT = re.compile(r"(?:#|//)\s*expect:\s*(CWE-\d+)")
-# Mesmo critério do motor: famílias de CWE equivalentes.
 _EQUIVALENT = {"CWE-94": "CWE-95"}
 
 
@@ -144,7 +129,6 @@ def run(ai_assistant=None) -> tuple[list[Expected], dict[str, Score]]:
     }
     results = {name: score(_as_reported(findings), expected) for name, findings in configurations.items()}
 
-    # Bandit sozinho, só nos arquivos Python, severidade média ou maior.
     bandit_reported = []
     for source in files:
         if source.path.endswith(".py"):

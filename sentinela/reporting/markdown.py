@@ -1,5 +1,3 @@
-"""Relatório em Markdown — usado como comentário de Pull Request e no terminal."""
-
 from __future__ import annotations
 
 from collections import Counter
@@ -21,9 +19,7 @@ def pr_comment(
     max_items: int = 25,
     risco: dict[str, Any] | None = None,
 ) -> str:
-    """Achados com IA dizendo 'falso positivo' vão para uma seção recolhida."""
 
-    # O mapeamento de dados pessoais é inventário, não vulnerabilidade: fica fora da lista de achados.
     active = [
         f
         for f in findings

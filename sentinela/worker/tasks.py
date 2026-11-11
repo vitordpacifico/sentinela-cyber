@@ -1,17 +1,3 @@
-"""Workers Celery: processamento assíncrono em duas filas.
-
-* fila ``analysis`` — parsing, regras, taint e Bandit (CPU, rápido);
-* fila ``ai``       — uma tarefa por achado consultando o Llama 3 (lento).
-
-Separar as filas permite escalar cada tipo de worker de forma independente
-(``docker compose up --scale worker-ai=3``) e impede que a IA, que leva
-segundos por achado, atrase a análise determinística de outros PRs.
-
-Fluxo: ``analyze`` grava os achados e dispara um *chord*:
-``group(assess(f1), assess(f2), ...) | finalize(scan)``. O ``finalize`` só
-roda quando todas as avaliações terminam (ou falham) e calcula o gate.
-"""
-
 from __future__ import annotations
 
 import logging
@@ -39,7 +25,7 @@ def _make_app() -> Celery:
             "sentinela.finalize": {"queue": ANALYSIS_QUEUE},
             "sentinela.assess": {"queue": AI_QUEUE},
         },
-        task_acks_late=True,  # worker morreu no meio? a tarefa volta para a fila
+        task_acks_late=True,
         task_reject_on_worker_lost=True,
         worker_prefetch_multiplier=1,
         task_time_limit=600,
@@ -67,7 +53,7 @@ def analyze(scan_id: str) -> int:
 def assess(finding_id: str) -> bool:
     try:
         return services.assess_finding(finding_id)
-    except Exception:  # IA nunca derruba o scan; finalize roda mesmo assim
+    except Exception:
         logger.warning("Falha na avaliação por IA do achado %s", finding_id, exc_info=True)
         return False
 

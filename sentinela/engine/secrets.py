@@ -1,18 +1,3 @@
-"""Detecção de credenciais escritas no código (CWE-798), em qualquer linguagem.
-
-Duas estratégias complementares:
-
-1. **Formato conhecido** — tokens com prefixo/estrutura de provedor (AWS,
-   GitHub, Slack, Stripe, Google, JWT, chave privada PEM, URL com senha).
-   São reconhecidos em qualquer string, independente do nome da variável.
-2. **Nome + valor** — um literal atribuído a algo chamado ``password``,
-   ``apiKey``, ``client_secret``... com valor que não parece placeholder e tem
-   entropia mínima.
-
-O valor encontrado **nunca** é copiado para o achado: a evidência guarda só
-os dois primeiros caracteres e o tamanho.
-"""
-
 from __future__ import annotations
 
 import math
@@ -46,7 +31,6 @@ _SECRET_NAME = re.compile(
     r"signing[_-]?key|encryption[_-]?key|jwt[_-]?key)",
     re.I,
 )
-# Nomes que falam *sobre* a credencial, mas não guardam a credencial.
 _METADATA_SUFFIX = re.compile(
     r"(field|label|header|name|url|uri|endpoint|path|file|len|length|min|max|"
     r"prompt|message|msg|regex|pattern|type|hint|placeholder|policy|ttl|"
@@ -141,7 +125,6 @@ def detect_secrets(
 
 
 def secret_lines(findings: list[Finding]) -> dict[str, set[int]]:
-    """Linhas com segredo por arquivo — usadas para mascarar o contexto da IA."""
 
     result: dict[str, set[int]] = {}
     for finding in findings:
@@ -167,7 +150,7 @@ def looks_like_secret(name: str, value: str) -> bool:
     stripped = value.strip()
     if len(stripped) < _MIN_LENGTH or _PLACEHOLDER.match(stripped):
         return False
-    if len(stripped.split()) > 2:  # frase, não credencial
+    if len(stripped.split()) > 2:
         return False
     return shannon_entropy(stripped) >= _MIN_ENTROPY
 

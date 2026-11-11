@@ -1,12 +1,3 @@
-"""Orquestra a análise de um conjunto de arquivos.
-
-Para cada arquivo: detecta a linguagem → parseia (Tree-sitter) → regras
-declarativas → detector de segredos → taint analysis → dados pessoais
-(mapeamento, valores reais e vazamentos) → Bandit (Python) →
-une achados que descrevem a mesma vulnerabilidade → monta o contexto de
-código que a IA vai ler (com segredos mascarados) → fingerprint.
-"""
-
 from __future__ import annotations
 
 import time
@@ -29,9 +20,9 @@ MAX_FILE_BYTES = 1_000_000
 @dataclass(frozen=True)
 class ScanOptions:
     use_bandit: bool = True
-    scope: str = ""  # entra no fingerprint (ex. nome do projeto)
+    scope: str = ""
     rules_dir: str | None = None
-    dados_pessoais: bool = True  # módulo de PII da Global Solution
+    dados_pessoais: bool = True
 
 
 def scan_files(files: Iterable[SourceFile], options: ScanOptions | None = None) -> ScanResult:
@@ -52,7 +43,7 @@ def scan_files(files: Iterable[SourceFile], options: ScanOptions | None = None) 
             continue
         try:
             file_findings = scan_source(source.path, source.content, language, options)
-        except Exception as exc:  # um arquivo ruim não derruba o scan inteiro
+        except Exception as exc:
             skipped.append((source.path, f"erro de análise: {type(exc).__name__}"))
             continue
         scanned += 1
@@ -103,8 +94,6 @@ def scan_source(path: str, content: str, language: str, options: ScanOptions | N
         line for finding in findings if finding.cwe == "CWE-798" for line in range(finding.line, finding.end_line + 1)
     }
     for finding in findings:
-        # Dados pessoais (CPF, Cartão SUS, e-mail, telefone) são mascarados antes de ir para a IA,
-        # para o banco e para os relatórios.
         finding.context = mascarar_dados_pessoais(code_window(lines, finding.line, finding.end_line, masked_lines))
         finding.snippet = mascarar_dados_pessoais(finding.snippet)
         finding.compute_fingerprint(options.scope)
@@ -112,11 +101,6 @@ def scan_source(path: str, content: str, language: str, options: ScanOptions | N
 
 
 def merge_findings(pattern_findings: list[Finding], taint_findings: list[Finding]) -> list[Finding]:
-    """Regra e taint na mesma chamada = uma vulnerabilidade só, com dois motores.
-
-    O achado de taint é mais informativo (tem o caminho do dado e severidade
-    maior), então ele é mantido e absorve o motor da regra.
-    """
 
     result = list(taint_findings)
     for finding in pattern_findings:
@@ -157,7 +141,6 @@ def corroborate_with_bandit(findings: list[Finding], content: str) -> None:
 
 
 def code_window(lines: list[str], start: int, end: int, masked: set[int], radius: int = CONTEXT_RADIUS) -> str:
-    """Linhas numeradas ao redor do achado; ``>>`` marca as linhas do achado."""
 
     first = max(1, start - radius)
     last = min(len(lines), end + radius)

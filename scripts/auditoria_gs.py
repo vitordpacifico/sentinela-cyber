@@ -25,7 +25,6 @@ RAIZ = Path(__file__).resolve().parents[1]
 
 
 def auditar(nome: str, alvo: Path, saida: Path, *, ai: bool, model: str) -> None:
-    """Roda o scan a partir da pasta-mãe do alvo, para os relatórios terem caminhos relativos."""
     saida = saida.resolve()
     saida.mkdir(parents=True, exist_ok=True)
     alvo = alvo.resolve()

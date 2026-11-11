@@ -1,20 +1,3 @@
-"""Taint analysis de dados pessoais: do campo com dado pessoal até uma saída insegura.
-
-Reaproveita o ``TaintAnalyzer`` do Sentinela (mesmo rastreamento entre
-variáveis, atribuições e funções do arquivo) e troca só três peças:
-
-* **fonte**: qualquer referência cujo nome indica dado pessoal
-  (``usuario.cpf``, ``diagnostico``, ``senhaDigitada``);
-* **sanitizador**: além da lista do ``pii.yml``, qualquer chamada cujo nome
-  indica proteção (``mascararCpf``, ``hashSenha``, ``criptografar``);
-* **achado**: o id da regra leva a categoria do dado
-  (``pii.vazamento.log.saude``), e a severidade vem da categoria, porque um
-  diagnóstico no log é mais grave que um e-mail no log.
-
-O achado tem evidência de fluxo, então o Security Gate bloqueia quando a
-severidade passa do limite da política.
-"""
-
 from __future__ import annotations
 
 from functools import cache
@@ -29,7 +12,6 @@ from sentinela.engine.taint import SinkSpec, TaintAnalyzer, TaintSpec, Trace
 from sentinela.pii.categorias import CategoriaPII, classificar_nome, nome_protegido, palavras
 from sentinela.pii.valores import mascarar_dados_pessoais
 
-# Partes do nome de uma chamada que indicam que o valor sai protegido.
 _PROTECAO = {
     "mascarar",
     "mascara",
@@ -70,7 +52,6 @@ DESCRICAO_SAIDA = {
 
 
 def tipo_saida(rule_id: str) -> str:
-    """``pii.vazamento.log.saude`` -> ``log``."""
 
     partes = rule_id.split(".")
     return partes[2] if len(partes) > 2 else ""
@@ -112,8 +93,6 @@ def carregar_spec_pii(linguagem: str, rules_dir: str | None = None) -> TaintSpec
 
 
 class AnalisadorFluxoPII(TaintAnalyzer):
-    """Taint analysis em que a fonte é o dado pessoal, e não a entrada do atacante."""
-
     def __init__(self, *args: object, **kwargs: object) -> None:
         super().__init__(*args, **kwargs)  # type: ignore[arg-type]
         self._categorias: dict[str, CategoriaPII] = {}
@@ -127,8 +106,6 @@ class AnalisadorFluxoPII(TaintAnalyzer):
         return Trace(source=origem, steps=(self._step(node, "source"),))
 
     def _taint(self, node: Node | None, env: dict[str, Trace]) -> Trace | None:
-        # ``usuario.senhaHash``: o campo já é a versão protegida do dado, mesmo que
-        # o objeto ``usuario`` tenha outros dados pessoais.
         if node is not None:
             referencia = self.adapter.reference_name(node)
             if referencia and "." in referencia and nome_protegido(referencia):

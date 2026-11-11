@@ -1,5 +1,3 @@
-"""Exportação SARIF 2.1.0 — formato lido pelo GitHub code scanning e IDEs."""
-
 from __future__ import annotations
 
 from typing import Any

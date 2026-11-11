@@ -1,17 +1,3 @@
-"""Regras de parsing para dados pessoais: mapeamento, valores reais e fluxo.
-
-Roda sobre a mesma AST do Tree-sitter que o resto do Sentinela usa e gera três
-tipos de achado:
-
-* ``pii.mapa.<categoria>`` (info): onde o código declara um campo, variável ou
-  parâmetro com dado pessoal. Forma o inventário de dados pessoais do sistema,
-  que a LGPD exige conhecer (art. 37). Não bloqueia o merge.
-* ``pii.valor.cpf`` / ``pii.valor.cns`` (alta): CPF ou Cartão SUS **válidos**
-  escritos no código, como em dados de teste copiados de um cadastro real.
-* ``pii.vazamento.<saida>.<categoria>``: o dado pessoal chega a uma saída
-  insegura (ver ``fluxo.py``). Tem evidência de fluxo e bloqueia o merge.
-"""
-
 from __future__ import annotations
 
 from tree_sitter import Node
@@ -22,14 +8,13 @@ from sentinela.pii.categorias import CategoriaPII, classificar_nome
 from sentinela.pii.fluxo import AnalisadorFluxoPII, carregar_spec_pii
 from sentinela.pii.valores import encontrar_cns, encontrar_cpfs, mascarar_dados_pessoais
 
-# Nós que declaram um nome de campo, além de atribuições e parâmetros.
 _DECLARACOES = {
-    "pair",  # { cpf: ... } em JS/TS e {"cpf": ...} em Python
-    "property_signature",  # interface Usuario { cpf: string }
-    "public_field_definition",  # class Usuario { cpf = "" }
-    "shorthand_property_identifier",  # { cpf }
-    "field_declaration",  # Java: private String cpf;
-    "keyword_argument",  # Python: Usuario(cpf=...)
+    "pair",
+    "property_signature",
+    "public_field_definition",
+    "shorthand_property_identifier",
+    "field_declaration",
+    "keyword_argument",
 }
 
 _REFERENCIAS = [
@@ -47,7 +32,6 @@ def analisar_dados_pessoais(
     source_lines: list[str],
     rules_dir: str | None = None,
 ) -> tuple[list[Finding], list[Finding]]:
-    """Devolve (achados de padrão, achados de fluxo) sobre dados pessoais."""
 
     padroes = [*_mapear(adapter, root, path, source_lines), *_valores_reais(adapter, root, path, source_lines)]
     spec = carregar_spec_pii(adapter.rules_language, rules_dir)
@@ -55,7 +39,6 @@ def analisar_dados_pessoais(
     return padroes, fluxo
 
 
-# ----------------------------------------------------------------- mapeamento
 def _nomes_declarados(adapter: LanguageAdapter, node: Node) -> list[str]:
     if node.type in adapter.assignment_types:
         return [nome for nome, _ in adapter.assignment_targets(node)]
@@ -123,7 +106,6 @@ def _achado_mapa(
     )
 
 
-# ---------------------------------------------------------- valores reais
 def _valores_reais(adapter: LanguageAdapter, root: Node, path: str, lines: list[str]) -> list[Finding]:
     achados: list[Finding] = []
     for valor, node in adapter.string_literals(root):

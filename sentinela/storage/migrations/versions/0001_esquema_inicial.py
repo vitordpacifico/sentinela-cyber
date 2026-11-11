@@ -1,10 +1,3 @@
-"""esquema inicial
-
-Revision ID: 0001
-Revises:
-Create Date: 2026-10-13 16:02:46.540590
-"""
-
 import sqlalchemy as sa
 from alembic import op
 

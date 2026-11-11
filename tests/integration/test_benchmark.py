@@ -1,5 +1,3 @@
-"""Regressão: o corpus rotulado não pode perder recall nem ganhar ruído."""
-
 from benchmark.run_benchmark import run
 
 

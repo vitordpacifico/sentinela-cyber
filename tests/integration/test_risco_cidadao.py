@@ -1,5 +1,3 @@
-"""Risco Cidadão pela API: scan com vazamento, painel e relatório."""
-
 from pathlib import Path
 
 PROTOTIPO = Path(__file__).resolve().parents[2] / "exemplos" / "prototipo-com-falhas" / "cadastroMorador.ts"

@@ -1,5 +1,3 @@
-"""Adaptador Tree-sitter para JavaScript (Node.js e navegador)."""
-
 from __future__ import annotations
 
 from collections.abc import Iterator
@@ -41,7 +39,6 @@ class JavaScriptAdapter(LanguageAdapter):
     def _grammar(self) -> Any:
         return tree_sitter_javascript.language()
 
-    # ------------------------------------------------------------ contexto
     def build_context(self, root: Node) -> FileContext:
         ctx = FileContext()
         for node in self.walk(root):
@@ -95,7 +92,6 @@ class JavaScriptAdapter(LanguageAdapter):
         args = self.call_args(node)
         return self.string_value(args[0]) if args else None
 
-    # ------------------------------------------------------------ chamadas
     def call_name(self, node: Node, ctx: FileContext) -> str | None:
         if node.type == "new_expression":
             constructor = node.child_by_field_name("constructor")
@@ -116,12 +112,11 @@ class JavaScriptAdapter(LanguageAdapter):
         arguments = node.child_by_field_name("arguments")
         if arguments is None:
             return []
-        if arguments.type == "template_string":  # tag`...`
+        if arguments.type == "template_string":
             return [arguments]
         return [child for child in arguments.named_children if child.type != "comment"]
 
     def call_kwargs(self, node: Node) -> dict[str, Node]:
-        """Opções passadas como objeto literal no último argumento ({shell: true})."""
 
         args = self.call_args(node)
         result: dict[str, Node] = {}
@@ -140,7 +135,6 @@ class JavaScriptAdapter(LanguageAdapter):
             return function.child_by_field_name("object")
         return None
 
-    # ---------------------------------------------------------- atribuições
     def assignment_targets(self, node: Node) -> list[tuple[str, Node | None]]:
         if node.type == "variable_declarator":
             target = node.child_by_field_name("name")
@@ -186,7 +180,6 @@ class JavaScriptAdapter(LanguageAdapter):
             return None
         return self.text(left.child_by_field_name("property")), right
 
-    # ------------------------------------------------------------- funções
     def function_name(self, node: Node) -> str:
         name = node.child_by_field_name("name")
         if name is not None:
@@ -212,7 +205,6 @@ class JavaScriptAdapter(LanguageAdapter):
                     result.append(Param(name))
         return result
 
-    # -------------------------------------------------------------- valores
     def reference_name(self, node: Node) -> str | None:
         if node.type in {"identifier", "shorthand_property_identifier"}:
             return self.text(node)

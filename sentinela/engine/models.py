@@ -1,5 +1,3 @@
-"""Modelos de domínio do motor de análise (independentes de banco e de API)."""
-
 from __future__ import annotations
 
 import hashlib
@@ -34,12 +32,10 @@ _SEVERITY_RANK = {
 
 
 class Engine(str, Enum):
-    """Quem produziu a evidência. Cada um é um sinal independente."""
-
-    RULE = "rule"  # regra declarativa sobre a AST
-    TAINT = "taint"  # fluxo de dados fonte -> sink
+    RULE = "rule"
+    TAINT = "taint"
     SECRET = "secret"  # noqa: S105 - nome do motor, não credencial
-    BANDIT = "bandit"  # motor externo (Python)
+    BANDIT = "bandit"
 
 
 DETERMINISTIC_ENGINES = frozenset(Engine)
@@ -47,17 +43,13 @@ DETERMINISTIC_ENGINES = frozenset(Engine)
 
 @dataclass(frozen=True)
 class TaintStep:
-    """Um passo do caminho do dado contaminado, para evidência e para a IA."""
-
     line: int
-    kind: str  # source | propagation | sanitizer | sink
+    kind: str
     code: str
 
 
 @dataclass
 class Finding:
-    """Uma vulnerabilidade encontrada em um ponto do código."""
-
     rule_id: str
     title: str
     language: str
@@ -75,12 +67,11 @@ class Finding:
     remediation: str = ""
     safe_example: str = ""
     references: list[str] = field(default_factory=list)
-    context: str = ""  # janela de código numerada (segredos mascarados) para a IA
+    context: str = ""
     fingerprint: str = ""
 
     @property
     def confidence(self) -> str:
-        """Alta quando há mais de um motor ou fluxo de dados comprovado."""
 
         if len(self.engines) >= 2 or Engine.TAINT in self.engines:
             return "high"
@@ -89,11 +80,6 @@ class Finding:
         return "medium"
 
     def compute_fingerprint(self, scope: str = "") -> str:
-        """Identidade estável do achado, resistente a deslocamento de linhas.
-
-        Usa a regra, o arquivo e o texto normalizado da linha — não o número
-        da linha — para que inserir código acima não "crie" um achado novo.
-        """
 
         normalized = re.sub(r"\s+", " ", self.snippet.strip())
         raw = "|".join([scope, self.rule_id, self.file_path, normalized])

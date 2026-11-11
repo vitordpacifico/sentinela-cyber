@@ -1,12 +1,3 @@
-"""Popula o banco com um histórico de scans de demonstração.
-
-Simula um projeto ao longo de algumas semanas: começa com o corpus
-vulnerável completo e, a cada scan, alguns arquivos são "corrigidos"
-(trocados pela versão segura). Útil para apresentar o dashboard.
-
-    python scripts/seed_demo.py               # usa SENTINELA_DATABASE_URL
-"""
-
 from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
@@ -19,7 +10,6 @@ from sentinela.storage.models import Scan
 CORPUS = Path(__file__).resolve().parents[1] / "benchmark" / "corpus"
 PROJECT = "loja-demo"
 
-# (dias atrás, arquivos incluídos)
 TIMELINE = [
     (35, ["python/loja_vulneravel.py", "javascript/api_vulneravel.js", "java/PedidoController.java"]),
     (

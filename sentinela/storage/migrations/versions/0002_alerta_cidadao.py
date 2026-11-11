@@ -1,10 +1,3 @@
-"""alerta ao cidadão escrito pela IA (Global Solution 2026.2)
-
-Revision ID: 0002
-Revises: 0001
-Create Date: 2026-11-07 10:00:00
-"""
-
 import sqlalchemy as sa
 from alembic import op
 

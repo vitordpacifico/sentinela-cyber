@@ -1,23 +1,3 @@
-"""Taint analysis: rastreia dado externo (fonte) até uma função perigosa (sink).
-
-Funciona igual para Python, JavaScript e Java porque opera sobre o
-``LanguageAdapter``. Para cada função:
-
-1. parâmetros anotados como entrada do usuário (``@RequestParam``) e acessos
-   a fontes (``request.args``, ``req.query``, ``getParameter``) geram um
-   *trace* contaminado;
-2. atribuições propagam o trace para a variável de destino — ou limpam a
-   variável quando o valor é seguro;
-3. chamadas a sanitizadores (``int``, ``shlex.quote``, ``encodeForHTML``...)
-   devolvem valor limpo;
-4. quando um argumento contaminado chega a um sink, gera um achado com o
-   caminho completo (fonte → propagações → sink).
-
-Também há um nível de análise **entre funções do mesmo arquivo**: se
-``buscar(id)`` repassa ``id`` a um ``execute``, chamar ``buscar(req.query.id)``
-é detectado; e uma função que retorna dado de fonte é tratada como fonte.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -45,7 +25,7 @@ class SinkSpec:
     cwe: str
     owasp: str
     calls: tuple[str, ...]
-    args: Any  # list[int] | "any"
+    args: Any
     require_kwarg: dict[str, str]
     member_assign: tuple[str, ...]
     remediation: str
@@ -98,8 +78,6 @@ def load_taint_spec(language: str, rules_dir: str | None = None) -> TaintSpec | 
 
 @dataclass(frozen=True)
 class Trace:
-    """Origem de um valor contaminado e o caminho que ele percorreu."""
-
     source: str
     steps: tuple[TaintStep, ...]
 
@@ -115,8 +93,6 @@ class Trace:
 
 @dataclass
 class FunctionSummary:
-    """O que uma função faz com seus argumentos (usado entre funções)."""
-
     name: str
     param_offset: int
     returns_source: Trace | None = None
@@ -141,19 +117,15 @@ class TaintAnalyzer:
         self.summaries: dict[str, FunctionSummary] = {}
         self._findings: dict[tuple[int, str], Finding] = {}
 
-    # ------------------------------------------------------------- entrada
     def run(self, root: Node) -> list[Finding]:
         functions = list(self.adapter.functions(root))
-        # Passo 1: resumo de cada função (o que ela retorna e onde usa cada parâmetro).
         for function in functions:
             self._summarize(function)
-        # Passo 2: análise real de cada escopo, usando os resumos.
         self._analyze_scope(root, is_module=True)
         for function in functions:
             self._analyze_scope(function, is_module=False)
         return sorted(self._findings.values(), key=lambda f: (f.line, f.rule_id))
 
-    # -------------------------------------------------------------- resumo
     def _summarize(self, function: Node) -> None:
         adapter = self.adapter
         name = adapter.function_name(function)
@@ -165,12 +137,10 @@ class TaintAnalyzer:
         self.summaries[name] = summary
 
         body = adapter.function_body(function) or function
-        # O que a função retorna sem nenhum parâmetro contaminado?
         env: dict[str, Trace] = {}
         returned = self._walk_scope(body, env, emit=False)
         summary.returns_source = returned
 
-        # Para cada parâmetro: ele alcança algum sink?
         for index, param in enumerate(params[offset:]):
             probe = Trace(
                 source=f"parâmetro `{param.name}` de {name}()",
@@ -182,7 +152,6 @@ class TaintAnalyzer:
             if hits:
                 summary.param_sinks[index] = hits
 
-    # ------------------------------------------------------------- escopos
     def _analyze_scope(self, scope: Node, *, is_module: bool) -> None:
         adapter = self.adapter
         env: dict[str, Trace] = {}
@@ -238,7 +207,6 @@ class TaintAnalyzer:
                         returned = trace
         return returned
 
-    # -------------------------------------------------------- propagação
     def _assign(self, node: Node, env: dict[str, Trace]) -> None:
         augmented = node.type.startswith("augmented")
         for name, value in self.adapter.assignment_targets(node):
@@ -297,23 +265,15 @@ class TaintAnalyzer:
         return None
 
     def _source_trace(self, reference: str, node: Node) -> Trace | None:
-        """Ponto de extensão: decide se uma referência já é uma fonte.
-
-        Aqui a fonte é entrada externa (``req.query``...). O módulo de dados
-        pessoais sobrescreve este método para tratar ``cpf``, ``senha`` etc.
-        como fonte.
-        """
 
         if matches_any(reference, self.spec.source_members):
             return Trace(source=f"`{reference}`", steps=(self._step(node, "source"),))
         return None
 
     def _is_sanitizer(self, call_name: str) -> bool:
-        """Ponto de extensão: chamada que devolve um valor limpo."""
 
         return matches_any(call_name, self.spec.sanitizers)
 
-    # --------------------------------------------------------------- sinks
     def _check_call_sink(
         self,
         node: Node,
@@ -340,7 +300,6 @@ class TaintAnalyzer:
                 self._record(sink, node, trace, name, emit, sink_hits)
                 break
 
-        # Chamada a função local que repassa o parâmetro a um sink.
         summary = self.summaries.get(name.rsplit(".", 1)[-1])
         if summary is None or not summary.param_sinks or not emit:
             return
@@ -417,7 +376,6 @@ class TaintAnalyzer:
             references=[f"https://cwe.mitre.org/data/definitions/{sink.cwe.split('-')[-1]}.html"],
         )
 
-    # ------------------------------------------------------------- helpers
     def _step(self, node: Node, kind: str) -> TaintStep:
         line = self.adapter.line(node)
         return TaintStep(line=line, kind=kind, code=self._line_text(line))

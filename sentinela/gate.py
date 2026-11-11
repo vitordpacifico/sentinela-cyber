@@ -1,24 +1,3 @@
-"""Security Gate: decide se um conjunto de achados bloqueia o merge.
-
-Política (``.sentinela.yml`` no repositório analisado)::
-
-    gate:
-      fail_on: high            # severidade mínima que pode bloquear
-      require_strong_evidence: true
-      ignore_rules: []
-      ignore_paths: ["tests/**", "**/fixtures/**"]
-
-**Evidência forte** é o que separa "bloqueia" de "avisa":
-
-* fluxo de dados comprovado (taint: fonte → sink), ou
-* dois ou mais motores independentes no mesmo ponto (ex. regra + Bandit), ou
-* credencial em formato de provedor (AWS, GitHub, Stripe...).
-
-O veredito da IA **nunca** conta como evidência — nem para bloquear, nem
-para liberar. Só a decisão registrada por um revisor (falso positivo,
-risco aceito, corrigido) remove um achado do gate.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -67,8 +46,8 @@ class GatePolicy:
 
 @dataclass
 class GateDecision:
-    status: str  # passed | warned | failed
-    blocking: list[str] = field(default_factory=list)  # fingerprints
+    status: str
+    blocking: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     reasons: list[str] = field(default_factory=list)
 
@@ -96,7 +75,6 @@ def has_strong_evidence(engines: set[Engine] | set[str], severity: Severity, rul
 
 
 def ignorado(finding: Any, policy: GatePolicy) -> bool:
-    """O achado está fora do gate por ``ignore_rules`` ou ``ignore_paths`` da política."""
 
     rule_id = _get(finding, "rule_id")
     path = _get(finding, "file_path")
@@ -106,7 +84,6 @@ def ignorado(finding: Any, policy: GatePolicy) -> bool:
 
 
 def evaluate(findings: list[Any], policy: GatePolicy) -> GateDecision:
-    """``findings`` pode ser ``Finding`` do motor ou linha do banco/dicionário."""
 
     decision = GateDecision(status="passed")
     for finding in findings:

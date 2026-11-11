@@ -1,5 +1,3 @@
-"""Módulo de dados pessoais (Global Solution 2026.2): categorias, valores, fluxo, risco e alerta."""
-
 import pytest
 
 from sentinela.ai.assistant import build_prompt, parse_assessment
@@ -19,7 +17,6 @@ def ids(findings, prefixo="pii."):
     return sorted(f.rule_id for f in findings if f.rule_id.startswith(prefixo))
 
 
-# ------------------------------------------------------------------ categorias
 @pytest.mark.parametrize(
     ("nome", "categoria"),
     [
@@ -56,7 +53,6 @@ def test_quebra_nomes_em_palavras():
     assert palavras("condiçãoDeSaúde") == ["condicao", "de", "saude"]
 
 
-# --------------------------------------------------------------------- valores
 def test_cpf_com_digitos_verificadores():
     assert cpf_valido("123.456.789-09")
     assert cpf_valido("12345678909")
@@ -79,7 +75,6 @@ def test_mascara_dados_pessoais_em_texto():
     assert "98765" not in mascarado and "4321" in mascarado
 
 
-# ------------------------------------------------------------------ TypeScript
 def test_typescript_e_detectado_e_usa_regras_do_javascript():
     assert detect_language("src/app.tsx") == "typescript"
     adapter = get_adapter("typescript")
@@ -94,7 +89,6 @@ def test_taint_de_injecao_atravessa_tipos_do_typescript():
     assert "javascript.taint.command-injection" in [f.rule_id for f in scan_source("a.ts", codigo, "typescript", OPTS)]
 
 
-# ------------------------------------------------------------- fluxo de PII
 TS_VAZAMENTOS = """
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
@@ -176,7 +170,6 @@ def test_security_gate_bloqueia_vazamento_de_cpf_e_so_avisa_de_email():
     assert evaluate(email, GatePolicy()).status != "failed"
 
 
-# ------------------------------------------------------------- Risco Cidadão
 def test_risco_por_categoria_e_saida():
     assert risco_do_achado("pii.vazamento.url.saude") == 1.0
     assert risco_do_achado("pii.vazamento.log.contato") == 0.35
@@ -207,7 +200,6 @@ def test_faixas_do_indice(indice, nivel):
     assert faixa(indice)[0] == nivel
 
 
-# -------------------------------------------------------------- alerta e IA
 def test_alerta_padrao_em_linguagem_simples():
     alerta = alerta_padrao("pii.vazamento.notificacao.saude")
     assert "tela bloqueada" in alerta["o_que_pode_acontecer"]

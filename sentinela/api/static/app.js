@@ -1,8 +1,3 @@
-// Dashboard executivo do Sentinela — JavaScript puro, sem build.
-// Todo texto vindo da API passa por esc() antes de ir para o HTML: o
-// dashboard exibe trechos de código vulnerável e não pode ser ele mesmo
-// vulnerável a XSS.
-
 const SEVERITIES = ["critical", "high", "medium", "low", "info"];
 const SEV_LABEL = { critical: "Crítico", high: "Alto", medium: "Médio", low: "Baixo", info: "Info" };
 const STATUS_LABEL = {
@@ -31,7 +26,7 @@ async function api(path, options = {}) {
   const response = await fetch(path, options);
   if (!response.ok) {
     let detail = response.statusText;
-    try { detail = (await response.json()).detail || detail; } catch { /* corpo não-JSON */ }
+    try { detail = (await response.json()).detail || detail; } catch { }
     throw new Error(detail);
   }
   return response.json();
@@ -39,7 +34,6 @@ async function api(path, options = {}) {
 
 function destroyCharts() { while (charts.length) charts.pop().destroy(); }
 
-// ---------------------------------------------------------------- roteador
 async function route() {
   destroyCharts();
   const hash = location.hash || "#/";
@@ -67,7 +61,6 @@ async function loadProjects() {
   select.innerHTML = projects.map((p) => `<option ${p.name === state.project ? "selected" : ""}>${esc(p.name)}</option>`).join("");
 }
 
-// --------------------------------------------------------------- visão geral
 async function renderOverview(view) {
   if (!state.project) {
     view.innerHTML = `<div class="card empty">
@@ -101,7 +94,6 @@ async function renderOverview(view) {
   drawOverviewCharts(m);
 }
 
-// ------------------------------------------------------------ Risco Cidadão
 const RISCO_COR = { baixo: "var(--ok)", moderado: "var(--medium)", alto: "var(--high)", critico: "var(--critical)" };
 
 function riscoCidadao(r, latest) {
@@ -211,7 +203,6 @@ function drawOverviewCharts(m) {
   }));
 }
 
-// ------------------------------------------------------------------- scans
 async function renderScans(view) {
   const scans = await api(`/api/scans?limit=50${state.project ? `&project=${encodeURIComponent(state.project)}` : ""}`);
   view.innerHTML = `<h1>Scans</h1><p class="subtitle">Cada análise enviada pela CLI, pelo pipeline ou por upload.</p>
@@ -324,7 +315,6 @@ async function review(f, status, row) {
   }
 }
 
-// ------------------------------------------------------------------ regras
 async function renderRules(view) {
   const rules = await api("/api/rules");
   view.innerHTML = `<h1>Catálogo de regras</h1><p class="subtitle">${rules.length} regras em Python, JavaScript e Java — padrões, taint analysis e segredos.</p>
@@ -333,7 +323,6 @@ async function renderRules(view) {
       <td>${esc(r.language)}</td><td>${esc(r.kind)}</td><td>${esc(r.cwe)}</td><td>${esc(r.owasp)}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
-// --------------------------------------------------------------- novo scan
 function setupScanDialog() {
   const dialog = $("#scan-dialog");
   $("#new-scan").addEventListener("click", () => {
@@ -373,6 +362,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     route();
   });
   window.addEventListener("hashchange", route);
-  try { await loadProjects(); } catch { /* API fora do ar: a rota mostra o erro */ }
+  try { await loadProjects(); } catch { }
   route();
 });

@@ -1,11 +1,3 @@
-"""Alerta ao cidadão: a falha técnica explicada em linguagem simples.
-
-A IA (``sentinela/ai/assistant.py``) escreve o alerta quando o Ollama está
-disponível. Sem IA, este módulo monta um alerta a partir da categoria do dado
-e do tipo de saída, para o painel e os relatórios nunca ficarem sem
-explicação. O campo ``origem`` diz qual dos dois escreveu.
-"""
-
 from __future__ import annotations
 
 from typing import Any
@@ -35,7 +27,6 @@ _EXPOSICAO = {
 
 
 def categoria_do_achado(rule_id: str) -> CategoriaPII | None:
-    """``pii.vazamento.log.saude`` -> Saúde; ``pii.valor.cns`` -> Saúde; ``pii.mapa.contato`` -> Contato."""
 
     partes = rule_id.split(".")
     if len(partes) < 3 or partes[0] != "pii":
@@ -50,7 +41,6 @@ def categoria_do_achado(rule_id: str) -> CategoriaPII | None:
 
 
 def alerta_padrao(rule_id: str, remediation: str = "") -> dict[str, Any] | None:
-    """Alerta montado por regras, usado quando a IA não está disponível."""
 
     categoria = categoria_do_achado(rule_id)
     partes = rule_id.split(".")

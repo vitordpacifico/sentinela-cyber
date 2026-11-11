@@ -1,5 +1,3 @@
-"""Tabelas do PostgreSQL (SQLAlchemy 2)."""
-
 from __future__ import annotations
 
 import uuid
@@ -36,9 +34,8 @@ class Scan(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.id", ondelete="CASCADE"), index=True)
-    # queued -> analyzing -> ai_review -> completed | failed
     status: Mapped[str] = mapped_column(String(20), default="queued", index=True)
-    trigger: Mapped[str] = mapped_column(String(20), default="api")  # api | upload | ci | cli
+    trigger: Mapped[str] = mapped_column(String(20), default="api")
     commit_sha: Mapped[str | None] = mapped_column(String(64))
     branch: Mapped[str | None] = mapped_column(String(200))
     pr_number: Mapped[int | None] = mapped_column(Integer)
@@ -59,8 +56,6 @@ class Scan(Base):
 
 
 class ScanFile(Base):
-    """Conteúdo enviado para análise — é como o worker recebe o código."""
-
     __tablename__ = "scan_files"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -97,7 +92,6 @@ class FindingRow(Base):
     remediation: Mapped[str] = mapped_column(Text, default="")
     safe_example: Mapped[str] = mapped_column(Text, default="")
     references: Mapped[list] = mapped_column(JSON, default=list)
-    # Análise da IA (consultiva)
     ai_verdict: Mapped[str | None] = mapped_column(String(20))
     ai_confidence: Mapped[str | None] = mapped_column(String(10))
     ai_rationale: Mapped[str | None] = mapped_column(Text)
@@ -112,12 +106,6 @@ class FindingRow(Base):
 
 
 class FindingState(Base):
-    """Decisão do revisor sobre um achado — vale para todos os scans futuros.
-
-    Chaveada por fingerprint: marcar algo como falso positivo hoje continua
-    valendo no próximo PR, mesmo que o código tenha mudado de linha.
-    """
-
     __tablename__ = "finding_states"
     __table_args__ = (UniqueConstraint("project_id", "fingerprint"),)
 

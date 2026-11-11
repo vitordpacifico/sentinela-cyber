@@ -1,11 +1,3 @@
-"""Casos de uso da plataforma — usados pela API, pelos workers e pela CLI.
-
-Pipeline de um scan (cada etapa é uma tarefa Celery em modo ``queue``):
-
-    create_scan  ->  analyze_scan  ->  assess_finding (xN, fila "ai")  ->  finalize_scan
-    (API)            (fila "analysis")                                      (gate + status)
-"""
-
 from __future__ import annotations
 
 from collections import Counter, defaultdict
@@ -33,7 +25,6 @@ class NotFound(Exception):
     pass
 
 
-# --------------------------------------------------------------------- scans
 def get_or_create_project(session: Session, name: str) -> Project:
     project = session.scalar(select(Project).where(Project.name == name))
     if project is None:
@@ -71,7 +62,6 @@ def create_scan(
 
 
 def analyze_scan(scan_id: str) -> list[str]:
-    """Roda o motor SAST e grava os achados. Retorna os ids dos achados."""
 
     with session_scope() as session:
         scan = _scan(session, scan_id)
@@ -97,7 +87,6 @@ def analyze_scan(scan_id: str) -> list[str]:
         rows = [_row_from_finding(scan, finding) for finding in result.findings]
         session.add_all(rows)
         scan.status = "ai_review" if rows else "finalizing"
-        # Código-fonte não precisa ficar guardado depois da análise.
         for file in list(scan.files):
             session.delete(file)
         session.flush()
@@ -105,7 +94,6 @@ def analyze_scan(scan_id: str) -> list[str]:
 
 
 def assess_finding(finding_id: str, assistant: OllamaAssistant | None = None) -> bool:
-    """Pede à IA local a triagem/correção de um achado. Falha silenciosa."""
 
     assistant = assistant if assistant is not None else assistant_from_env()
     if assistant is None or not assistant.available:
@@ -139,7 +127,6 @@ def finalize_scan(scan_id: str) -> dict[str, Any]:
 
 
 def process_inline(scan_id: str, assistant: OllamaAssistant | None = None) -> dict[str, Any]:
-    """Executa todas as etapas na sequência (modo ``inline``, testes, CLI)."""
 
     finding_ids = analyze_scan(scan_id)
     assistant = assistant if assistant is not None else assistant_from_env()
@@ -159,7 +146,6 @@ def _fail(scan_id: str, message: str) -> None:
             scan.finished_at = datetime.now(UTC)
 
 
-# ----------------------------------------------------------------- revisão
 def update_finding_state(finding_id: str, *, status: str, note: str, actor: str) -> dict[str, Any]:
     if status not in REVIEW_STATUSES:
         raise ValueError(f"status deve ser um de {', '.join(REVIEW_STATUSES)}")
@@ -194,7 +180,6 @@ def update_finding_state(finding_id: str, *, status: str, note: str, actor: str)
         return finding_dict(row, {row.fingerprint: state}, include_history=_history(session, row))
 
 
-# ----------------------------------------------------------- serialização
 def finding_dict(
     row: FindingRow,
     states: dict[str, FindingState],
@@ -245,7 +230,6 @@ def finding_dict(
 
 
 def _alerta_cidadao(row: FindingRow) -> dict[str, Any] | None:
-    """Alerta escrito pela IA, ou montado por regras quando a IA não estava disponível."""
 
     if row.ai_alerta_cidadao:
         return {**row.ai_alerta_cidadao, "origem": "ia", "modelo": row.ai_model}
@@ -280,9 +264,7 @@ def scan_findings(session: Session, scan_id: str) -> list[dict[str, Any]]:
     return [finding_dict(row, states) for row in rows]
 
 
-# ----------------------------------------------------------------- métricas
 def project_metrics(session: Session, project_name: str) -> dict[str, Any]:
-    """Dados do dashboard executivo para um projeto."""
 
     project = session.scalar(select(Project).where(Project.name == project_name))
     if project is None:
@@ -293,7 +275,6 @@ def project_metrics(session: Session, project_name: str) -> dict[str, Any]:
     ).all()
     latest = scans[-1] if scans else None
     current = [finding_dict(row, states) for row in latest.findings] if latest else []
-    # O mapeamento de dados pessoais é inventário: entra no Risco Cidadão, mas não conta como falha.
     open_now = [f for f in current if f["status"] in {"open", "confirmed"} and not _inventario(f["rule_id"])]
 
     severity = Counter(f["severity"] for f in open_now)
@@ -372,7 +353,6 @@ def list_projects(session: Session) -> list[dict[str, Any]]:
     ]
 
 
-# ----------------------------------------------------------------- helpers
 def _scan(session: Session, scan_id: str) -> Scan:
     scan = session.get(Scan, scan_id)
     if scan is None:

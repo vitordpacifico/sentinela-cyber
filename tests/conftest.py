@@ -1,5 +1,3 @@
-"""Fixtures compartilhadas: banco SQLite isolado por teste e IA desligada."""
-
 from __future__ import annotations
 
 import pytest

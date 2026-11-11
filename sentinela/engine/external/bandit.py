@@ -1,13 +1,3 @@
-"""Bandit como segundo motor, independente, para arquivos Python.
-
-O Bandit é mantido pela PyCQA, com regras próprias. Quando ele aponta a
-mesma linha e uma CWE compatível com um achado do Sentinela, o achado ganha
-o motor ``bandit`` — duas implementações diferentes concordando é evidência
-mais forte, e é isso que o Security Gate exige para bloquear.
-
-Se o Bandit não estiver instalado ou falhar, a análise segue sem ele.
-"""
-
 from __future__ import annotations
 
 import logging
@@ -18,7 +8,6 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 logging.getLogger("stevedore.extension").setLevel(logging.CRITICAL)
 
-# Mesma fraqueza descrita por CWEs diferentes em cada ferramenta.
 _CWE_FAMILIES = (
     {78, 94, 95},
     {259, 798, 321},
@@ -59,7 +48,7 @@ def run_bandit(source: str) -> list[BanditIssue]:
             manager.discover_files([path])
             manager.run_tests()
             raw = [issue.as_dict(with_code=False) for issue in manager.get_issue_list()]
-        except Exception:  # o Bandit nunca pode derrubar a análise
+        except Exception:
             logger.warning("Bandit falhou; seguindo sem ele.", exc_info=True)
             return []
 

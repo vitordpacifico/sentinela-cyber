@@ -39,7 +39,6 @@ def arquivos(pasta: Path, prefixo: str = "") -> list[tuple[str, str]]:
 
 
 def apagar_projetos(nomes: set[str]) -> None:
-    """Apaga os projetos da demonstração, para o script poder rodar de novo sem duplicar scans."""
     with session_scope() as session:
         for projeto in session.query(Project).filter(Project.name.in_(nomes)).all():
             for modelo in (StateHistory, FindingState, FindingRow):

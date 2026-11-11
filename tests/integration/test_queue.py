@@ -1,5 +1,3 @@
-"""Modo fila: Celery em modo síncrono (eager) com o mesmo pipeline do Compose."""
-
 import pytest
 
 
@@ -10,8 +8,7 @@ def eager_queue(database, monkeypatch):
 
     monkeypatch.setattr(get_settings(), "execution_mode", "queue")
     monkeypatch.setattr(get_settings(), "ai_enabled", True)
-    monkeypatch.setattr(get_settings(), "ollama_url", "http://127.0.0.1:9")  # IA fora do ar
-    # Celery 5.7 não aceita monkeypatch nessas chaves; altera e restaura pela própria configuração.
+    monkeypatch.setattr(get_settings(), "ollama_url", "http://127.0.0.1:9")
     chaves = ("task_always_eager", "task_eager_propagates")
     anteriores = {chave: celery_app.conf.get(chave) for chave in chaves}
     celery_app.conf.update(task_always_eager=True, task_eager_propagates=True)
@@ -50,4 +47,4 @@ def test_ai_assessment_is_stored(database, monkeypatch):
     with session_scope() as session:
         (finding,) = services.scan_findings(session, scan_id)
     assert finding["ai"]["verdict"] == "false_positive"
-    assert finding["status"] == "open"  # IA não muda status
+    assert finding["status"] == "open"
