@@ -79,12 +79,12 @@
         "linha": 36,
         "risco": 80,
         "alerta_cidadao": {
-          "titulo": "Risco de exposição: Saúde",
-          "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler informações de saúde sem precisar de senha. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
-          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-          "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
-          "gravidade": "crítica",
-          "origem": "regras"
+          "titulo": "Vulnerabilidade de segurança em dados pessoais",
+          "o_que_pode_acontecer": "Seus dados pessoais podem ser acessados por terceiros não autorizados, o que pode causar constrangimento e discriminação.",
+          "quem_e_afetado": "Cidadãos que utilizam o aplicativo",
+          "o_que_fazer": "A equipe deve corrigir a vulnerabilidade armazenando os dados pessoais com criptografia.",
+          "origem": "ia",
+          "modelo": "llama3.2"
         }
       },
       {
@@ -94,12 +94,12 @@
         "linha": 39,
         "risco": 80,
         "alerta_cidadao": {
-          "titulo": "Risco de exposição: CPF e documentos",
-          "o_que_pode_acontecer": "CPF ou outros documentos ficam gravados no histórico do navegador e nos registros dos servidores por onde a requisição passa. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
-          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-          "o_que_fazer": "Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.",
-          "gravidade": "alta",
-          "origem": "regras"
+          "titulo": "Dado pessoal exposto na URL",
+          "o_que_pode_acontecer": "Você pode ser vítima de golpe ou fraude, pois seu CPF e telefone estão sendo enviados para o servidor sem segurança.",
+          "quem_e_afetado": "cidadãos que utilizam o aplicativo",
+          "o_que_fazer": "A equipe deve corrigir a falha removendo o dado pessoal do URL e enviando apenas o CPF em um corpo de requisição HTTPS.",
+          "origem": "ia",
+          "modelo": "llama3.2"
         }
       },
       {
@@ -109,12 +109,12 @@
         "linha": 28,
         "risco": 72,
         "alerta_cidadao": {
-          "titulo": "Risco de exposição: CPF e documentos",
-          "o_que_pode_acontecer": "Um documento verdadeiro ficou gravado no código do sistema, e qualquer pessoa com acesso ao código consegue copiá-lo. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
-          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-          "o_que_fazer": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).",
-          "gravidade": "alta",
-          "origem": "regras"
+          "titulo": "Uso de CPFs reais no código",
+          "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se o seu CPF for usado de forma ilegal.",
+          "quem_e_afetado": "cidadãos que tiverem seus CPFs usados de forma ilegal",
+          "o_que_fazer": "Remova o CPF do código e avise o encarregado de dados (DPO)",
+          "origem": "ia",
+          "modelo": "llama3.2"
         }
       },
       {
@@ -124,12 +124,12 @@
         "linha": 35,
         "risco": 64,
         "alerta_cidadao": {
-          "titulo": "Risco de exposição: CPF e documentos",
-          "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler CPF ou outros documentos sem precisar de senha. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
-          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-          "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
-          "gravidade": "alta",
-          "origem": "regras"
+          "titulo": "Risco de vazamento de dados pessoais",
+          "o_que_pode_acontecer": "Seu CPF pode ser acessado por terceiros, o que pode causar constrangimento e discriminação.",
+          "quem_e_afetado": "Cidadãos que forneceram seus dados pessoais",
+          "o_que_fazer": "A equipe deve corrigir o código para armazenar os dados pessoais com criptografia",
+          "origem": "ia",
+          "modelo": "llama3.2"
         }
       },
       {
@@ -139,12 +139,12 @@
         "linha": 46,
         "risco": 60,
         "alerta_cidadao": {
-          "titulo": "Risco de exposição: Saúde",
-          "o_que_pode_acontecer": "Informações de saúde aparecem na tela bloqueada do celular, onde qualquer pessoa por perto consegue ler. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
-          "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-          "o_que_fazer": "A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.",
-          "gravidade": "crítica",
-          "origem": "regras"
+          "titulo": "Dado Pessoal em Notificação",
+          "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se seus dados pessoais forem expostos.",
+          "quem_e_afetado": "cidadãos que usam o aplicativo",
+          "o_que_fazer": "Corrija a falha exibindo apenas um aviso genérico e o detalhe dentro do app após o login.",
+          "origem": "ia",
+          "modelo": "llama3.2"
         }
       }
     ],
@@ -192,14 +192,28 @@
         "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
       ],
       "status": "open",
-      "ai": null,
+      "ai": {
+        "verdict": "true_positive",
+        "confidence": "high",
+        "rationale": "O dado pessoal de saúde é armazenado sem criptografia, o que pode ser acessado por terceiros não autorizados.",
+        "suggested_severity": null,
+        "fix_explanation": "Gurre os dados pessoais com criptografia, como await SecureStore.setItemAsync('cpf', cpf);",
+        "fix_code": "await SecureStore.setItemAsync('cpf', cpf);",
+        "model": "llama3.2",
+        "alerta_cidadao": {
+          "titulo": "Vulnerabilidade de segurança em dados pessoais",
+          "o_que_pode_acontecer": "Seus dados pessoais podem ser acessados por terceiros não autorizados, o que pode causar constrangimento e discriminação.",
+          "quem_e_afetado": "Cidadãos que utilizam o aplicativo",
+          "o_que_fazer": "A equipe deve corrigir a vulnerabilidade armazenando os dados pessoais com criptografia."
+        }
+      },
       "alerta_cidadao": {
-        "titulo": "Risco de exposição: Saúde",
-        "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler informações de saúde sem precisar de senha. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
-        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-        "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
-        "gravidade": "crítica",
-        "origem": "regras"
+        "titulo": "Vulnerabilidade de segurança em dados pessoais",
+        "o_que_pode_acontecer": "Seus dados pessoais podem ser acessados por terceiros não autorizados, o que pode causar constrangimento e discriminação.",
+        "quem_e_afetado": "Cidadãos que utilizam o aplicativo",
+        "o_que_fazer": "A equipe deve corrigir a vulnerabilidade armazenando os dados pessoais com criptografia.",
+        "origem": "ia",
+        "modelo": "llama3.2"
       }
     },
     {
@@ -239,14 +253,28 @@
         "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
       ],
       "status": "open",
-      "ai": null,
+      "ai": {
+        "verdict": "true_positive",
+        "confidence": "high",
+        "rationale": "O dado pessoal de saúde está sendo exibido na tela bloqueada do celular sem a necessidade de login, o que expõe os dados pessoais de cidadãos.",
+        "suggested_severity": null,
+        "fix_explanation": "Mude para que a notificação apareça apenas após o login, mostrando apenas um aviso genérico e o detalhe dentro do app.",
+        "fix_code": "await Notifications.scheduleNotificationAsync({ content: { title: \"Você tem um novo aviso\" }, trigger: null });",
+        "model": "llama3.2",
+        "alerta_cidadao": {
+          "titulo": "Dado Pessoal em Notificação",
+          "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se seus dados pessoais forem expostos.",
+          "quem_e_afetado": "cidadãos que usam o aplicativo",
+          "o_que_fazer": "Corrija a falha exibindo apenas um aviso genérico e o detalhe dentro do app após o login."
+        }
+      },
       "alerta_cidadao": {
-        "titulo": "Risco de exposição: Saúde",
-        "o_que_pode_acontecer": "Informações de saúde aparecem na tela bloqueada do celular, onde qualquer pessoa por perto consegue ler. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.",
-        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-        "o_que_fazer": "A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.",
-        "gravidade": "crítica",
-        "origem": "regras"
+        "titulo": "Dado Pessoal em Notificação",
+        "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se seus dados pessoais forem expostos.",
+        "quem_e_afetado": "cidadãos que usam o aplicativo",
+        "o_que_fazer": "Corrija a falha exibindo apenas um aviso genérico e o detalhe dentro do app após o login.",
+        "origem": "ia",
+        "modelo": "llama3.2"
       }
     },
     {
@@ -275,14 +303,28 @@
         "https://cwe.mitre.org/data/definitions/359.html"
       ],
       "status": "open",
-      "ai": null,
+      "ai": {
+        "verdict": "true_positive",
+        "confidence": "high",
+        "rationale": "O CPF escrito no código é um documento real e não um valor fictício, pois é escrito como ***.***.***-09, que é um formato de CPF válido.",
+        "suggested_severity": "critical",
+        "fix_explanation": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).",
+        "fix_code": "const CPF_TESTE = gerarCpfFicticio();",
+        "model": "llama3.2",
+        "alerta_cidadao": {
+          "titulo": "Uso de CPFs reais no código",
+          "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se o seu CPF for usado de forma ilegal.",
+          "quem_e_afetado": "cidadãos que tiverem seus CPFs usados de forma ilegal",
+          "o_que_fazer": "Remova o CPF do código e avise o encarregado de dados (DPO)"
+        }
+      },
       "alerta_cidadao": {
-        "titulo": "Risco de exposição: CPF e documentos",
-        "o_que_pode_acontecer": "Um documento verdadeiro ficou gravado no código do sistema, e qualquer pessoa com acesso ao código consegue copiá-lo. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
-        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-        "o_que_fazer": "Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).",
-        "gravidade": "alta",
-        "origem": "regras"
+        "titulo": "Uso de CPFs reais no código",
+        "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se o seu CPF for usado de forma ilegal.",
+        "quem_e_afetado": "cidadãos que tiverem seus CPFs usados de forma ilegal",
+        "o_que_fazer": "Remova o CPF do código e avise o encarregado de dados (DPO)",
+        "origem": "ia",
+        "modelo": "llama3.2"
       }
     },
     {
@@ -322,14 +364,28 @@
         "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
       ],
       "status": "open",
-      "ai": null,
+      "ai": {
+        "verdict": "true_positive",
+        "confidence": "high",
+        "rationale": "O código expõe CPF e senha em logs, o que pode ser visto por várias pessoas e enviado a outros serviços.",
+        "suggested_severity": "critical",
+        "fix_explanation": "Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.",
+        "fix_code": "console.log(\"cadastro concluído\", { usuarioId: usuario.id });",
+        "model": "llama3.2",
+        "alerta_cidadao": {
+          "titulo": "Dado pessoal exposto em logs",
+          "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se o log for acessado por alguém.",
+          "quem_e_afetado": "cidadãos que utilizam o sistema",
+          "o_que_fazer": "A equipe deve corrigir o código para não expor dados pessoais em logs."
+        }
+      },
       "alerta_cidadao": {
-        "titulo": "Risco de exposição: CPF e documentos",
-        "o_que_pode_acontecer": "Pessoas da equipe técnica e serviços que recebem os registros do sistema podem ver CPF ou outros documentos de quem usa o app. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
-        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-        "o_que_fazer": "Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.",
-        "gravidade": "alta",
-        "origem": "regras"
+        "titulo": "Dado pessoal exposto em logs",
+        "o_que_pode_acontecer": "Você pode ser vítima de golpe ou discriminação se o log for acessado por alguém.",
+        "quem_e_afetado": "cidadãos que utilizam o sistema",
+        "o_que_fazer": "A equipe deve corrigir o código para não expor dados pessoais em logs.",
+        "origem": "ia",
+        "modelo": "llama3.2"
       }
     },
     {
@@ -369,14 +425,28 @@
         "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
       ],
       "status": "open",
-      "ai": null,
+      "ai": {
+        "verdict": "true_positive",
+        "confidence": "high",
+        "rationale": "O dado pessoal CPF está sendo armazenado sem criptografia, o que pode ser acessado por terceiros",
+        "suggested_severity": "critical",
+        "fix_explanation": "Gurre os dados pessoais com criptografia, como `await SecureStore.setItemAsync('cpf', cpf);`",
+        "fix_code": "await SecureStore.setItemAsync('cpf', cadastro.cpf);",
+        "model": "llama3.2",
+        "alerta_cidadao": {
+          "titulo": "Risco de vazamento de dados pessoais",
+          "o_que_pode_acontecer": "Seu CPF pode ser acessado por terceiros, o que pode causar constrangimento e discriminação.",
+          "quem_e_afetado": "Cidadãos que forneceram seus dados pessoais",
+          "o_que_fazer": "A equipe deve corrigir o código para armazenar os dados pessoais com criptografia"
+        }
+      },
       "alerta_cidadao": {
-        "titulo": "Risco de exposição: CPF e documentos",
-        "o_que_pode_acontecer": "Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler CPF ou outros documentos sem precisar de senha. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
-        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-        "o_que_fazer": "Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.",
-        "gravidade": "alta",
-        "origem": "regras"
+        "titulo": "Risco de vazamento de dados pessoais",
+        "o_que_pode_acontecer": "Seu CPF pode ser acessado por terceiros, o que pode causar constrangimento e discriminação.",
+        "quem_e_afetado": "Cidadãos que forneceram seus dados pessoais",
+        "o_que_fazer": "A equipe deve corrigir o código para armazenar os dados pessoais com criptografia",
+        "origem": "ia",
+        "modelo": "llama3.2"
       }
     },
     {
@@ -416,14 +486,28 @@
         "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
       ],
       "status": "open",
-      "ai": null,
+      "ai": {
+        "verdict": "true_positive",
+        "confidence": "high",
+        "rationale": "O dado pessoal CPF e telefone está sendo enviado na URL, o que pode ser capturado por atacantes e utilizado para realizar ataques de phishing ou outras formas de fraude.",
+        "suggested_severity": "critical",
+        "fix_explanation": "Remova o dado pessoal do URL e envie apenas o CPF em um corpo de requisição HTTPS.",
+        "fix_code": "const resposta = await fetch(`https://api.exemplo.gov.br/cadastro`, { method: 'POST', body: JSON.stringify({ cpf }) });",
+        "model": "llama3.2",
+        "alerta_cidadao": {
+          "titulo": "Dado pessoal exposto na URL",
+          "o_que_pode_acontecer": "Você pode ser vítima de golpe ou fraude, pois seu CPF e telefone estão sendo enviados para o servidor sem segurança.",
+          "quem_e_afetado": "cidadãos que utilizam o aplicativo",
+          "o_que_fazer": "A equipe deve corrigir a falha removendo o dado pessoal do URL e enviando apenas o CPF em um corpo de requisição HTTPS."
+        }
+      },
       "alerta_cidadao": {
-        "titulo": "Risco de exposição: CPF e documentos",
-        "o_que_pode_acontecer": "CPF ou outros documentos ficam gravados no histórico do navegador e nos registros dos servidores por onde a requisição passa. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.",
-        "quem_e_afetado": "Todas as pessoas cadastradas que usam esta parte do sistema.",
-        "o_que_fazer": "Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.",
-        "gravidade": "alta",
-        "origem": "regras"
+        "titulo": "Dado pessoal exposto na URL",
+        "o_que_pode_acontecer": "Você pode ser vítima de golpe ou fraude, pois seu CPF e telefone estão sendo enviados para o servidor sem segurança.",
+        "quem_e_afetado": "cidadãos que utilizam o aplicativo",
+        "o_que_fazer": "A equipe deve corrigir a falha removendo o dado pessoal do URL e enviando apenas o CPF em um corpo de requisição HTTPS.",
+        "origem": "ia",
+        "modelo": "llama3.2"
       }
     },
     {

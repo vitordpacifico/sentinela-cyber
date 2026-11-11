@@ -46,6 +46,12 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 
 **Resultado:** Categoria nova "Fotos e imagens" no mapeamento de PII, termo "coordenada" na localização, auditoria refeita no código do Pluvia (aprovado, Risco Cidadão 6, 140 campos mapeados), prints do painel refeitos e documentação atualizada. 3 testes novos (111 no total).
 
+### 6. Testar a IA de verdade (11/11/2026)
+
+**Pedido:** Instalar o Ollama e testar a IA do módulo.
+
+**Resultado:** Ollama e `llama3.2` instalados. O teste mostrou que nenhuma resposta da IA era aproveitada: o modelo levava mais que o limite de 60 segundos, a resposta era cortada e o alerta ficava fora do formato pedido, e a IA era chamada também para os achados de mapeamento. Correções: limite de 180 segundos, resposta mais longa, alerta dentro do formato JSON, correção recomendada da regra enviada como referência, uma segunda tentativa quando a resposta vem incompleta e mapeamento fora da IA. Modelo padrão trocado para `llama3.2`. Evidências e prints do painel refeitos com a IA. 3 testes novos (114 no total).
+
 ## Decisões sugeridas pela IA, para o grupo revisar
 
 - Usar o Sentinela do grupo como base, porque o PDF fala em "novas regras no motor de parsing", "o LLM" e "Dashboard Atualizado".
@@ -57,15 +63,15 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 
 ## Verificações feitas
 
-- 111 testes automatizados passando, incluindo os 63 originais do Sentinela.
+- 114 testes automatizados passando, incluindo os 63 originais do Sentinela.
 - `ruff check` e `ruff format` sem erros.
 - O Security Gate do próprio repositório continua aprovado.
 - Auditoria executada nos três alvos, com as evidências em `evidencias/`.
 - Painel conferido no navegador, com prints em `evidencias/`.
 
-A IA local (Ollama) não estava instalada durante o desenvolvimento. Os alertas das evidências foram escritos por regras. Para o vídeo, instale o Ollama e gere as evidências de novo com `--ai`.
+- IA local testada com o Ollama e o modelo `llama3.2`: os 6 vazamentos do protótipo receberam alerta ao cidadão e correção escritos pela IA (evidências em `evidencias/`).
 
 ## Revisão humana
 
-- [ ] Ollama instalado e alertas gerados pela IA
+- [x] Ollama instalado e alertas gerados pela IA
 - [ ] Cada arquivo do módulo lido e explicado pelo grupo

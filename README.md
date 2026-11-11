@@ -155,7 +155,7 @@ sentinela serve          # API + dashboard em http://localhost:8000 (SQLite, sem
 ```bash
 sentinela scan src/                                  # analisa um diretório
 sentinela scan . --diff origin/main                  # só os arquivos alterados
-sentinela scan . --ai                                # com triagem pelo Llama 3
+sentinela scan . --ai                                # com triagem pela IA local (llama3.2)
 sentinela scan . --sarif out.sarif --markdown pr.md  # relatórios
 ```
 
@@ -220,7 +220,7 @@ Variáveis de ambiente (prefixo `SENTINELA_`):
 | `EXECUTION_MODE` | `inline` | `queue` usa Redis + workers (padrão no Compose) |
 | `REDIS_URL` | `redis://localhost:6379/0` | Broker do Celery |
 | `AI_ENABLED` | `true` | Triagem por IA |
-| `OLLAMA_URL` / `OLLAMA_MODEL` | `http://localhost:11434` / `llama3` | LLM local |
+| `OLLAMA_URL` / `OLLAMA_MODEL` | `http://localhost:11434` / `llama3.2` | LLM local |
 | `USE_BANDIT` | `true` | Bandit como segundo motor |
 | `API_TOKEN` | — | Se definido, a escrita na API exige o header `X-API-Token` |
 

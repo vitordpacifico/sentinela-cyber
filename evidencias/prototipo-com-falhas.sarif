@@ -334,7 +334,13 @@
             "engines": [
               "taint"
             ],
-            "status": "open"
+            "status": "open",
+            "ai": {
+              "verdict": "true_positive",
+              "confidence": "high",
+              "rationale": "O dado pessoal de saúde é armazenado sem criptografia, o que pode ser acessado por terceiros não autorizados.",
+              "suggested_severity": null
+            }
           },
           "codeFlows": [
             {
@@ -411,7 +417,13 @@
             "engines": [
               "taint"
             ],
-            "status": "open"
+            "status": "open",
+            "ai": {
+              "verdict": "true_positive",
+              "confidence": "high",
+              "rationale": "O dado pessoal de saúde está sendo exibido na tela bloqueada do celular sem a necessidade de login, o que expõe os dados pessoais de cidadãos.",
+              "suggested_severity": null
+            }
           },
           "codeFlows": [
             {
@@ -488,7 +500,13 @@
             "engines": [
               "rule"
             ],
-            "status": "open"
+            "status": "open",
+            "ai": {
+              "verdict": "true_positive",
+              "confidence": "high",
+              "rationale": "O CPF escrito no código é um documento real e não um valor fictício, pois é escrito como ***.***.***-09, que é um formato de CPF válido.",
+              "suggested_severity": "critical"
+            }
           },
           "ruleIndex": 2
         },
@@ -521,7 +539,13 @@
             "engines": [
               "taint"
             ],
-            "status": "open"
+            "status": "open",
+            "ai": {
+              "verdict": "true_positive",
+              "confidence": "high",
+              "rationale": "O código expõe CPF e senha em logs, o que pode ser visto por várias pessoas e enviado a outros serviços.",
+              "suggested_severity": "critical"
+            }
           },
           "codeFlows": [
             {
@@ -598,7 +622,13 @@
             "engines": [
               "taint"
             ],
-            "status": "open"
+            "status": "open",
+            "ai": {
+              "verdict": "true_positive",
+              "confidence": "high",
+              "rationale": "O dado pessoal CPF está sendo armazenado sem criptografia, o que pode ser acessado por terceiros",
+              "suggested_severity": "critical"
+            }
           },
           "codeFlows": [
             {
@@ -675,7 +705,13 @@
             "engines": [
               "taint"
             ],
-            "status": "open"
+            "status": "open",
+            "ai": {
+              "verdict": "true_positive",
+              "confidence": "high",
+              "rationale": "O dado pessoal CPF e telefone está sendo enviado na URL, o que pode ser capturado por atacantes e utilizado para realizar ataques de phishing ou outras formas de fraude.",
+              "suggested_severity": "critical"
+            }
           },
           "codeFlows": [
             {

@@ -18,7 +18,7 @@ O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para
 |---|---|---|
 | **01. Mapeamento de PII** | Regras novas no motor de parsing (Tree-sitter) que reconhecem 9 categorias de dados pessoais pelo nome de campos, variáveis e parâmetros (entre elas **fotos** e **localização**, os dados centrais do Pluvia), e acham **CPF e Cartão SUS válidos** escritos no código (com cálculo dos dígitos verificadores). Suporte novo a **TypeScript**, a linguagem do app. | `sentinela/pii/categorias.py`, `sentinela/pii/valores.py`, `sentinela/pii/detector.py`, `sentinela/engine/languages/typescript.py` |
 | **02. Taint Analysis** | Segue o dado pessoal até 6 tipos de saída insegura: log, armazenamento sem criptografia, URL, notificação, analytics e área de transferência. Reconhece proteções (mascarar, hash, criptografar, `expo-secure-store`). O **Security Gate bloqueia** o merge quando o vazamento é de dado sensível, CPF ou senha. | `sentinela/pii/fluxo.py`, `sentinela/rules/pii.yml` |
-| **03. Tradução via IA** | O LLM local (Llama via Ollama) escreve um **alerta ao cidadão** em linguagem simples: o que pode acontecer, quem é afetado e o que fazer. O código chega à IA com **CPF, e-mail e telefone mascarados**. Sem IA, um alerta escrito por regras ocupa o lugar. | `sentinela/ai/assistant.py`, `sentinela/pii/alerta.py`, `sentinela/pii/valores.py` |
+| **03. Tradução via IA** | O LLM local (Llama 3.2 via Ollama) escreve um **alerta ao cidadão** em linguagem simples (o que pode acontecer, quem é afetado e o que fazer) e sugere a **correção do código**, guiada pela correção recomendada da regra. O código chega à IA com **CPF, e-mail e telefone mascarados**. Se a resposta vier incompleta, a IA tenta de novo; sem IA, um alerta escrito por regras ocupa o lugar. | `sentinela/ai/assistant.py`, `sentinela/pii/alerta.py`, `sentinela/pii/valores.py` |
 | **04. Dashboard Executivo** | Indicador **Risco Cidadão** (0 a 100) com medidor, faixa de risco, dados pessoais por categoria e alertas ao cidadão. Também na API, na CLI e no relatório Markdown. | `sentinela/pii/risco.py`, `sentinela/api/static/`, `GET /api/scans/{id}/risco-cidadao` |
 
 ## Categorias de dados pessoais
@@ -81,7 +81,7 @@ Para gerar tudo de novo:
 python scripts/auditoria_gs.py
 ```
 
-Com a IA escrevendo os alertas (é preciso ter o [Ollama](https://ollama.com) instalado e rodar `ollama pull llama3.2` antes):
+Com a IA escrevendo os alertas e as correções (é preciso ter o [Ollama](https://ollama.com) instalado e rodar `ollama pull llama3.2` antes). As evidências desta pasta foram geradas assim: os 6 vazamentos do protótipo têm alerta e correção escritos pela IA. Num notebook sem placa de vídeo, cada vazamento leva de 25 a 50 segundos, e a auditoria inteira, uns 3 minutos. Os achados de mapeamento não vão para a IA.
 
 ```bash
 python scripts/auditoria_gs.py --ai

@@ -17,20 +17,20 @@
 | Contato e endereço | 1 | 0 |
 | Cadastro de pessoa | 1 | 0 |
 
-> **Risco de exposição: Saúde** (`prototipo-com-falhas/cadastroMorador.ts:36`, escrito por regras)  
-> Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler informações de saúde sem precisar de senha. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.  
-> **Quem é afetado:** Todas as pessoas cadastradas que usam esta parte do sistema.  
-> **O que fazer:** Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.
+> **Vulnerabilidade de segurança em dados pessoais** (`prototipo-com-falhas/cadastroMorador.ts:36`, escrito por IA)  
+> Seus dados pessoais podem ser acessados por terceiros não autorizados, o que pode causar constrangimento e discriminação.  
+> **Quem é afetado:** Cidadãos que utilizam o aplicativo  
+> **O que fazer:** A equipe deve corrigir a vulnerabilidade armazenando os dados pessoais com criptografia.
 
-> **Risco de exposição: CPF e documentos** (`prototipo-com-falhas/cadastroMorador.ts:39`, escrito por regras)  
-> CPF ou outros documentos ficam gravados no histórico do navegador e nos registros dos servidores por onde a requisição passa. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.  
-> **Quem é afetado:** Todas as pessoas cadastradas que usam esta parte do sistema.  
-> **O que fazer:** Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.
+> **Dado pessoal exposto na URL** (`prototipo-com-falhas/cadastroMorador.ts:39`, escrito por IA)  
+> Você pode ser vítima de golpe ou fraude, pois seu CPF e telefone estão sendo enviados para o servidor sem segurança.  
+> **Quem é afetado:** cidadãos que utilizam o aplicativo  
+> **O que fazer:** A equipe deve corrigir a falha removendo o dado pessoal do URL e enviando apenas o CPF em um corpo de requisição HTTPS.
 
-> **Risco de exposição: CPF e documentos** (`prototipo-com-falhas/cadastroMorador.ts:28`, escrito por regras)  
-> Um documento verdadeiro ficou gravado no código do sistema, e qualquer pessoa com acesso ao código consegue copiá-lo. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.  
-> **Quem é afetado:** Todas as pessoas cadastradas que usam esta parte do sistema.  
-> **O que fazer:** Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).
+> **Uso de CPFs reais no código** (`prototipo-com-falhas/cadastroMorador.ts:28`, escrito por IA)  
+> Você pode ser vítima de golpe ou discriminação se o seu CPF for usado de forma ilegal.  
+> **Quem é afetado:** cidadãos que tiverem seus CPFs usados de forma ilegal  
+> **O que fazer:** Remova o CPF do código e avise o encarregado de dados (DPO)
 
 **O que bloqueia o merge:**
 - `prototipo-com-falhas/cadastroMorador.ts:36` Dado pessoal salvo sem criptografia: Saúde
@@ -53,10 +53,12 @@ await AsyncStorage.setItem("cadastro:saude", cadastro.condicaoDeSaude);
 1. linha 36 (source): `await AsyncStorage.setItem("cadastro:saude", cadastro.condicaoDeSaude);`
 2. linha 36 (sink): `await AsyncStorage.setItem("cadastro:saude", cadastro.condicaoDeSaude);`
 
+**IA (llama3.2):** vulnerabilidade real, confiança high. O dado pessoal de saúde é armazenado sem criptografia, o que pode ser acessado por terceiros não autorizados.
+
 **Como corrigir:** Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.
 
 ```typescript
-await SecureStore.setItemAsync("cpf", cpf);
+await SecureStore.setItemAsync('cpf', cpf);
 ```
 
 <sub>regra `pii.vazamento.armazenamento.saude` · motores: taint · fingerprint `cd2a0ec01af5`</sub>
@@ -73,6 +75,8 @@ await Notifications.scheduleNotificationAsync({
 **Caminho do dado:**
 1. linha 47 (source): `content: { title: "Evacuação", body: `Leve seus remédios: ${remedios}` },`
 2. linha 46 (sink): `await Notifications.scheduleNotificationAsync({`
+
+**IA (llama3.2):** vulnerabilidade real, confiança high. O dado pessoal de saúde está sendo exibido na tela bloqueada do celular sem a necessidade de login, o que expõe os dados pessoais de cidadãos.
 
 **Como corrigir:** A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.
 
@@ -91,10 +95,13 @@ O texto contém um CPF com dígitos verificadores corretos (***.***.***-09). Pod
 const CPF_DE_TESTE = "***.***.***-09";
 ```
 
+**IA (llama3.2):** vulnerabilidade real, confiança high. O CPF escrito no código é um documento real e não um valor fictício, pois é escrito como ***.***.***-09, que é um formato de CPF válido.
+Severidade sugerida: `critical` (não aplicada automaticamente).
+
 **Como corrigir:** Use dados fictícios gerados para teste, nunca documentos reais. Se o documento já foi enviado ao repositório, remova do histórico e avise o encarregado de dados (DPO).
 
 ```typescript
-const CPF_TESTE = gerarCpfFicticio(); // gerado na hora, não pertence a ninguém
+const CPF_TESTE = gerarCpfFicticio();
 ```
 
 <sub>regra `pii.valor.cpf` · motores: rule · fingerprint `c14d2e9d0ed4`</sub>
@@ -112,10 +119,13 @@ console.log("Novo cadastro", cadastro.cpf, cadastro.senha);
 1. linha 32 (source): `console.log("Novo cadastro", cadastro.cpf, cadastro.senha);`
 2. linha 32 (sink): `console.log("Novo cadastro", cadastro.cpf, cadastro.senha);`
 
+**IA (llama3.2):** vulnerabilidade real, confiança high. O código expõe CPF e senha em logs, o que pode ser visto por várias pessoas e enviado a outros serviços.
+Severidade sugerida: `critical` (não aplicada automaticamente).
+
 **Como corrigir:** Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.
 
 ```typescript
-console.info("cadastro concluído", { usuarioId: usuario.id });
+console.log("cadastro concluído", { usuarioId: usuario.id });
 ```
 
 <sub>regra `pii.vazamento.log.documento` · motores: taint · fingerprint `168606409973`</sub>
@@ -133,10 +143,13 @@ await AsyncStorage.setItem("cadastro:cpf", cadastro.cpf);
 1. linha 35 (source): `await AsyncStorage.setItem("cadastro:cpf", cadastro.cpf);`
 2. linha 35 (sink): `await AsyncStorage.setItem("cadastro:cpf", cadastro.cpf);`
 
+**IA (llama3.2):** vulnerabilidade real, confiança high. O dado pessoal CPF está sendo armazenado sem criptografia, o que pode ser acessado por terceiros
+Severidade sugerida: `critical` (não aplicada automaticamente).
+
 **Como corrigir:** Guarde dados pessoais com criptografia (expo-secure-store, Keychain, Keystore) ou não guarde no aparelho.
 
 ```typescript
-await SecureStore.setItemAsync("cpf", cpf);
+await SecureStore.setItemAsync('cpf', cadastro.cpf);
 ```
 
 <sub>regra `pii.vazamento.armazenamento.documento` · motores: taint · fingerprint `bd4c4d57bb42`</sub>
@@ -154,10 +167,13 @@ const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${ca
 1. linha 39 (source): `const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);`
 2. linha 39 (sink): `const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);`
 
+**IA (llama3.2):** vulnerabilidade real, confiança high. O dado pessoal CPF e telefone está sendo enviado na URL, o que pode ser capturado por atacantes e utilizado para realizar ataques de phishing ou outras formas de fraude.
+Severidade sugerida: `critical` (não aplicada automaticamente).
+
 **Como corrigir:** Envie dados pessoais no corpo de uma requisição HTTPS (POST), nunca na URL, que fica em histórico, logs e proxies.
 
 ```typescript
-await fetch("https://api.exemplo.gov.br/cadastro", { method: "POST", body: JSON.stringify({ cpf }) });
+const resposta = await fetch(`https://api.exemplo.gov.br/cadastro`, { method: 'POST', body: JSON.stringify({ cpf }) });
 ```
 
 <sub>regra `pii.vazamento.url.documento` · motores: taint · fingerprint `dba19fb9d22b`</sub>

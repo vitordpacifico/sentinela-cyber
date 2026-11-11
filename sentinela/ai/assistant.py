@@ -63,7 +63,7 @@ class AIAssessment:
 
 
 class OllamaAssistant:
-    def __init__(self, *, base_url: str, model: str, timeout: float = 60.0) -> None:
+    def __init__(self, *, base_url: str, model: str, timeout: float = 180.0) -> None:
         self.base_url = base_url.rstrip("/")
         self.model = model
         self.timeout = timeout
@@ -74,17 +74,26 @@ class OllamaAssistant:
         return bool(self.base_url and self.model) and not self._broken
 
     def assess(self, finding: Finding) -> AIAssessment | None:
-        if not self.available:
+        if not self.available or not precisa_de_ia(finding):
             return None
-        try:
-            raw = self._generate(build_prompt(finding))
-        except (httpx.ConnectError, httpx.TimeoutException, httpx.NetworkError):
-            self._broken = True
-            logger.info("Ollama indisponível; IA desligada para o restante do scan.")
-            return None
-        except (httpx.HTTPError, ValueError):
-            return None
-        return parse_assessment(raw, model=self.model, current=finding.severity)
+        prompt = build_prompt(finding)
+        pii = finding.rule_id.startswith("pii.")
+        melhor: AIAssessment | None = None
+        for temperatura in (0.0, 0.3):
+            try:
+                raw = self._generate(prompt, temperatura)
+            except (httpx.ConnectError, httpx.TimeoutException, httpx.NetworkError):
+                self._broken = True
+                logger.info("Ollama indisponível; IA desligada para o restante do scan.")
+                return melhor
+            except (httpx.HTTPError, ValueError):
+                continue
+            resultado = parse_assessment(raw, model=self.model, current=finding.severity)
+            if resultado is not None and (melhor is None or resultado.alerta_cidadao):
+                melhor = resultado
+            if melhor is not None and (not pii or melhor.alerta_cidadao):
+                break
+        return melhor
 
     def health(self) -> bool:
         try:
@@ -93,7 +102,7 @@ class OllamaAssistant:
         except httpx.HTTPError:
             return False
 
-    def _generate(self, prompt: str) -> Mapping[str, Any]:
+    def _generate(self, prompt: str, temperatura: float = 0.0) -> Mapping[str, Any]:
         response = httpx.post(
             f"{self.base_url}/api/generate",
             json={
@@ -102,7 +111,7 @@ class OllamaAssistant:
                 "system": SYSTEM_PROMPT,
                 "stream": False,
                 "format": "json",
-                "options": {"temperature": 0, "num_ctx": 4096},
+                "options": {"temperature": temperatura, "num_ctx": 4096, "num_predict": 1024},
             },
             timeout=self.timeout,
         )
@@ -121,16 +130,27 @@ SYSTEM_PROMPT = (
 
 CAMPOS_ALERTA = ("titulo", "o_que_pode_acontecer", "quem_e_afetado", "o_que_fazer")
 
+_FORMATO_ALERTA = (
+    ', "alerta_cidadao": {"titulo": "frase curta", "o_que_pode_acontecer": "consequência real para a pessoa", '
+    '"quem_e_afetado": "quem sofre o risco", "o_que_fazer": "o que a equipe deve corrigir"}'
+)
+
 _INSTRUCAO_ALERTA = (
-    "\n\nEste achado envolve DADOS PESSOAIS de cidadãos. Inclua também no JSON o campo "
-    '"alerta_cidadao": {"titulo": "frase curta", "o_que_pode_acontecer": "consequência real para a pessoa, '
-    'como golpe, constrangimento ou discriminação", "quem_e_afetado": "quem sofre o risco", '
-    '"o_que_fazer": "o que a equipe deve corrigir"}. Escreva em português simples, para quem não é da área '
-    "de tecnologia: sem siglas, sem termos técnicos, até 2 frases por campo. Não invente dados pessoais."
+    "\n\nEste achado envolve DADOS PESSOAIS de cidadãos. Preencha também o campo alerta_cidadao. "
+    "Escreva o alerta em português simples, para quem não é da área de tecnologia: sem siglas, sem termos "
+    "técnicos, até 2 frases por campo. Em o_que_pode_acontecer, diga a consequência real para a pessoa, como "
+    "golpe, constrangimento ou discriminação. Não invente dados pessoais."
 )
 
 
+def precisa_de_ia(finding: Finding) -> bool:
+    """O mapeamento de dados pessoais é inventário, não falha: não vai para a IA."""
+
+    return not finding.rule_id.startswith("pii.mapa.")
+
+
 def build_prompt(finding: Finding) -> str:
+    pii = finding.rule_id.startswith("pii.")
     path = (
         "\n".join(f"  linha {s.line} [{s.kind}]: {s.code}" for s in finding.taint_path)
         or "  (achado por padrão, sem fluxo de dados)"
@@ -160,12 +180,26 @@ def build_prompt(finding: Finding) -> str:
         '"rationale": "uma frase citando a linha que justifica", '
         '"suggested_severity": "critical|high|medium|low|info", '
         '"fix_explanation": "o que mudar, em uma ou duas frases", '
-        '"fix_code": "trecho corrigido, mesma linguagem, sem markdown"}\n\n'
+        '"fix_code": "trecho corrigido, mesma linguagem, sem markdown"' + (_FORMATO_ALERTA if pii else "") + "}\n\n"
         f"Achado: {json.dumps(meta, ensure_ascii=False)}\n\n"
         f"Caminho do dado:\n{path}\n\n"
         f"Código (linhas com >> são o achado):\n{finding.context}\n"
-        + (_INSTRUCAO_ALERTA if finding.rule_id.startswith("pii.") else "")
+        + _referencia_de_correcao(finding)
+        + (_INSTRUCAO_ALERTA if pii else "")
     )
+
+
+def _referencia_de_correcao(finding: Finding) -> str:
+    """Correção recomendada pela regra, para o modelo não sugerir um código que repete a falha."""
+
+    if not finding.remediation and not finding.safe_example:
+        return ""
+    texto = "\nCorreção recomendada pela regra (siga esta direção no fix_code, adaptando ao código acima):\n"
+    if finding.remediation:
+        texto += f"{finding.remediation}\n"
+    if finding.safe_example:
+        texto += f"Exemplo seguro:\n{finding.safe_example}\n"
+    return texto + "O fix_code NÃO pode repetir a linha vulnerável: ele precisa remover a falha.\n"
 
 
 def parse_assessment(payload: Mapping[str, Any], *, model: str, current: Severity) -> AIAssessment | None:
@@ -235,4 +269,11 @@ def assistant_from_env() -> OllamaAssistant | None:
     )
 
 
-__all__ = ["AIAssessment", "OllamaAssistant", "assistant_from_env", "build_prompt", "parse_assessment"]
+__all__ = [
+    "AIAssessment",
+    "OllamaAssistant",
+    "assistant_from_env",
+    "build_prompt",
+    "parse_assessment",
+    "precisa_de_ia",
+]

@@ -53,7 +53,7 @@ def main(argv: list[str] | None = None) -> int:
     scan.add_argument("--json", metavar="ARQ", help="grava resultado completo em JSON")
     scan.add_argument("--ai", action="store_true", help="triagem e correção por IA local (Ollama)")
     scan.add_argument("--ollama-url", default=os.environ.get("SENTINELA_OLLAMA_URL", "http://localhost:11434"))
-    scan.add_argument("--model", default=os.environ.get("SENTINELA_OLLAMA_MODEL", "llama3"))
+    scan.add_argument("--model", default=os.environ.get("SENTINELA_OLLAMA_MODEL", "llama3.2"))
     scan.add_argument("--api", metavar="URL", help="envia ao servidor Sentinela em vez de analisar localmente")
     scan.add_argument("--api-token", default=os.environ.get("SENTINELA_API_TOKEN"))
     scan.add_argument("--no-bandit", action="store_true", help="não usar o Bandit como segundo motor")

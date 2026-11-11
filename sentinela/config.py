@@ -18,8 +18,8 @@ class Settings(BaseSettings):
 
     ai_enabled: bool = True
     ollama_url: str = "http://localhost:11434"
-    ollama_model: str = "llama3"
-    ollama_timeout: float = 60.0
+    ollama_model: str = "llama3.2"
+    ollama_timeout: float = 180.0
 
     use_bandit: bool = True
     api_token: str | None = None  # se definido, POST/PATCH exigem header X-API-Token

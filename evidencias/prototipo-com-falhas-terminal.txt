@@ -1,25 +1,25 @@
 
 Sentinela 1.0.0 — 1 arquivo(s) analisado(s), 14 achado(s)
 
-CRITICAL prototipo-com-falhas/cadastroMorador.ts:36  Dado pessoal salvo sem criptografia: Saúde (CWE-312)
+CRITICAL prototipo-com-falhas/cadastroMorador.ts:36  Dado pessoal salvo sem criptografia: Saúde (CWE-312)  [IA: true_positive/high]
          await AsyncStorage.setItem("cadastro:saude", cadastro.condicaoDeSaude);
            ↳ linha 36 source: await AsyncStorage.setItem("cadastro:saude", cadastro.condicaoDeSaude);
            ↳ linha 36 sink: await AsyncStorage.setItem("cadastro:saude", cadastro.condicaoDeSaude);
-CRITICAL prototipo-com-falhas/cadastroMorador.ts:46  Dado pessoal em notificação: Saúde (CWE-359)
+CRITICAL prototipo-com-falhas/cadastroMorador.ts:46  Dado pessoal em notificação: Saúde (CWE-359)  [IA: true_positive/high]
          await Notifications.scheduleNotificationAsync({
            ↳ linha 47 source: content: { title: "Evacuação", body: `Leve seus remédios: ${remedios}` },
            ↳ linha 46 sink: await Notifications.scheduleNotificationAsync({
-HIGH     prototipo-com-falhas/cadastroMorador.ts:28  CPF válido escrito no código (CWE-359)
+HIGH     prototipo-com-falhas/cadastroMorador.ts:28  CPF válido escrito no código (CWE-359)  [IA: true_positive/high]
          const CPF_DE_TESTE = "***.***.***-09";
-HIGH     prototipo-com-falhas/cadastroMorador.ts:32  Dado pessoal escrito no log: CPF e documentos (CWE-532)
+HIGH     prototipo-com-falhas/cadastroMorador.ts:32  Dado pessoal escrito no log: CPF e documentos (CWE-532)  [IA: true_positive/high]
          console.log("Novo cadastro", cadastro.cpf, cadastro.senha);
            ↳ linha 32 source: console.log("Novo cadastro", cadastro.cpf, cadastro.senha);
            ↳ linha 32 sink: console.log("Novo cadastro", cadastro.cpf, cadastro.senha);
-HIGH     prototipo-com-falhas/cadastroMorador.ts:35  Dado pessoal salvo sem criptografia: CPF e documentos (CWE-312)
+HIGH     prototipo-com-falhas/cadastroMorador.ts:35  Dado pessoal salvo sem criptografia: CPF e documentos (CWE-312)  [IA: true_positive/high]
          await AsyncStorage.setItem("cadastro:cpf", cadastro.cpf);
            ↳ linha 35 source: await AsyncStorage.setItem("cadastro:cpf", cadastro.cpf);
            ↳ linha 35 sink: await AsyncStorage.setItem("cadastro:cpf", cadastro.cpf);
-HIGH     prototipo-com-falhas/cadastroMorador.ts:39  Dado pessoal exposto na URL: CPF e documentos (CWE-598)
+HIGH     prototipo-com-falhas/cadastroMorador.ts:39  Dado pessoal exposto na URL: CPF e documentos (CWE-598)  [IA: true_positive/high]
          const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);
            ↳ linha 39 source: const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);
            ↳ linha 39 sink: const resposta = await fetch(`${API}/moradores?cpf=${cadastro.cpf}&telefone=${cadastro.telefone}`);
@@ -36,9 +36,9 @@ Dados pessoais mapeados: 8 campo(s). A lista completa está nos relatórios JSON
 
 Risco Cidadão: 100/100 (Crítico)
   5 vazamentos de dados pessoais e 1 documento real no código, envolvendo CPF ou outros documentos e informações de saúde.
-  ! Risco de exposição: Saúde (prototipo-com-falhas/cadastroMorador.ts:36)
-    Se o celular ou o servidor for perdido, roubado ou invadido, alguém pode ler informações de saúde sem precisar de senha. Isso pode causar constrangimento, discriminação no trabalho ou no plano de saúde, e golpes.
-  ! Risco de exposição: CPF e documentos (prototipo-com-falhas/cadastroMorador.ts:39)
-    CPF ou outros documentos ficam gravados no histórico do navegador e nos registros dos servidores por onde a requisição passa. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.
-  ! Risco de exposição: CPF e documentos (prototipo-com-falhas/cadastroMorador.ts:28)
-    Um documento verdadeiro ficou gravado no código do sistema, e qualquer pessoa com acesso ao código consegue copiá-lo. Com o CPF, golpistas abrem contas, pedem crédito e aplicam golpes em nome da pessoa.
+  ! Vulnerabilidade de segurança em dados pessoais (prototipo-com-falhas/cadastroMorador.ts:36)
+    Seus dados pessoais podem ser acessados por terceiros não autorizados, o que pode causar constrangimento e discriminação.
+  ! Dado pessoal exposto na URL (prototipo-com-falhas/cadastroMorador.ts:39)
+    Você pode ser vítima de golpe ou fraude, pois seu CPF e telefone estão sendo enviados para o servidor sem segurança.
+  ! Uso de CPFs reais no código (prototipo-com-falhas/cadastroMorador.ts:28)
+    Você pode ser vítima de golpe ou discriminação se o seu CPF for usado de forma ilegal.
