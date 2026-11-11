@@ -68,7 +68,6 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 - O Security Gate do próprio repositório continua aprovado.
 - Auditoria executada nos três alvos, com as evidências em `evidencias/`.
 - Painel conferido no navegador, com prints em `evidencias/`.
-
 - IA local testada com o Ollama e o modelo `llama3.2`: os 6 vazamentos do protótipo receberam alerta ao cidadão e correção escritos pela IA (evidências em `evidencias/`).
 
 ## Revisão humana
