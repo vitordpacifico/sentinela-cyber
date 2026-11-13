@@ -12,11 +12,11 @@ def test_cli_blocks_and_writes_reports(tmp_path, monkeypatch):
     (tmp_path / "node_modules" / "x.js").write_text("eval(a)")
     code = main(["scan", ".", "--sarif", "out.sarif", "--markdown", "out.md", "--json", "out.json", "--quiet"])
     assert code == 1
-    data = json.loads((tmp_path / "out.json").read_text())
+    data = json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))
     assert data["gate"]["status"] == "failed"
     assert [f["file_path"] for f in data["findings"]] == ["app.py"]
-    assert json.loads((tmp_path / "out.sarif").read_text())["version"] == "2.1.0"
-    assert "bloqueado" in (tmp_path / "out.md").read_text()
+    assert json.loads((tmp_path / "out.sarif").read_text(encoding="utf-8"))["version"] == "2.1.0"
+    assert "bloqueado" in (tmp_path / "out.md").read_text(encoding="utf-8")
 
 
 def test_cli_policy_and_no_fail(tmp_path, monkeypatch):
