@@ -6,11 +6,11 @@ O Sentinela é a ferramenta de SAST do grupo, criada no Projeto Integrador. Para
 
 | Integrante | RM |
 |---|---|
-| Victor Pacifico Dias | 558017 |
-| Gustavo Ruiz Vieira Paulino | 554779 |
+| Eduardo Dallabella Lima | 556803 |
 | Guilherme Abe | 554743 |
-| Eduardo | A preencher |
-| Heloísa | A preencher |
+| Gustavo Ruiz Vieira Paulino | 554779 |
+| Heloísa Real | 554535 |
+| Victor Pacifico Dias | 558017 |
 
 ## A missão e onde cada parte está
 
