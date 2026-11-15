@@ -18,6 +18,22 @@
 >
 > O restante deste README é o Sentinela original do Projeto Integrador.
 
+### Ficha da CitizenTech
+
+| Item | Resposta |
+|---|---|
+| Nome | Pluvia |
+| Cidade e bairro | São Paulo, SP: Cambuci, Ipiranga, Mooca, Vila Prudente e bairros vizinhos, com histórico de alagamentos |
+| Cidadão beneficiado | Motoristas, motociclistas, entregadores, passageiros e moradores de áreas que alagam |
+| Problema, em uma frase | Durante chuvas fortes, as pessoas entram em ruas alagadas sem aviso, deixam o carro em lugares que alagam e não sabem se um alagamento continua ativo, porque a informação está espalhada e sem contexto. |
+| Como funciona | O app reúne ocorrências de fontes identificadas (dados oficiais, sensores de nível e relatos com foto), mostra no mapa o que acontece por perto e avisa quando surge um alagamento perto do carro ou de um lugar favorito. |
+| O que cada parte faz | **Cybersecurity (este repositório):** o Sentinela acha dados pessoais no código do app (localização, fotos, contato), segue o dado até saídas inseguras, bloqueia o merge e calcula o Risco Cidadão. **App ([pluvia-mobile](https://github.com/vitordpacifico/pluvia-mobile)):** mapa, meu carro, relatos e avisos. **ESP32:** mede o nível da água. **API em C#:** recebe ocorrências, sensores e relatos. **IA e ML:** triagem das fotos e risco por região. **Linux:** roda a API com monitoramento. |
+| Link do repositório | https://github.com/vitordpacifico/sentinela-cyber |
+| Indicador de impacto | **Risco Cidadão** (0 a 100): quanto os dados pessoais dos moradores ficam expostos no código. No app real do Pluvia, 6 (Baixo). |
+| ODS conectados | ODS 11 (Cidades e Comunidades Sustentáveis), ODS 13 (Ação Contra a Mudança Global do Clima) e ODS 16 (Paz, Justiça e Instituições Eficazes, pela proteção dos dados) |
+
+---
+
 **Plataforma SAST & DevSecOps.** O Sentinela analisa o código-fonte de cada
 Pull Request **sem executá-lo**, em **Python, JavaScript e Java**.
 
