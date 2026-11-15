@@ -29,6 +29,24 @@ def test_cli_policy_and_no_fail(tmp_path, monkeypatch):
     assert main(["scan", ".", "--quiet", "--no-bandit", "--no-fail"]) == 0
 
 
+def test_cli_dados_mapeados_ignoram_caminhos_da_politica(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+    codigo = "def salvar(email, telefone):\n    return {'email': email, 'telefone': telefone}\n"
+    (tmp_path / "app.py").write_text(codigo)
+    (tmp_path / "__tests__").mkdir()
+    (tmp_path / "__tests__" / "fixtura.py").write_text(codigo)
+    (tmp_path / ".sentinela.yml").write_text('gate:\n  ignore_paths:\n    - "__tests__/*"\n')
+    assert main(["scan", ".", "--no-bandit", "--json", "out.json"]) == 0
+    saida = capsys.readouterr().out
+    data = json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))
+    no_app = sum(1 for f in data["findings"] if f["file_path"] == "app.py" and f["rule_id"].startswith("pii.mapa."))
+    nos_testes = sum(1 for f in data["findings"] if f["file_path"].startswith("__tests__/"))
+    assert no_app > 0 and nos_testes == no_app
+    assert data["risco_cidadao"]["dados_mapeados"] == no_app
+    assert f"Dados pessoais mapeados: {no_app} campo(s)" in saida
+    assert f"{nos_testes} campo(s) em caminhos ignorados" in saida
+
+
 def test_cli_nothing_to_scan(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     (tmp_path / "notes.txt").write_text("nada")

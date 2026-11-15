@@ -156,8 +156,8 @@
                   "uri": "src/app/(abas)/_layout.tsx"
                 },
                 "region": {
-                  "startLine": 25,
-                  "endLine": 25,
+                  "startLine": 30,
+                  "endLine": 30,
                   "startColumn": 9
                 }
               }
@@ -189,8 +189,8 @@
                   "uri": "src/app/_layout.tsx"
                 },
                 "region": {
-                  "startLine": 29,
-                  "endLine": 29,
+                  "startLine": 30,
+                  "endLine": 30,
                   "startColumn": 9
                 }
               }
@@ -255,15 +255,15 @@
                   "uri": "src/componentes/CartaoOcorrencia/estilos.ts"
                 },
                 "region": {
-                  "startLine": 19,
-                  "endLine": 19,
+                  "startLine": 31,
+                  "endLine": 31,
                   "startColumn": 3
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "056ad54dd25ab0735f59a0baabbe32f8"
+            "sentinela/v1": "44ba0a02f3f2d1464a7d415eb6dbb651"
           },
           "properties": {
             "severity": "info",
@@ -296,7 +296,7 @@
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "287230b383240d5a0a439479c39fa15a"
+            "sentinela/v1": "2f998c8c05f7f2f5454c361e9a8c3a9b"
           },
           "properties": {
             "severity": "info",
@@ -329,7 +329,7 @@
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "287230b383240d5a0a439479c39fa15a"
+            "sentinela/v1": "2f998c8c05f7f2f5454c361e9a8c3a9b"
           },
           "properties": {
             "severity": "info",
@@ -2532,8 +2532,8 @@
                   "uri": "src/telas/Avisos/index.tsx"
                 },
                 "region": {
-                  "startLine": 32,
-                  "endLine": 32,
+                  "startLine": 39,
+                  "endLine": 39,
                   "startColumn": 9
                 }
               }
@@ -2565,8 +2565,8 @@
                   "uri": "src/telas/Avisos/index.tsx"
                 },
                 "region": {
-                  "startLine": 36,
-                  "endLine": 36,
+                  "startLine": 43,
+                  "endLine": 43,
                   "startColumn": 9
                 }
               }
@@ -3060,8 +3060,8 @@
                   "uri": "src/telas/Mapa/index.tsx"
                 },
                 "region": {
-                  "startLine": 66,
-                  "endLine": 66,
+                  "startLine": 75,
+                  "endLine": 75,
                   "startColumn": 9
                 }
               }
@@ -3093,15 +3093,15 @@
                   "uri": "src/telas/Ocorrencia/estilos.ts"
                 },
                 "region": {
-                  "startLine": 6,
-                  "endLine": 6,
+                  "startLine": 9,
+                  "endLine": 9,
                   "startColumn": 3
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "sentinela/v1": "56749bbdaa1c18710834eb6827f21372"
+            "sentinela/v1": "028fcf2deae5c9ae6d8e53d412b71328"
           },
           "properties": {
             "severity": "info",
@@ -3126,8 +3126,8 @@
                   "uri": "src/telas/Ocorrencia/index.tsx"
                 },
                 "region": {
-                  "startLine": 32,
-                  "endLine": 32,
+                  "startLine": 50,
+                  "endLine": 50,
                   "startColumn": 9
                 }
               }
@@ -3159,8 +3159,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 40,
-                  "endLine": 40,
+                  "startLine": 48,
+                  "endLine": 48,
                   "startColumn": 1
                 }
               }
@@ -3192,8 +3192,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 43,
-                  "endLine": 43,
+                  "startLine": 51,
+                  "endLine": 51,
                   "startColumn": 9
                 }
               }
@@ -3225,8 +3225,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 43,
-                  "endLine": 43,
+                  "startLine": 51,
+                  "endLine": 51,
                   "startColumn": 9
                 }
               }
@@ -3258,8 +3258,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 44,
-                  "endLine": 44,
+                  "startLine": 52,
+                  "endLine": 52,
                   "startColumn": 9
                 }
               }
@@ -3291,8 +3291,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 44,
-                  "endLine": 44,
+                  "startLine": 52,
+                  "endLine": 52,
                   "startColumn": 9
                 }
               }
@@ -3324,8 +3324,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 45,
-                  "endLine": 45,
+                  "startLine": 53,
+                  "endLine": 53,
                   "startColumn": 9
                 }
               }
@@ -3357,8 +3357,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 45,
-                  "endLine": 45,
+                  "startLine": 53,
+                  "endLine": 53,
                   "startColumn": 9
                 }
               }
@@ -3390,8 +3390,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 113,
-                  "endLine": 113,
+                  "startLine": 121,
+                  "endLine": 121,
                   "startColumn": 9
                 }
               }
@@ -3423,8 +3423,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 113,
-                  "endLine": 113,
+                  "startLine": 121,
+                  "endLine": 121,
                   "startColumn": 9
                 }
               }
@@ -3456,8 +3456,8 @@
                   "uri": "src/telas/Perfil/index.tsx"
                 },
                 "region": {
-                  "startLine": 184,
-                  "endLine": 184,
+                  "startLine": 192,
+                  "endLine": 192,
                   "startColumn": 9
                 }
               }
@@ -3513,6 +3513,39 @@
           "ruleId": "pii.mapa.imagem",
           "level": "note",
           "message": {
+            "text": "`areaFoto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/telas/Relatar/estilos.ts"
+                },
+                "region": {
+                  "startLine": 8,
+                  "endLine": 8,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "sentinela/v1": "653c63b18c66b2ae80b7ee68b42f5782"
+          },
+          "properties": {
+            "severity": "info",
+            "confidence": "medium",
+            "engines": [
+              "rule"
+            ],
+            "status": "open"
+          },
+          "ruleIndex": 4
+        },
+        {
+          "ruleId": "pii.mapa.imagem",
+          "level": "note",
+          "message": {
             "text": "`confirmacaoFoto` guarda fotos, que podem mostrar o rosto, a placa do carro ou a casa da pessoa. Confira se o dado é necessário e se está protegido."
           },
           "locations": [
@@ -3522,8 +3555,8 @@
                   "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 37,
-                  "endLine": 37,
+                  "startLine": 43,
+                  "endLine": 43,
                   "startColumn": 3
                 }
               }
@@ -3555,8 +3588,8 @@
                   "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 42,
-                  "endLine": 42,
+                  "startLine": 48,
+                  "endLine": 48,
                   "startColumn": 9
                 }
               }
@@ -3588,8 +3621,8 @@
                   "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 48,
-                  "endLine": 48,
+                  "startLine": 54,
+                  "endLine": 54,
                   "startColumn": 9
                 }
               }
@@ -3621,8 +3654,8 @@
                   "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 48,
-                  "endLine": 48,
+                  "startLine": 54,
+                  "endLine": 54,
                   "startColumn": 9
                 }
               }
@@ -3654,8 +3687,8 @@
                   "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 49,
-                  "endLine": 49,
+                  "startLine": 55,
+                  "endLine": 55,
                   "startColumn": 9
                 }
               }
@@ -3687,8 +3720,8 @@
                   "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 55,
-                  "endLine": 55,
+                  "startLine": 61,
+                  "endLine": 61,
                   "startColumn": 9
                 }
               }
@@ -3720,8 +3753,8 @@
                   "uri": "src/telas/Relatar/index.tsx"
                 },
                 "region": {
-                  "startLine": 120,
-                  "endLine": 120,
+                  "startLine": 126,
+                  "endLine": 126,
                   "startColumn": 9
                 }
               }
@@ -3753,8 +3786,8 @@
                   "uri": "src/telas/Relato/estilos.ts"
                 },
                 "region": {
-                  "startLine": 7,
-                  "endLine": 7,
+                  "startLine": 9,
+                  "endLine": 9,
                   "startColumn": 3
                 }
               }
@@ -3786,8 +3819,8 @@
                   "uri": "src/telas/Relato/index.tsx"
                 },
                 "region": {
-                  "startLine": 23,
-                  "endLine": 23,
+                  "startLine": 27,
+                  "endLine": 27,
                   "startColumn": 9
                 }
               }

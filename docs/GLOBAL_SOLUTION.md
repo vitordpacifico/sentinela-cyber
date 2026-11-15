@@ -65,7 +65,7 @@ Detalhado em [risco-cidadao.md](risco-cidadao.md). Em resumo:
 |---|---|---|---|
 | `exemplos/prototipo-com-falhas` (falhas inseridas de propósito) | **Bloqueado** | **100, Crítico** | 5 vazamentos e 1 CPF real no código |
 | `exemplos/prototipo-corrigido` (mesma função, corrigida) | Aprovado | 7, Baixo | 0 vazamentos |
-| App Pluvia de Mobile (`GS-Mobile/src`, código real) | Aprovado | 6, Baixo | 0 vazamentos; 140 campos com dado pessoal mapeados, entre eles 20 de localização e 20 de fotos |
+| App Pluvia de Mobile (`GS-Mobile/src`, código real) | Aprovado | 6, Baixo | 0 vazamentos; 101 campos com dado pessoal mapeados, entre eles 12 de localização e 16 de fotos (os testes do app, com dados fictícios, ficam fora) |
 
 **O que a auditoria mudou no app.** Os campos mapeados mostraram onde o app guardava o telefone e o CEP do cidadão. Seguindo esses campos, a revisão manual achou um problema que o scanner não pega sozinho, porque o dado passa por dois arquivos (veja as limitações): esses dados iam para o AsyncStorage, que grava **sem criptografia**. O app foi corrigido, e agora o telefone e o CEP ficam no cofre do sistema (`expo-secure-store`: Keychain no iOS, Keystore no Android). A correção está no commit [e2e0176 do app](https://github.com/vitordpacifico/pluvia-mobile/commit/e2e0176).
 

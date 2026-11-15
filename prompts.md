@@ -58,6 +58,12 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 
 **Resultado:** Comentários e docstrings removidos dos arquivos Python, do JavaScript e do CSS do painel, sem alterar o comportamento. Ficaram só os marcadores que as ferramentas usam (`# noqa` e `# type: ignore`), as docstrings que viram texto de ajuda dos scripts e a documentação de uma rota da API. Os arquivos de exemplo vulneráveis (`benchmark/corpus`, `tests/fixtures` e `exemplos`) não foram alterados, porque são dados de teste. Testes, lint e Security Gate sem erros.
 
+### 8. Revisão final (15/11/2026)
+
+**Pedido:** Revisar o projeto inteiro e deixar tudo perfeito.
+
+**Resultado:** A auditoria do app passou a ignorar os testes do Pluvia, que usam dados fictícios, igual ao painel. Agora a auditoria e o painel mostram o mesmo número de campos. A CLI conta só os campos fora dos caminhos ignorados e informa quantos ficaram de fora. No painel, os gráficos sem dados mostram uma mensagem em vez de um gráfico vazio, a triagem por IA não conta os achados de mapeamento e os links de referência mostram o site. O teste da CLI lê os relatórios em UTF-8 também no Windows. Evidências e prints refeitos com a IA. 1 teste novo (115 no total).
+
 ## Decisões sugeridas pela IA, para o grupo revisar
 
 - Usar o Sentinela do grupo como base, porque o PDF fala em "novas regras no motor de parsing", "o LLM" e "Dashboard Atualizado".
@@ -69,7 +75,7 @@ Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de 
 
 ## Verificações feitas
 
-- 114 testes automatizados passando, incluindo os 63 originais do Sentinela.
+- 115 testes automatizados passando, incluindo os 63 originais do Sentinela.
 - `ruff check` e `ruff format` sem erros.
 - O Security Gate do próprio repositório continua aprovado.
 - Auditoria executada nos três alvos, com as evidências em `evidencias/`.

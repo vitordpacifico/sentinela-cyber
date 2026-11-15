@@ -31,6 +31,8 @@ def test_painel_mostra_a_queda_do_risco_depois_da_correcao(client):
     metricas = client.get("/api/projects/sentinela-app/metrics").json()
     assert metricas["risco_cidadao"]["nivel"] == "baixo"
     assert metricas["risco_cidadao"]["vazamentos"] == 0
+    assert metricas["risco_cidadao"]["dados_mapeados"] > 0
+    assert sum(metricas["ai"].values()) == 0
 
 
 def test_risco_da_cli_respeita_a_politica(tmp_path):

@@ -421,7 +421,7 @@
             "ai": {
               "verdict": "true_positive",
               "confidence": "high",
-              "rationale": "O dado pessoal de saúde está sendo exibido na tela bloqueada do celular sem a necessidade de login, o que expõe os dados pessoais de cidadãos.",
+              "rationale": "O valor `remedios` é diretamente ligado ao dado pessoal de saúde do cadastro, e não há nenhuma validação ou transformação que sugira que ele seja seguro.",
               "suggested_severity": null
             }
           },

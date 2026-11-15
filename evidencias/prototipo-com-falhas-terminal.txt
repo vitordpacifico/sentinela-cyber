@@ -39,6 +39,6 @@ Risco Cidadão: 100/100 (Crítico)
   ! Vulnerabilidade de segurança em dados pessoais (prototipo-com-falhas/cadastroMorador.ts:36)
     Seus dados pessoais podem ser acessados por terceiros não autorizados, o que pode causar constrangimento e discriminação.
   ! Dado pessoal exposto na URL (prototipo-com-falhas/cadastroMorador.ts:39)
-    Você pode ser vítima de golpe ou fraude, pois seu CPF e telefone estão sendo enviados para o servidor sem segurança.
+    Você pode ser vítima de golpe ou fraude, pois seus dados pessoais foram expostos.
   ! Uso de CPFs reais no código (prototipo-com-falhas/cadastroMorador.ts:28)
     Você pode ser vítima de golpe ou discriminação se o seu CPF for usado de forma ilegal.

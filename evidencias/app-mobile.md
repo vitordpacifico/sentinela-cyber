@@ -11,10 +11,10 @@ Nenhum vazamento de dado pessoal encontrado. O índice reflete só os dados que 
 
 | Dado pessoal | Campos mapeados | Vazamentos |
 |---|---:|---:|
-| Cadastro de pessoa | 42 | 0 |
-| Contato e endereço | 40 | 0 |
-| Fotos e imagens | 21 | 0 |
-| Localização | 20 | 0 |
-| Senhas e credenciais | 18 | 0 |
+| Cadastro de pessoa | 36 | 0 |
+| Contato e endereço | 26 | 0 |
+| Fotos e imagens | 16 | 0 |
+| Localização | 12 | 0 |
+| Senhas e credenciais | 11 | 0 |
 
 Nenhuma vulnerabilidade aberta encontrada nos arquivos alterados. 🎉

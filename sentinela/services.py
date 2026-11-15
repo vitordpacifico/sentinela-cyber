@@ -283,7 +283,7 @@ def project_metrics(session: Session, project_name: str) -> dict[str, Any]:
     by_cwe = Counter(f["cwe"] for f in open_now)
     by_owasp = Counter(f["owasp"] for f in open_now if f["owasp"])
     by_language = Counter(f["language"] for f in open_now)
-    ai = Counter((f["ai"] or {}).get("verdict", "sem_ia") for f in current)
+    ai = Counter((f["ai"] or {}).get("verdict", "sem_ia") for f in current if not _inventario(f["rule_id"]))
 
     trend = []
     for scan in scans[-30:]:

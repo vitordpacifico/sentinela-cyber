@@ -23,13 +23,13 @@
 > **O que fazer:** A equipe deve corrigir a vulnerabilidade armazenando os dados pessoais com criptografia.
 
 > **Dado pessoal exposto na URL** (`prototipo-com-falhas/cadastroMorador.ts:39`, escrito por IA)  
-> Você pode ser vítima de golpe ou fraude, pois seu CPF e telefone estão sendo enviados para o servidor sem segurança.  
+> Você pode ser vítima de golpe ou fraude, pois seus dados pessoais foram expostos.  
 > **Quem é afetado:** cidadãos que utilizam o aplicativo  
-> **O que fazer:** A equipe deve corrigir a falha removendo o dado pessoal do URL e enviando apenas o CPF em um corpo de requisição HTTPS.
+> **O que fazer:** O aplicativo deve corrigir a falha removendo o dado pessoal do URL e enviando apenas o CPF em um corpo de requisição HTTPS.
 
 > **Uso de CPFs reais no código** (`prototipo-com-falhas/cadastroMorador.ts:28`, escrito por IA)  
 > Você pode ser vítima de golpe ou discriminação se o seu CPF for usado de forma ilegal.  
-> **Quem é afetado:** cidadãos que tiverem seus CPFs usados de forma ilegal  
+> **Quem é afetado:** cidadãos que usam o sistema  
 > **O que fazer:** Remova o CPF do código e avise o encarregado de dados (DPO)
 
 **O que bloqueia o merge:**
@@ -76,12 +76,12 @@ await Notifications.scheduleNotificationAsync({
 1. linha 47 (source): `content: { title: "Evacuação", body: `Leve seus remédios: ${remedios}` },`
 2. linha 46 (sink): `await Notifications.scheduleNotificationAsync({`
 
-**IA (llama3.2):** vulnerabilidade real, confiança high. O dado pessoal de saúde está sendo exibido na tela bloqueada do celular sem a necessidade de login, o que expõe os dados pessoais de cidadãos.
+**IA (llama3.2):** vulnerabilidade real, confiança high. O valor `remedios` é diretamente ligado ao dado pessoal de saúde do cadastro, e não há nenhuma validação ou transformação que sugira que ele seja seguro.
 
 **Como corrigir:** A notificação aparece na tela bloqueada. Mostre só um aviso genérico e o detalhe dentro do app, depois do login.
 
 ```typescript
-await Notifications.scheduleNotificationAsync({ content: { title: "Você tem um novo aviso" }, trigger: null });
+const remedios = 'medicamentos';
 ```
 
 <sub>regra `pii.vazamento.notificacao.saude` · motores: taint · fingerprint `4d2f48b403a1`</sub>
@@ -125,7 +125,7 @@ Severidade sugerida: `critical` (não aplicada automaticamente).
 **Como corrigir:** Não escreva dados pessoais em logs. Registre só um identificador técnico ou o dado mascarado.
 
 ```typescript
-console.log("cadastro concluído", { usuarioId: usuario.id });
+console.info('cadastro concluído', { usuarioId: usuario.id });
 ```
 
 <sub>regra `pii.vazamento.log.documento` · motores: taint · fingerprint `168606409973`</sub>

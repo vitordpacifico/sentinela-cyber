@@ -34,7 +34,7 @@ def arquivos(pasta: Path, prefixo: str = "") -> list[tuple[str, str]]:
     return [
         (f"{prefixo}{caminho.relative_to(pasta).as_posix()}", caminho.read_text(encoding="utf-8"))
         for caminho in sorted(pasta.rglob("*"))
-        if caminho.suffix in EXTENSOES and "node_modules" not in caminho.parts and "__tests__" not in caminho.parts
+        if caminho.suffix in EXTENSOES and not {"node_modules", "__tests__", "testes"} & set(caminho.parts)
     ]
 
 

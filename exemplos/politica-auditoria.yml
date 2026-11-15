@@ -3,5 +3,8 @@
 gate:
   fail_on: high
   require_strong_evidence: true
-  ignore_paths: []
+  # Testes do app usam dados fictícios e não entram na auditoria.
+  ignore_paths:
+    - "*/__tests__/*"
+    - "src/testes/*"
   ignore_rules: []

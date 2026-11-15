@@ -83,7 +83,7 @@ def _scan(args: argparse.Namespace) -> int:
             json.dumps({"gate": gate, "risco_cidadao": risco, "findings": findings}, indent=2, ensure_ascii=False),
         )
     if not args.quiet:
-        _print_report(findings, gate, len(files))
+        _print_report(findings, gate, len(files), policy)
         _print_risco(risco)
 
     if gate["status"] == "failed" and not args.no_fail:
@@ -206,7 +206,7 @@ def _collect(paths: list[str], diff_ref: str | None) -> list[SourceFile]:
     return files
 
 
-def _print_report(findings: list[dict], gate: dict, file_count: int) -> None:
+def _print_report(findings: list[dict], gate: dict, file_count: int, policy: GatePolicy) -> None:
     color = sys.stdout.isatty()
     print(f"\nSentinela {__version__} — {file_count} arquivo(s) analisado(s), {len(findings)} achado(s)\n")
     mapeados = [f for f in findings if f["rule_id"].startswith("pii.mapa.")]
@@ -227,9 +227,14 @@ def _print_report(findings: list[dict], gate: dict, file_count: int) -> None:
         print(f"  - {reason}")
     if gate.get("dashboard"):
         print(f"\nDashboard: {gate['dashboard']}")
-    if mapeados:
+    considerados = [f for f in mapeados if not ignorado(f, policy)]
+    if considerados:
         print(
-            f"\nDados pessoais mapeados: {len(mapeados)} campo(s). A lista completa está nos relatórios JSON e SARIF."
+            f"\nDados pessoais mapeados: {len(considerados)} campo(s). A lista completa está nos relatórios JSON e SARIF."
+        )
+    if len(mapeados) > len(considerados):
+        print(
+            f"  {len(mapeados) - len(considerados)} campo(s) em caminhos ignorados pela política ficam fora da conta."
         )
 
 

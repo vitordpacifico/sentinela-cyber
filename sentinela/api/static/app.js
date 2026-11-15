@@ -13,6 +13,9 @@ const $ = (sel) => document.querySelector(sel);
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
+function dominio(url) {
+  try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "referência"; }
+}
 function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 function fmtDate(iso) { return iso ? new Date(iso).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" }) : "—"; }
 function gateBadge(status) {
@@ -162,15 +165,24 @@ function cweTable(rows) {
     <tr><td><a href="https://cwe.mitre.org/data/definitions/${esc(r.cwe.split("-")[1])}.html" target="_blank" rel="noopener">${esc(r.cwe)}</a></td><td>${esc(r.count)}</td></tr>`).join("")}</tbody></table>`;
 }
 
+function semDados(seletor, texto) {
+  const caixa = $(seletor).closest(".chart-box");
+  caixa.outerHTML = `<p class="muted">${esc(texto)}</p>`;
+}
+
+const soma = (valores) => valores.reduce((total, v) => total + (v || 0), 0);
+
 function drawOverviewCharts(m) {
   if (!window.Chart) return;
   Chart.defaults.color = cssVar("--muted");
   Chart.defaults.borderColor = cssVar("--border");
   const colors = SEVERITIES.map((s) => cssVar(`--${s}`));
 
-  charts.push(new Chart($("#c-sev"), {
+  const severidades = SEVERITIES.map((s) => m.severity[s]);
+  if (soma(severidades) === 0) semDados("#c-sev", "Nenhum achado aberto. 🎉");
+  else charts.push(new Chart($("#c-sev"), {
     type: "doughnut",
-    data: { labels: SEVERITIES.map((s) => SEV_LABEL[s]), datasets: [{ data: SEVERITIES.map((s) => m.severity[s]), backgroundColor: colors, borderWidth: 0 }] },
+    data: { labels: SEVERITIES.map((s) => SEV_LABEL[s]), datasets: [{ data: severidades, backgroundColor: colors, borderWidth: 0 }] },
     options: { maintainAspectRatio: false, cutout: "62%", plugins: { legend: { position: "right" } } },
   }));
 
@@ -186,14 +198,16 @@ function drawOverviewCharts(m) {
     options: { maintainAspectRatio: false, scales: { y: { stacked: true, beginAtZero: true, ticks: { precision: 0 } } }, interaction: { mode: "index", intersect: false } },
   }));
 
-  charts.push(new Chart($("#c-owasp"), {
+  if (soma(m.owasp.map((o) => o.count)) === 0) semDados("#c-owasp", "Nenhuma categoria do OWASP Top 10 nos achados abertos.");
+  else charts.push(new Chart($("#c-owasp"), {
     type: "bar",
     data: { labels: m.owasp.map((o) => o.category.split(" - ")[1] || o.category), datasets: [{ data: m.owasp.map((o) => o.count), backgroundColor: cssVar("--accent"), maxBarThickness: 26, borderRadius: 4 }] },
     options: { indexAxis: "y", maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } },
   }));
 
   const aiKeys = ["true_positive", "false_positive", "uncertain", "sem_ia"];
-  charts.push(new Chart($("#c-ai"), {
+  if (soma(aiKeys.map((k) => m.ai[k])) === 0) semDados("#c-ai", "Nenhuma falha no último scan para a IA analisar.");
+  else charts.push(new Chart($("#c-ai"), {
     type: "doughnut",
     data: {
       labels: ["Real", "Falso positivo", "Incerto", "Sem IA"],
@@ -291,7 +305,7 @@ function findingDetail(f) {
     ${ai}
     ${f.alerta_cidadao ? `<h3>Alerta ao cidadão</h3>${alertaCidadao(f.alerta_cidadao)}` : ""}
     <h3>Como corrigir</h3><p>${esc(f.remediation)}</p>${f.safe_example ? `<pre>${esc(f.safe_example)}</pre>` : ""}
-    <p class="muted">Regra <code>${esc(f.rule_id)}</code> · ${esc(f.owasp)} · ${f.references.map((r) => `<a href="${esc(r)}" target="_blank" rel="noopener">referência</a>`).join(" ")}</p>
+    <p class="muted">Regra <code>${esc(f.rule_id)}</code> · ${esc(f.owasp)} · ${f.references.map((r) => `<a href="${esc(r)}" target="_blank" rel="noopener">${esc(dominio(r))}</a>`).join(" · ")}</p>
     <h3>Revisão</h3>
     <div class="review">${Object.entries(STATUS_LABEL).map(([k, v]) => `<button type="button" class="btn small" data-status="${k}" ${k === f.status ? "disabled" : ""}>${v}</button>`).join("")}
       <input type="text" class="note" placeholder="Justificativa (opcional)" size="36" value="${esc(f.review_note || "")}"></div>
