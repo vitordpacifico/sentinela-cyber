@@ -4,65 +4,39 @@ As regras gerais da Global Solution pedem o registro dos prompts usados (página
 
 **Ferramenta:** Claude Code (modelo Claude Opus 5.5).
 
-Os pedidos abaixo foram reescritos em linguagem formal, mantendo o conteúdo de cada um.
+Abaixo estão os prompts principais da construção do módulo, em ordem. O texto de cada um foi revisado para ficar claro e completo, sem mudar o que foi pedido.
 
 ## Prompts
 
-### 1. Entender a missão de Cybersecurity (05/11/2026)
+### 1. Entender a missão e escolher a base (05/11/2026)
 
-**Pedido:** Explicar, com base no PDF da GS, o que a disciplina pede e se os checkpoints anteriores do professor fazem parte da entrega.
+> Leia as páginas 28 e 29 do PDF da Global Solution, que estão em imagem, e explique o que a disciplina de Cybersecurity pede: as três missões, o que vai no ZIP e como a nota é distribuída. Separe o que o PDF exige do que é dedução. Depois, avalie se o Sentinela, a ferramenta de SAST que o grupo criou no Projeto Integrador, serve como base, já que a missão fala em "novas regras no motor de parsing" e em "Dashboard Atualizado".
 
-**Resultado:** Leitura das páginas 28 e 29, que são imagens no PDF. A IA deixou claro o que o PDF exige e o que é dedução, e propôs usar o Sentinela do grupo como base.
+**Resultado:** Leitura das missões e da pontuação, com a proposta de usar o Sentinela como base. Fork em `vitordpacifico/sentinela-cyber`, com os 63 testes originais rodando.
 
-### 2. Usar o Sentinela como base (06/11/2026)
+### 2. Implementar o módulo de dados pessoais (06/11/2026)
 
-**Pedido:** Fazer o fork do repositório do Sentinela, criado pelo Gustavo no Projeto Integrador, e usá-lo como base da entrega.
+> No Sentinela, implemente um módulo de dados pessoais com as três missões e o indicador. (1) Mapeamento de PII: regras no motor de parsing que reconheçam CPF, saúde, senhas e outras categorias pelo nome de campos e variáveis, em português e inglês, e que achem CPF e Cartão SUS verdadeiros pelo dígito verificador. (2) Taint analysis: siga o dado pessoal até saídas inseguras (log, URL, armazenamento sem criptografia, notificação, analytics e área de transferência), reconheça mascaramento e criptografia, e faça o Security Gate bloquear vazamento de saúde, CPF e senha. (3) IA: o LLM local escreve um alerta ao cidadão em linguagem simples e sugere a correção, recebendo o código com os dados pessoais mascarados. (4) Indicador Risco Cidadão de 0 a 100 na API, na CLI, no relatório e no painel. Adicione suporte a TypeScript, a linguagem do app, crie um protótipo com falhas inseridas de propósito e a versão corrigida, e cubra tudo com testes.
 
-**Resultado:** Fork em `vitordpacifico/sentinela-cyber`, ambiente instalado e testes originais rodados (63 passando, depois de corrigir um teste que quebrava com a versão nova da biblioteca Celery).
+**Resultado:** Módulo `sentinela/pii/` com 9 categorias, CPF e Cartão SUS por dígito verificador, taint até 6 saídas, mascaramento antes da IA, alerta ao cidadão e Risco Cidadão na API, na CLI, no relatório e no painel. Suporte a TypeScript, protótipo com falhas e corrigido, scripts da auditoria, da demonstração e do ZIP, e 45 testes novos.
 
-### 3. Implementar o módulo de dados pessoais (06/11/2026)
+### 3. Auditar o app real do grupo (07/11/2026)
 
-**Pedido:** Implementar as quatro partes da missão: mapeamento de PII, taint analysis, alerta ao cidadão escrito pela IA e o indicador Risco Cidadão no painel.
+> Rode o módulo no código real do app Pluvia de Mobile. O documento de definição pede o mapeamento de dados pessoais em fotos e localização, então crie a categoria "Fotos e imagens" e reforce a de localização. Registre as evidências da auditoria (relatório, JSON, SARIF e saída do terminal) e, se o mapeamento mostrar algum dado pessoal mal protegido no app, corrija no repositório de Mobile.
 
-**Resultado:**
+**Resultado:** Categoria "Fotos e imagens", auditoria do app aprovada com Risco Cidadão baixo e evidências em `evidencias/`. A auditoria levou à correção do telefone e do CEP sem criptografia no app de Mobile.
 
-- Suporte a TypeScript no motor de parsing.
-- Módulo `sentinela/pii/` com as categorias de dados pessoais, a detecção de CPF e Cartão SUS válidos, a taint analysis até saídas inseguras e o mascaramento antes da IA.
-- Alerta ao cidadão no prompt da IA, com coluna nova no banco e migração.
-- Indicador Risco Cidadão na API, na CLI, no relatório Markdown e no painel.
-- Protótipo com falhas inseridas de propósito e versão corrigida, para a auditoria.
-- Scripts da auditoria, da demonstração no painel e do ZIP de entrega.
-- 45 testes novos (108 no total).
+### 4. Testar a IA de verdade (11/11/2026)
 
-### 4. Fechar a entrega (06/11/2026)
+> Instale o Ollama e o modelo `llama3.2` e rode a auditoria com a IA ligada. Confira se cada vazamento recebe um alerta ao cidadão e uma correção realmente escritos pela IA, e não pelo texto de reserva. Se a resposta não chegar, vier cortada ou fora do formato, descubra a causa e corrija até os 6 vazamentos do protótipo terem alerta e correção da IA.
 
-**Pedido:** Deixar o código de Cyber e de Mobile completos para a validação, antes dos prints e do vídeo.
+**Resultado:** Causas encontradas e corrigidas: limite de 60 segundos curto para o processador, resposta cortada, alerta fora do formato JSON e IA chamada para achados de mapeamento. Limite de 180 segundos, resposta mais longa, segunda tentativa e correção recomendada da regra enviada como referência. Os 6 vazamentos passaram a ter alerta e correção da IA.
 
-**Resultado:** O problema que a auditoria apontou no app (telefone e CEP sem criptografia) foi corrigido no repositório de Mobile. A auditoria e os prints do painel foram refeitos, o roteiro do vídeo foi reduzido para 3 minutos e o script da demonstração passou a poder rodar de novo sem duplicar scans.
+### 5. Revisão final e evidências (15/11/2026)
 
-### 5. Acompanhar a mudança do app para o Pluvia (07/11/2026)
+> Faça uma revisão completa do repositório para a entrega: testes, lint, Security Gate, os três scans comparados com a documentação, links quebrados e qualquer dado pessoal nosso nas evidências. Garanta que a auditoria e o painel mostrem os mesmos números, que gráficos sem dados não pareçam quebrados e que a Ficha da CitizenTech esteja no início do README. Refaça as evidências com a IA ligada.
 
-**Pedido:** Adaptar a entrega ao documento de definição do grupo, que troca o app de Mobile pelo Pluvia (proposta "Alaga") e pede, em Cyber, o mapeamento de dados pessoais em fotos e localização.
-
-**Resultado:** Categoria nova "Fotos e imagens" no mapeamento de PII, termo "coordenada" na localização, auditoria refeita no código do Pluvia (aprovado, Risco Cidadão 6, 140 campos mapeados), prints do painel refeitos e documentação atualizada. 3 testes novos (111 no total).
-
-### 6. Testar a IA de verdade (11/11/2026)
-
-**Pedido:** Instalar o Ollama e testar a IA do módulo.
-
-**Resultado:** Ollama e `llama3.2` instalados. O teste mostrou que nenhuma resposta da IA era aproveitada: o modelo levava mais que o limite de 60 segundos, a resposta era cortada e o alerta ficava fora do formato pedido, e a IA era chamada também para os achados de mapeamento. Correções: limite de 180 segundos, resposta mais longa, alerta dentro do formato JSON, correção recomendada da regra enviada como referência, uma segunda tentativa quando a resposta vem incompleta e mapeamento fora da IA. Modelo padrão trocado para `llama3.2`. Evidências e prints do painel refeitos com a IA. 3 testes novos (114 no total).
-
-### 7. Remover os comentários do código (11/11/2026)
-
-**Pedido:** Remover a maior parte dos comentários do código, mantendo o registro do uso de IA neste arquivo.
-
-**Resultado:** Comentários e docstrings removidos dos arquivos Python, do JavaScript e do CSS do painel, sem alterar o comportamento. Ficaram só os marcadores que as ferramentas usam (`# noqa` e `# type: ignore`), as docstrings que viram texto de ajuda dos scripts e a documentação de uma rota da API. Os arquivos de exemplo vulneráveis (`benchmark/corpus`, `tests/fixtures` e `exemplos`) não foram alterados, porque são dados de teste. Testes, lint e Security Gate sem erros.
-
-### 8. Revisão final (15/11/2026)
-
-**Pedido:** Revisar o projeto inteiro e deixar tudo perfeito.
-
-**Resultado:** A auditoria do app passou a ignorar os testes do Pluvia, que usam dados fictícios, igual ao painel. Agora a auditoria e o painel mostram o mesmo número de campos. A CLI conta só os campos fora dos caminhos ignorados e informa quantos ficaram de fora. No painel, os gráficos sem dados mostram uma mensagem em vez de um gráfico vazio, a triagem por IA não conta os achados de mapeamento e os links de referência mostram o site. O teste da CLI lê os relatórios em UTF-8 também no Windows. Evidências e prints refeitos com a IA. 1 teste novo (115 no total).
+**Resultado:** Auditoria e painel com os mesmos números (testes do app fora da conta), gráficos vazios trocados por mensagens, triagem por IA sem os achados de mapeamento, Ficha da CitizenTech no README, evidências refeitas e 115 testes passando.
 
 ## Decisões sugeridas pela IA, para o grupo revisar
 
