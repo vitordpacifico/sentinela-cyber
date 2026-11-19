@@ -7,8 +7,8 @@
 > analisar **TypeScript**. Ele audita o Pluvia, o app de alagamentos do grupo.
 >
 > Tudo sobre a entrega está em **[docs/GLOBAL_SOLUTION.md](docs/GLOBAL_SOLUTION.md)**:
-> a missão, as evidências em [`evidencias/`](evidencias), o indicador
-> ([docs/risco-cidadao.md](docs/risco-cidadao.md)) e os prompts ([prompts.md](prompts.md)).
+> a missão, as evidências em [`evidencias/`](evidencias) e o indicador
+> ([docs/risco-cidadao.md](docs/risco-cidadao.md)).
 >
 > ```bash
 > python scripts/auditoria_gs.py   # auditoria do protótipo
