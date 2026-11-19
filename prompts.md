@@ -1,48 +1,60 @@
 # Uso de IA
 
-As regras gerais da Global Solution pedem o registro dos prompts usados (página 21 do PDF da GS).
+As regras gerais da Global Solution permitem a IA como copiloto, desde que os prompts fiquem registrados (página 21 do PDF da GS).
 
 **Ferramenta:** Claude Code (modelo Claude Opus 5.5).
 
 ## Como usamos a IA
 
-Usamos a IA como copiloto, como a GS permite. A base é o Sentinela, ferramenta que o grupo criou no Projeto Integrador. As missões vieram do PDF, e as escolhas do módulo (categorias, pesos, saídas inseguras e o indicador) foram discutidas e aprovadas pelo grupo. A IA ajudou a escrever partes do código, revisar, encontrar erros e escrever testes. Cada resultado foi conferido pelo grupo rodando a auditoria e o painel.
+A base é o Sentinela, ferramenta de SAST que o grupo criou no Projeto Integrador. As missões vieram do PDF, e o desenho do módulo (as categorias de dado pessoal, as saídas inseguras, os pesos e a fórmula do Risco Cidadão) foi decidido pelo grupo. Usamos a IA como copiloto para tirar dúvidas de Tree-sitter e de taint analysis, revisar o que já tínhamos escrito e investigar erros. Toda sugestão foi conferida rodando a auditoria e o painel.
 
-Abaixo estão os prompts principais da construção, em ordem. O texto de cada um foi revisado para ficar claro e completo, sem mudar o que foi pedido.
+Abaixo estão os prompts mais importantes, em ordem. O texto foi revisado para ficar claro, sem mudar o que foi pedido.
 
 ## Prompts
 
-### 1. Entender a missão e escolher a base (05/11/2026)
+### 1. Ler a missão no PDF (05/11/2026)
 
-> As páginas 28 e 29 do PDF da Global Solution estão em imagem. Ajude a conferir o que a disciplina de Cybersecurity pede: as três missões, o que vai no ZIP e como a nota é distribuída. Separe o que o PDF exige do que é dedução. Queremos usar como base o Sentinela, a ferramenta de SAST que o grupo criou no Projeto Integrador. Avalie se faz sentido, já que a missão fala em "novas regras no motor de parsing" e em "Dashboard Atualizado".
+> As páginas 28 e 29 do PDF da GS estão em imagem. Confira com a gente o que a disciplina de Cybersecurity pede: as três missões, o que vai no ZIP e a pontuação. Pensamos em usar o Sentinela do Projeto Integrador como base, porque a missão fala em "novas regras no motor de parsing". Faz sentido ou o professor espera uma ferramenta nova?
 
-**Resultado:** Leitura das missões e da pontuação, com a proposta de usar o Sentinela como base. Fork em `vitordpacifico/sentinela-cyber`, com os 63 testes originais rodando.
+**Resultado:** Confirmamos as missões e a pontuação, e decidimos seguir com o Sentinela, que já tinha motor de parsing, LLM e painel.
 
-### 2. Implementar o módulo de dados pessoais (06/11/2026)
+### 2. Reconhecer dado pessoal pelo nome (06/11/2026)
 
-> Desenhamos um módulo de dados pessoais para o Sentinela com as três missões e o indicador. Ajude a implementar: (1) Mapeamento de PII: regras no motor de parsing que reconheçam CPF, saúde, senhas e outras categorias pelo nome de campos e variáveis, em português e inglês, e que achem CPF e Cartão SUS verdadeiros pelo dígito verificador. (2) Taint analysis: siga o dado pessoal até saídas inseguras (log, URL, armazenamento sem criptografia, notificação, analytics e área de transferência), reconheça mascaramento e criptografia, e faça o Security Gate bloquear vazamento de saúde, CPF e senha. (3) IA: o LLM local escreve um alerta ao cidadão em linguagem simples e sugere a correção, recebendo o código com os dados pessoais mascarados. (4) Indicador Risco Cidadão de 0 a 100 na API, na CLI, no relatório e no painel. Também precisamos de suporte a TypeScript, a linguagem do app, de um protótipo com falhas inseridas de propósito e a versão corrigida, e de testes para tudo.
+> Montamos uma lista de categorias de dado pessoal (saúde, documentos, senhas, localização, contato) e queremos reconhecê-las pelo nome de campos e variáveis. O problema: `senhaHash` e `cpfMascarado` não deveriam contar, e nomes em camelCase e snake_case precisam funcionar. Como separar as palavras do nome e evitar esses falsos positivos?
 
-**Resultado:** Módulo `sentinela/pii/` com 9 categorias, CPF e Cartão SUS por dígito verificador, taint até 6 saídas, mascaramento antes da IA, alerta ao cidadão e Risco Cidadão na API, na CLI, no relatório e no painel. Suporte a TypeScript, protótipo com falhas e corrigido, scripts da auditoria, da demonstração e do ZIP, e 45 testes novos.
+**Resultado:** Escrevemos a separação de palavras e a lista de nomes protegidos em `sentinela/pii/categorias.py`, com testes para cada caso.
 
-### 3. Auditar o app real do grupo (07/11/2026)
+### 3. CPF e Cartão SUS verdadeiros no código (06/11/2026)
 
-> Vamos rodar o módulo no código real do nosso app Pluvia de Mobile. O documento de definição pede o mapeamento de dados pessoais em fotos e localização, então precisamos da categoria "Fotos e imagens" e de reforçar a de localização. Ajude a registrar as evidências da auditoria (relatório, JSON, SARIF e saída do terminal) e, se o mapeamento mostrar algum dado pessoal mal protegido no app, vamos corrigir no repositório de Mobile.
+> Queremos acusar CPF e Cartão SUS escritos no código, mas só os verdadeiros, para não marcar qualquer sequência de números. Revise a nossa conta do dígito verificador do CPF e explique como funciona a validação do Cartão Nacional de Saúde.
 
-**Resultado:** Categoria "Fotos e imagens", auditoria do app aprovada com Risco Cidadão baixo e evidências em `evidencias/`. A auditoria levou à correção do telefone e do CEP sem criptografia no app de Mobile.
+**Resultado:** Validação de CPF e CNS em `sentinela/pii/valores.py`, também usada para mascarar esses números antes de o código ir para a IA.
 
-### 4. Testar a IA de verdade (11/11/2026)
+### 4. Taint até saídas inseguras (06/11/2026)
 
-> Ajude a instalar o Ollama e o modelo `llama3.2` para rodarmos a auditoria com a IA ligada. Queremos conferir se cada vazamento recebe um alerta ao cidadão e uma correção realmente escritos pela IA, e não pelo texto de reserva. Se a resposta não chegar, vier cortada ou fora do formato, vamos achar a causa e corrigir até os 6 vazamentos do protótipo terem alerta e correção da IA.
+> O Sentinela já segue entrada externa até funções perigosas. Queremos usar o mesmo motor para seguir o dado pessoal até log, URL, armazenamento sem criptografia e notificação, tratando mascaramento e hash como limpeza. Como encaixar isso no motor de taint que já existe sem quebrar as regras antigas?
 
-**Resultado:** Causas encontradas e corrigidas: limite de 60 segundos curto para o processador, resposta cortada, alerta fora do formato JSON e IA chamada para achados de mapeamento. Limite de 180 segundos, resposta mais longa, segunda tentativa e correção recomendada da regra enviada como referência. Os 6 vazamentos passaram a ter alerta e correção da IA.
+**Resultado:** Criamos as regras de vazamento em `sentinela/rules/pii.yml` e o fluxo em `sentinela/pii/fluxo.py`. Os 63 testes originais continuaram passando.
 
-### 5. Revisão final e evidências (15/11/2026)
+### 5. Alerta ao cidadão pela IA (06/11/2026)
 
-> Antes de entregar, revise comigo o repositório inteiro: testes, lint, Security Gate, os três scans comparados com a documentação, links quebrados e qualquer dado pessoal nosso nas evidências. A auditoria e o painel precisam mostrar os mesmos números, que gráficos sem dados não pareçam quebrados e que a Ficha da CitizenTech esteja no início do README. No final, refazemos as evidências com a IA ligada.
+> A IA do Sentinela já avalia cada achado. Para os vazamentos de dado pessoal, queremos que ela escreva um alerta em linguagem simples para o cidadão (o que pode acontecer, quem é afetado e o que fazer). Como mudar o prompt para a resposta vir sempre nesse formato, e como garantir que o CPF não chegue aberto à IA?
 
-**Resultado:** Auditoria e painel com os mesmos números (testes do app fora da conta), gráficos vazios trocados por mensagens, triagem por IA sem os achados de mapeamento, Ficha da CitizenTech no README, evidências refeitas e 115 testes passando.
+**Resultado:** Prompt com o formato do alerta ao cidadão, mascaramento de CPF, Cartão SUS, e-mail e telefone antes da IA, e um alerta escrito por regras quando a IA está desligada.
 
-## Decisões discutidas com a IA
+### 6. A IA não respondia a tempo (11/11/2026)
+
+> Instalamos o Ollama com o `llama3.2` e rodamos a auditoria, mas os alertas continuam vindo do texto de reserva, não da IA. Ajude a investigar o que acontece com a resposta.
+
+**Resultado:** Descobrimos que o modelo, rodando no processador, levava mais de 60 segundos, a resposta vinha cortada e a IA também era chamada para os achados de mapeamento. Aumentamos o limite para 180 segundos, deixamos a resposta mais longa e tiramos o mapeamento da IA. Os 6 vazamentos do protótipo passaram a ter alerta e correção escritos pela IA.
+
+### 7. Números diferentes na auditoria e no painel (15/11/2026)
+
+> Na revisão final, a auditoria do app mostra 142 campos com dado pessoal e o painel mostra 103. Revise com a gente de onde vem essa diferença.
+
+**Resultado:** A auditoria contava os arquivos de teste do app, que só têm dados fictícios. Passamos a ignorá-los nos dois lugares, e agora os números batem.
+
+## Decisões do projeto
 
 - Usar o Sentinela do grupo como base, porque o PDF fala em "novas regras no motor de parsing", "o LLM" e "Dashboard Atualizado".
 - Reconhecer dado pessoal pelo nome do campo, mais CPF e Cartão SUS pelo valor.
